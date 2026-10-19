@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from 'sonner';
 import { AppAuthProvider } from '@/contexts/AppAuthContext';
@@ -21,7 +21,7 @@ export function App() {
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
       <AppAuthProvider>
         <DogProvider>
-          <BrowserRouter>
+          <HashRouter>
             <Routes>
               <Route path="/" element={<AppLayout />}>
                 <Route index element={<Index />} />
@@ -40,7 +40,7 @@ export function App() {
                 className: 'rounded-none border-2 border-black dark:border-white shadow-brutal font-mono text-xs font-bold uppercase'
               }} 
             />
-          </BrowserRouter>
+          </HashRouter>
         </DogProvider>
       </AppAuthProvider>
     </ThemeProvider>
