@@ -21,7 +21,32 @@ Kuchu platformunun görsel dili, İsviçre Tipografisi (Swiss Modernism / Intern
    - Başlıklar ve buton metinleri `font-black` (900 ağırlık) ve genellikle büyük harf (`uppercase`, `tracking-tight` veya `tracking-wider`) kullanılır.
    - Sayısal göstergeler ve indeksler üst-simge veya belirgin monospaced tarzda sunulur.
 
-### 2. Bileşen Şablonları
-- **Buton (Primary):** `bg-red-600 text-white font-black uppercase border-2 border-black shadow-[4px_4px_0px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#000000] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all`
-- **Kart (Card):** `bg-white dark:bg-zinc-900 border-2 border-black dark:border-white shadow-[4px_4px_0px_0px_#000000] dark:shadow-[4px_4px_0px_0px_#ffffff] p-6`
-- **Etiket / Badge:** `border-2 border-black text-xs font-black uppercase px-2.5 py-0.5 shadow-[2px_2px_0px_0px_#000000]`
+### 2. Token Değerleri ve Renk Paleti (src/index.css)
+- `--background`: `0 0% 100%` (Açık tema saf beyaz) / `0 0% 0%` (Koyu tema saf siyah)
+- `--foreground`: `0 0% 0%` / `0 0% 100%`
+- `--primary`: `0 91% 54%` (İsviçre kırmızısı `#dc2626`)
+- `--primary-foreground`: `0 0% 100%`
+- `--accent`: `210 100% 50%` (Bilgilendirici kobalt mavisi)
+- `--accent-foreground`: `0 0% 100%`
+- `--secondary`: `0 0% 90%` / `0 0% 15%`
+- `--muted`: `0 0% 96%` / `0 0% 10%`
+- `--muted-foreground`: `0 0% 40%` / `0 0% 60%`
+- `--destructive`: `0 100% 40%` (Yüksek risk / tehlike)
+- `--border`: `0 0% 0%` (Açık) / `0 0% 100%` (Koyu)
+
+### 3. Grid & Yerleşim (Josef Müller-Brockmann Disiplini)
+- **Maksimum İçerik Genişliği:** `max-w-[1200px]` (`max-w-swiss`).
+- **Asimetrik Oranlar:** Hero alanında 7/5 grid oranı (Sol 7 kolon tipografik poster, sağ 5 kolon etkileşimli hızlı test).
+- **Bölüm Boşlukları:** Masaüstünde 64–96px, mobilde 40–56px.
+- **Kart Aralıkları:** 24px (`gap-6`).
+- **Çizgisel Yapı:** Ayırıcılar boşluk bırakmak yerine 2px katı çizgiler (`border-b-2 border-black dark:border-white`) ile yapı kurar.
+
+### 4. Bileşen Şablonları
+- **Buton (Primary):** `bg-red-600 text-white font-black uppercase border-2 border-black dark:border-white shadow-[4px_4px_0px_0px_#000000] dark:shadow-[4px_4px_0px_0px_#ffffff] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#000000] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all rounded-none`
+- **Kart (Card):** `bg-white dark:bg-zinc-950 border-2 border-black dark:border-white shadow-[4px_4px_0px_0px_#000000] dark:shadow-[4px_4px_0px_0px_#ffffff] p-6 rounded-none`
+- **Etiket / Badge:** `border-2 border-black dark:border-white text-xs font-black uppercase px-2.5 py-0.5 shadow-[2px_2px_0px_0px_#000000] rounded-none font-mono`
+
+### 5. Yasal & Bilimsel Kısıtlar
+- **Sorumluluk Reddi (Disclaimer):** Her sayfada ve analiz çıktısında tıbbi/veteriner tanı olmadığı, profesyonel destek eşiği uyarısı yer alır.
+- **Bilimsel Referanslar:** Kuyruk sağ-sol lateralizasyonu (Giorgio Vallortigara & Marcello Quaranta, 2007/2013) ve Yatıştırıcı Sinyaller (Turid Rugaas, 1997) referansları korunur.
+- **KVKK / Gizlilik:** Kişisel veriler yalnızca kullanıcının yerel tarayıcısında ve kendi kullanıcı ID'si altında depolanır (`create_only=true`).
