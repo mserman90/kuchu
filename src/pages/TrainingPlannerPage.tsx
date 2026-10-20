@@ -17,7 +17,7 @@ import { toast } from 'sonner';
 export const TrainingPlannerPage: React.FC = () => {
   const { activeDog } = useDog();
 
-  const [dogName, setDogName] = useState(activeDog?.name || 'Milo');
+  const [dogName, setDogName] = useState(activeDog?.name || 'Kuçu');
   const [breed, setBreed] = useState(activeDog?.breed || 'Golden Retriever Melezi');
   const [ageYears, setAgeYears] = useState(activeDog?.ageYears || 2);
   const [category, setCategory] = useState<

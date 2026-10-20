@@ -69,7 +69,7 @@ const TEMPLATES: Record<string, { title: string; baseExercises: Omit<TrainingExe
         durationMinutes: 10,
         goal: 'Evin içinde çağrıldığında koşarak gelme refleksi.',
         steps: [
-          'Evin diğer ucuna geçin. Neşeli ve tiz bir sesle "Milo, Gel!" deyin.',
+          'Evin diğer ucuna geçin. Neşeli ve tiz bir sesle "Kuçu, Gel!" deyin.',
           'Geldiği an parti yapın; coşkuyla sevin ve 3-4 parça ödülü ardı ardına verin.',
           'Asla ceza vermek, banyo yaptırmak veya tırnak kesmek için çağırmayın.'
         ],

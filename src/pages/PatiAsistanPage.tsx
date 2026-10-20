@@ -12,7 +12,7 @@ import {
 
 export const PatiAsistanPage: React.FC = () => {
   const { activeDog } = useDog();
-  const dogName = activeDog?.name || 'Milo';
+  const dogName = activeDog?.name || 'Kuçu';
 
   const [messages, setMessages] = useState<AssistantMessageEntity[]>([]);
   const [input, setInput] = useState('');

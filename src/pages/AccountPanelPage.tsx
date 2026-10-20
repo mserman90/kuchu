@@ -48,7 +48,7 @@ export const AccountPanelPage: React.FC = () => {
 
   // Notes state
   const [personalNotes, setPersonalNotes] = useState(() => {
-    return localStorage.getItem('kuchu_personal_notes') || 'Milo bugün yürüyüşte karşıdan gelen köpeği görünce daha az heyecanlandı. LAT protokolü çalışıyor.';
+    return localStorage.getItem('kuchu_personal_notes') || 'Kuçu bugün yürüyüşte karşıdan gelen köpeği görünce daha az heyecanlandı. LAT protokolü çalışıyor.';
   });
 
   // Login form state

@@ -43,7 +43,7 @@ export const BehaviorAnalysisPage: React.FC = () => {
     energyMovement: 'calm',
     environment: 'home',
     trigger: 'none',
-    dogName: activeDog?.name || 'Milo'
+    dogName: activeDog?.name || 'Kuçu'
   });
 
   const steps = [

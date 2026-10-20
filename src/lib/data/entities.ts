@@ -10,7 +10,7 @@ import {
 // Default Demo Dog
 export const DEFAULT_DOG: DogProfileEntity = {
   id: 'dog_demo_01',
-  name: 'Milo',
+  name: 'Kuçu',
   breed: 'Golden Retriever Melezi',
   ageYears: 2,
   ageMonths: 4,

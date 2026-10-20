@@ -20,7 +20,7 @@ const STORAGE_KEYS = {
 
 const DEFAULT_DOG: DogProfile = {
   id: 'dog_init_1',
-  name: 'Milo',
+  name: 'Kuçu',
   breed: 'Golden Retriever Melezi',
   ageYears: 2,
   ageMonths: 4,
