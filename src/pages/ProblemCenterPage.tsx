@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { BEHAVIOR_PROBLEMS, BehaviorProblem } from '@/lib/content/problems';
 import { DisclaimerBar } from '@/components/common/Ui';
 import { FavoriteButton } from '@/components/common/FavoriteButton';
@@ -8,7 +9,8 @@ import {
   XCircle, 
   AlertTriangle, 
   X, 
-  ArrowRight
+  ArrowRight,
+  Zap
 } from 'lucide-react';
 
 export const ProblemCenterPage: React.FC = () => {
@@ -55,6 +57,27 @@ export const ProblemCenterPage: React.FC = () => {
       </div>
 
       <DisclaimerBar variant="compact" />
+
+      {/* Quick Solution Wizard Promo */}
+      <div className="p-4 sm:p-5 border-2 border-black dark:border-white bg-black text-white dark:bg-white dark:text-black shadow-brutal flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <Zap className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+            <span className="font-mono text-xs font-black uppercase tracking-wider">
+              SORUNUNUZUN NE OLDUĞUNDAN EMİN DEĞİL MİSİNİZ?
+            </span>
+          </div>
+          <p className="text-xs text-zinc-300 dark:text-zinc-700">
+            5 soruluk klinik triyaj testimizle köpeğinizin davranışını, aciliyetini ve Merck 3M reçetesini anında belirleyin.
+          </p>
+        </div>
+        <Link
+          to="/hizli-cozum"
+          className="px-5 py-2.5 bg-red-600 text-white font-mono text-xs font-black uppercase border-2 border-black dark:border-white shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 transition-all whitespace-nowrap"
+        >
+          HIZLI ÇÖZÜMÜ BAŞLAT →
+        </Link>
+      </div>
 
       {/* Filter & Search Bar */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-4 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-brutal">

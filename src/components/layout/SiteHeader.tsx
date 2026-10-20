@@ -16,7 +16,8 @@ import {
   Moon,
   Sparkles,
   UserCheck,
-  LogIn
+  LogIn,
+  Zap
 } from 'lucide-react';
 
 export const SiteHeader: React.FC = () => {
@@ -27,6 +28,7 @@ export const SiteHeader: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navLinks = [
+    { to: '/hizli-cozum', label: 'HIZLI ÇÖZÜM', icon: Zap, badge: 'YENİ' },
     { to: '/analiz', label: 'ANALİZ', icon: Compass, badge: 'MOTOR' },
     { to: '/sorunlar', label: 'SORUNLAR', icon: HelpCircle },
     { to: '/egitim-planlari', label: 'PLANLAR', icon: CalendarCheck },

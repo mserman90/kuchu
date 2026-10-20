@@ -8,7 +8,8 @@ import {
   MessageSquareHeart, 
   ArrowRight, 
   Activity,
-  Brain
+  Brain,
+  Zap
 } from 'lucide-react';
 
 export const Index: React.FC = () => {
@@ -89,11 +90,20 @@ export const Index: React.FC = () => {
             {/* Primary Action Buttons */}
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <Link
+                to="/hizli-cozum"
+                className="h-[44px] sm:h-[40px] px-6 bg-black text-white dark:bg-white dark:text-black font-black text-xs sm:text-sm uppercase tracking-wider border-2 border-black dark:border-white shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-sm active:translate-x-1 active:translate-y-1 active:shadow-none transition-all inline-flex items-center gap-2"
+              >
+                <Zap className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                <span>HIZLI ÇÖZÜM SİHİRBAZI</span>
+                <span className="font-mono text-[9px] bg-red-600 text-white px-1.5 py-0.5">YENİ</span>
+              </Link>
+
+              <Link
                 to="/analiz"
                 className="h-[44px] sm:h-[40px] px-6 bg-red-600 text-white font-black text-xs sm:text-sm uppercase tracking-wider border-2 border-black dark:border-white shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-sm active:translate-x-1 active:translate-y-1 active:shadow-none transition-all inline-flex items-center gap-2"
               >
                 <Compass className="w-4 h-4 stroke-[2.5]" />
-                <span>DAVRANIŞ ANALİZİNE BAŞLA</span>
+                <span>DAVRANIŞ ANALİZİ</span>
                 <ArrowRight className="w-4 h-4 stroke-[2.5]" />
               </Link>
 
@@ -102,7 +112,7 @@ export const Index: React.FC = () => {
                 className="h-[44px] sm:h-[40px] px-6 bg-white dark:bg-zinc-900 text-black dark:text-white font-black text-xs sm:text-sm uppercase tracking-wider border-2 border-black dark:border-white shadow-brutal dark:shadow-brutal-white hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-sm active:translate-x-1 active:translate-y-1 active:shadow-none transition-all inline-flex items-center gap-2"
               >
                 <HelpCircle className="w-4 h-4 stroke-[2.5] text-red-600" />
-                <span>SORUN ÇÖZÜM MERKEZİ</span>
+                <span>SORUN ÇÖZÜMÜ</span>
               </Link>
             </div>
 
