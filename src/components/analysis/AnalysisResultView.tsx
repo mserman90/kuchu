@@ -177,6 +177,24 @@ export const AnalysisResultView: React.FC<AnalysisResultViewProps> = ({ result, 
 
       </div>
 
+      {/* Merck Clinical Screening Alert */}
+      <div className="p-5 border-2 border-black dark:border-white bg-zinc-100 dark:bg-zinc-950 shadow-brutal-sm space-y-2">
+        <div className="flex items-center justify-between border-b-2 border-black dark:border-white pb-2">
+          <span className="font-mono text-xs font-black uppercase tracking-wider text-black dark:text-white flex items-center gap-2">
+            <span className="w-3 h-3 bg-red-600 inline-block border border-black"></span>
+            MERCK VETERINARY MANUAL — KLİNİK DEĞERLENDİRME & AĞRI UYARISI
+          </span>
+          <span className="font-mono text-[10px] font-bold px-2 py-0.5 border border-black bg-white dark:bg-zinc-800 text-black dark:text-white uppercase">
+            Veteriner Etoloji Kuralı
+          </span>
+        </div>
+        <p className="text-xs font-medium text-zinc-700 dark:text-zinc-300 leading-relaxed">
+          Köpeğinizde son zamanlarda ani bir tepkisellik, dokunulmaya tahammülsüzlük veya agresyon artışı gözlemlediyseniz, 
+          <strong> Merck Kılavuzu uyarınca öncelikle gizli fiziksel ağrı (osteoartrit, diş çürüğü, kulak iltihabı) veteriner hekim tarafından dışlanmalıdır.</strong> 
+          Ağrı çeken bir köpeğe eğitim veya disiplin uygulamak korku agresyonunu kalıcı hale getirebilir.
+        </p>
+      </div>
+
       {/* Likely Causes */}
       <div className="p-6 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-brutal space-y-3">
         <h4 className="font-mono text-xs font-black uppercase tracking-wider text-black dark:text-white">

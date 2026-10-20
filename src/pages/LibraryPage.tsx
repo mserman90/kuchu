@@ -16,6 +16,7 @@ export const LibraryPage: React.FC = () => {
 
   const categories = [
     { id: 'all', label: 'TÜM MAKALELER' },
+    { id: 'clinical', label: 'MERCK VET KLİNİK REHBERİ' },
     { id: 'calming_signals', label: 'SAKİNLEŞME SİNYALLERİ' },
     { id: 'science', label: 'NÖRO-ETOLOJİ & BİLİM' },
     { id: 'training_tips', label: 'POZİTİF PEKİŞTİRME' },

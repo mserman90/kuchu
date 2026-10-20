@@ -5,6 +5,13 @@ export interface SolutionStep {
   scientificTip?: string;
 }
 
+export interface MerckProtocol {
+  management: string;
+  modification: string;
+  responseSubstitution: string;
+  medicalRuleOut: string;
+}
+
 export interface BehaviorProblem {
   id: string;
   slug: string;
@@ -18,6 +25,7 @@ export interface BehaviorProblem {
     overview: string;
     steps: SolutionStep[];
   };
+  merckProtocol: MerckProtocol;
   whatNotToDo: string[];
   whenToCallProfessional: string[];
 }
@@ -54,9 +62,15 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
         {
           stepNumber: 3,
           title: 'Kademeli Gerçek Hayat Provokasyonu',
-          instruction: 'Bir aile üyesinin dışarıdan zili çalmasını sağlayın. Köpek minderde sakin kalana kadar kapıyı açmayın.',
+          instruction: 'Bir aile üyesinin dışarıdan zili çalmasını sağlayın. Köpek minderde sakin kalana kadar kapıyı açmayın.'
         }
       ]
+    },
+    merckProtocol: {
+      management: 'Pencerelere buzlu cam filmi çekin veya perdeleri kapalı tutun; kapı zilinin sesini kısın. Köpeğin gün içinde cama koşarak bu davranışı "pratik etmesine" kesinlikle izin vermeyin.',
+      modification: 'Kademeli duyarsızlaştırma: Zil sesini en düşük desibelden başlatıp ödülle eşleştirin (Merck DS/CC protokolü).',
+      responseSubstitution: 'Tepki İkamesi (DRI): Zil çaldığı an kapıya havlamak yerine, mutfaktaki matına gidip oturma ve çenesini mata koyma davranışını ödüllendirin.',
+      medicalRuleOut: 'İşitme kaybı başlangıcı yaşayan köpekler sesleri aniden algılayıp irkilerek aşırı havlayabilir. Kulak enfeksiyonu veya duyusal gerileme muayenesi önerilir.'
     },
     whatNotToDo: [
       'Köpeğe "Sus!" diye bağırmayın (Köpek sizin de ona eşlik edip havladığınızı düşünür).',
@@ -77,7 +91,7 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
     shortDescription: 'Sahibi evden ayrıldığı an başlayan uluma, kapıları tırmalama, salya akıtma ve tuvalet kaçırma.',
     rootCauses: [
       'Aşırı bağlanma ve tek başına güvende hissetmeme',
-      'Sosyal izolasyon paniği (Köpekler evrimsel olarak sürü hayvanıdır)',
+      'Sosyal izolasyon paniği (Köpekler evrimsel olarak gevşek sosyal gruplarla yaşar)',
       'Rutin değişimleri, barınaktan sahiplenilme travması'
     ],
     positiveProtocol: {
@@ -93,14 +107,20 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
         {
           stepNumber: 2,
           title: '1 Saniyelik Kapı Kapanma Egzersizi',
-          instruction: 'Dış kapıyı kapatın ve 2 saniye sonra geri dönün. Sakin bir sesle ödül vermeden hayatınıza devam edin.',
+          instruction: 'Dış kapıyı kapatın ve 2 saniye sonra geri dönün. Sakin bir sesle ödül vermeden hayatınıza devam edin.'
         },
         {
           stepNumber: 3,
           title: 'Süreleri Kademeli Olarak Artırın (5sn, 15sn, 1dk, 5dk)',
-          instruction: 'Asla köpeğin ağlama noktasına gelmesine izin vermeyin. Ağlarsa bir önceki adıma dönün.',
+          instruction: 'Asla köpeğin ağlama noktasına gelmesine izin vermeyin. Ağlarsa bir önceki adıma dönün.'
         }
       ]
+    },
+    merckProtocol: {
+      management: 'Eğitim süresince köpeği tek başına evde asla eşik üstü sürelerde bırakmayın; köpek kreşi, evde bakıcı veya güvenilir bir arkadaş desteğiyle yalnızlık paniğinin nörolojik olarak pekişmesini engelleyin.',
+      modification: 'Mikro ayrılık eşik protokolü: Ayrılık ipuçlarını (anahtar, mont, ayakkabı) nötrleştirin; 2-5 saniyelik çıkışlarla beyne "geri dönecek" güvencesi kazandırın.',
+      responseSubstitution: 'Ayrılık anında donmuş Lickimat veya Kong oyuncağını yalama davranışına odaklama (Yalama eylemi endorfin salgılatır).',
+      medicalRuleOut: 'Kronik ağrı (osteoartrit) veya tiroid disfonksiyonu anksiyeteyi ciddi oranda artırır. 7 yaş üstünde DISHAA demans taraması yapılmalıdır.'
     },
     whatNotToDo: [
       'Evden çıkarken ve eve dönerken uzun duygusal vedalar veya coşkulu sarılmalar yapmayın.',
@@ -109,7 +129,7 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
     ],
     whenToCallProfessional: [
       'Köpek kapıları veya camları kırarak kendine fiziksel zarar veriyorsa',
-      'Ayrılık anında kalp çarpıntısı, hiperventilasyon ve kusma görülüyorsa (Veteriner hekim ilaç desteği gerekebilir).'
+      'Ayrılık anında kalp çarpıntısı, hiperventilasyon ve kusma görülüyorsa (Merck farmakoterapi protokolü gerekebilir).'
     ]
   },
   {
@@ -121,8 +141,8 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
     shortDescription: 'Oyun sırasında elleri, ayak bileklerini jilet gibi süt dişleriyle can yakıcı şekilde ısırma.',
     rootCauses: [
       'Diş kaşıntısı ve çene kaslarını tanıma evresi',
-      'Isırık İnhibisyonu (Bite Inhibition) eğitiminin henüz tamamlanmamış olması',
-      'Aşırı yorgunluk (Yavrular yoruldukça huysuzlaşıp daha çok ısırır)'
+      'Isırık İnhibisyonu (Bite Inhibition) eğitiminin henüz tamamlanmamış olması (Merck 3-8 hafta süreci)',
+      'Aşırı yorgunluk ve aşırı uyarılma (Yavrular yoruldukça huysuzlaşıp daha çok ısırır)'
     ],
     positiveProtocol: {
       protocolName: 'Isırık İnhibisyonu ve Yönlendirme (Redirection)',
@@ -132,19 +152,25 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
           stepNumber: 1,
           title: 'Canınız Yandığında Yüksek Sesle İrkilin ("OUCH!")',
           instruction: 'Kardeşlerinin oyun sırasında yaptığı gibi ani tiz bir ses çıkarın ve oyunu 10 saniye boyunca durdurup ellerinizi saklayın.',
-          scientificTip: 'Köpekler sosyal geri bildirimi kardeşlerinden bu ses ile öğrenir.'
+          scientificTip: 'Köpekler sosyal geri bildirimi kardeşlerinden bu ses ile öğrenir (Merck Normal Social Behavior).'
         },
         {
           stepNumber: 2,
           title: 'Alternatif Çiğneme Oyuncağı Sunun',
-          instruction: 'Elinizi ısırmaya yeltendiği anda hemen dişlerinin arasına uygun sertlikte bir kauçuk oyuncak sokun ve onunla oynayın.',
+          instruction: 'Elinizi ısırmaya yeltendiği anda hemen dişlerinin arasına uygun sertlikte bir kauçuk oyuncak sokun ve onunla oynayın.'
         },
         {
           stepNumber: 3,
           title: 'Yorulma Molası Verin',
-          instruction: 'Isırma delicesine artıyorsa yavru aşırı uyarılmıştır; sakin bir odada uykuya geçmesi için ortam hazırlayın.',
+          instruction: 'Isırma delicesine artıyorsa yavru aşırı uyarılmıştır; sakin bir odada uykuya geçmesi için ortam hazırlayın.'
         }
       ]
+    },
+    merckProtocol: {
+      management: 'Yavrunun etrafta serbestçe paçalara saldırmasını önlemek için oyun çiti (playpen) kullanın; elleri hızlıca sallayarak av dürtüsünü provoke etmeyin.',
+      modification: 'Diş temasında etkileşimi dondurma (negatif ceza -P), doğru oyuncağı ısırdığında oyunu coşkuyla sürdürme.',
+      responseSubstitution: 'Tepki İkamesi (DRI): Size doğru koştuğunda ağzında pelüş veya ip oyuncağını taşıyarak gelmesi davranışını ödüllendirin.',
+      medicalRuleOut: 'Süt dişlerinin dökülme döneminde diş eti iltihabı veya çift diş (persiste süt dişi) ağrısı olup olmadığını kontrol ettirin.'
     },
     whatNotToDo: [
       'Ağzını elle tutup sıkmayın veya diline basmayın (Şiddeti artırır ve el korkusu yaratır).',
@@ -165,7 +191,7 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
     rootCauses: [
       'Köpeğin doğal yürüyüş hızının insandan hızlı olması',
       'Çekmenin işe yaradığını öğrenmiş olması (Çekince hedefine ulaşıyor)',
-      'Karşıt Refleks (Opposition Reflex - Bir canlı çekildiğinde ters yöne direnç gösterir)'
+      'Karşıt Refleks (Opposition Reflex - Canlı çekildiğinde ters yöne direnç gösterir)'
     ],
     positiveProtocol: {
       protocolName: 'Kırmızı Işık - Yeşil Işık ve Odak Çalışması',
@@ -180,14 +206,20 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
         {
           stepNumber: 2,
           title: 'Size Baktığında Yürümeye Devam Edin',
-          instruction: 'Köpek durup "Neden gitmiyoruz?" diye dönüp size baktığı anda "Evet!" deyip diz hizanızda ödül verin ve yürüyün.',
+          instruction: 'Köpek durup "Neden gitmiyoruz?" diye dönüp size baktığı anda "Evet!" deyip diz hizanızda ödül verin ve yürüyün.'
         },
         {
           stepNumber: 3,
           title: 'U Dönüşleri Yapın',
-          instruction: 'Köpek öne fırladığında aniden ters yöne dönüp neşeyle yürüyün. Sizi sürekli takip etmek zorunda kalsın.',
+          instruction: 'Köpek öne fırladığında aniden ters yöne dönüp neşeyle yürüyün. Sizi sürekli takip etmek zorunda kalsın.'
         }
       ]
+    },
+    merckProtocol: {
+      management: 'Boyun tasması yerine ön göğüsten takılan (front-clip) ergonomik Y-göğüs tasması kullanın; çekildiğinde köpeğin ağırlık merkezini size çevirir.',
+      modification: 'Gevşek tasma yürüyüşü: Tasma U harfi şeklini aldığında diz yanından ödül verme; gerildiği anda durma.',
+      responseSubstitution: 'Tepki İkamesi: Yolda başka bir köpek gördüğünde öne atılmak yerine, durup sahibine bakma ("Watch me / Look at that") davranışı.',
+      medicalRuleOut: 'Sürekli çekmeye bağlı trakea (soluk borusu) zedelenmesi, boyun fıtığı veya kalça ağrısı varlığı hekimce değerlendirilmelidir.'
     },
     whatNotToDo: [
       'Boğma zincir (choke chain) veya dikenli tasma (prong collar) takmayın (Gırtlak ve tiroid hasarı yapar).',
@@ -207,6 +239,7 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
     shortDescription: 'Mama yerken veya oyuncağını kemirirken yaklaşan kişiye hırlama, donup kalma veya ısırma.',
     rootCauses: [
       'Evrimsel hayatta kalma mekanizması (Avını kaybetmeme dürtüsü)',
+      'Çatışma Kaynaklı Agresyon (Merck: Conflict-related aggression)',
       'Geçmişte elinden zorla eşyalarının alınmış olması güvensizliği'
     ],
     positiveProtocol: {
@@ -222,9 +255,15 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
         {
           stepNumber: 2,
           title: 'Eşit Değerle Takas Yapın',
-          instruction: 'Bir nesneyi almak zorundaysanız asla zorla çekmeyin; elinizde daha harika bir ödülle dikkatini dağıtıp takas edin.',
+          instruction: 'Bir nesneyi almak zorundaysanız asla zorla çekmeyin; elinizde daha harika bir ödülle dikkatini dağıtıp takas edin.'
         }
       ]
+    },
+    merckProtocol: {
+      management: 'Köpek mama yerken veya kemik kemirirken çocukları ve misafirleri kesinlikle uzak tutun; köpeği rahatsız edilmeyeceği ayrı bir odada besleyin.',
+      modification: 'Klasik Karşıt Koşullanma: İnsanın yaklaşması = Ekstra yüksek değerli et parçalarının havadan düşmesi eşleştirmesi.',
+      responseSubstitution: 'Tepki İkamesi: Eşyayı ağzında sıkıp hırlamak yerine, "Bırak" (Drop it) komutuyla eşyayı bırakıp 2 adım geri çekilme davranışı.',
+      medicalRuleOut: 'Ağız/diş çürüğü, diş kırığı veya çiğneme ağrısı yaşayan köpekler kemiklerini çiğneyemediklerinde aşırı agresif kaynak koruma gösterebilir.'
     },
     whatNotToDo: [
       'Yemek yerken köpeğin mamasına elinizi sokup "Bana saygı duyuyor mu?" testi yapmayın.',
@@ -244,7 +283,7 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
     shortDescription: 'Eve birisi geldiğinde veya sokakta yürürken sevinçten insanların üzerine atlayıp kıyafetleri kirletme.',
     rootCauses: [
       'Köpeklerin doğal selamlama ritüeli yüz yüze temastır; yüze ulaşmaya çalışırlar.',
-      'İnsanların zıplayınca köpeği iterek veya gülerek ödüllendirmiş olması.'
+      'İnsanların zıplayınca köpeği iterek veya gülerek ödüllendirmiş olması (İstemsiz pekiştirme).'
     ],
     positiveProtocol: {
       protocolName: 'Dört Pati Yerde Kuralı (Four on the Floor)',
@@ -258,9 +297,15 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
         {
           stepNumber: 2,
           title: '4 Pati Yere Değdiği Salisede Ödüllendirin',
-          instruction: 'Pati yere bastığı anda yere doğru eğilip sakin bir sesle ödüllendirin.',
+          instruction: 'Pati yere bastığı anda yere doğru eğilip sakin bir sesle ödüllendirin.'
         }
       ]
+    },
+    merckProtocol: {
+      management: 'Misafir geldiğinde köpeği tasmayla kontrol altında tutun veya kapı arkasında bariyer arkasında karşılatın; misafire zıplamasını pekiştirmeyin.',
+      modification: 'Dört pati yerde (Four on the Floor) ödüllendirmesi ve zıplama anında ilgiyi anında sıfırlama.',
+      responseSubstitution: 'Tepki İkamesi (DRI - En etkili Merck yöntemi): Kapı açıldığı anda "Otur" (Sit) davranışı. Köpek aynı anda hem oturup hem de bir insanın üzerine zıplayamaz.',
+      medicalRuleOut: 'Arka bacaklarda veya kalçada patella luksasyonu veya eklem ağrısı olan köpekler zıplarken veya inerken ani acı duyup agresyon gösterebilir.'
     },
     whatNotToDo: [
       'Zıplayınca diziyle köpeğin göğsüne vurmayın (Eski moda ve kaburga zedeleyici bir yöntemdir).',
@@ -279,7 +324,8 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
     shortDescription: 'Fırtına, şimşek veya silah/patlama seslerinde tir tir titreme, banyoya saklanma ve nefes darlığı.',
     rootCauses: [
       'Hassas köpek işitme duyusu (İnsan kulağının 4 katı frekans algısı)',
-      'Barometrik basınç değişimlerini hissetme ve kaçış refleksi'
+      'Barometrik basınç değişimlerini hissetme ve kaçış refleksi',
+      'Genetik korku yatkınlığı ve erken dönem ses desensitizasyonu eksikliği'
     ],
     positiveProtocol: {
       protocolName: 'Akustik Desensitizasyon ve Güvenli Mağara',
@@ -288,17 +334,23 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
         {
           stepNumber: 1,
           title: 'Güvenli Sığınak (Mağara) Hazırlayın',
-          instruction: 'Pencereleri kapatın, perdeleri çekin, banyo veya koridor gibi iç mekanlara battaniyelerle sığınak kurun.',
+          instruction: 'Pencereleri kapatın, perdeleri çekin, banyo veya koridor gibi iç mekanlara battaniyelerle sığınak kurun.'
         },
         {
           stepNumber: 2,
           title: 'Beyaz Gürültü veya Klasik Müzik Açın',
-          instruction: 'Dışarıdan gelen frekans patlamalarını maskelemek için ritmik müzik açın.',
+          instruction: 'Dışarıdan gelen frekans patlamalarını maskelemek için ritmik müzik açın.'
         }
       ]
     },
+    merckProtocol: {
+      management: 'Fırtına başlamadan önce perdeleri kapatın, beyaz gürültü makinesi veya vantilatör çalıştırın; köpeğin karanlık güvenli bir odaya (banyo, gardırop) geçişine izin verin.',
+      modification: 'Fırtına ses kayıtlarıyla mikro desensitizasyon: Fırtına sesi en düşük volümdeyken oyun oynama ve ciğer ödülü verme.',
+      responseSubstitution: 'Tepki İkamesi: Sakinleşme battaniyesine geçip çiğneme oyuncağı kemirme davranışını pekiştirme.',
+      medicalRuleOut: 'Gürültü fobisi aniden başlayan yetişkin köpeklerde kas-iskelet sistemi ağrısı veya orta kulak iltihabı araştırması yapılmalıdır. Şiddetli panik krizlerinde veteriner hekim reçeteli Trazodone vb. anksiyolitikler Merck tarafından önerilir.'
+    },
     whatNotToDo: [
-      'Korktuğunda köpeği dışarı zorla çıkarmayın.',
+      'Korktuğunda köpeği dışarı zorla çıkarmayın (Taşma / Flooding felakete yol açar).',
       'Korkusunu "Şımarıklık yapıyor" diyerek azarlamayın.'
     ],
     whenToCallProfessional: [
@@ -313,7 +365,8 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
     severity: 'low',
     shortDescription: 'Önceden dışarı yapan köpeğin eve, halılara veya yatağa aniden idrar/dışkı bırakmaya başlaması.',
     rootCauses: [
-      'Öncelikle idrar yolu enfeksiyonu veya parazit (Tıbbi sebep)',
+      'Öncelikle idrar yolu enfeksiyonu, sistit veya böbrek sorunları (Tıbbi sebep)',
+      'Yaşlı köpeklerde DISHAA Demans belirtisi (H - House Soiling)',
       'Evde stres faktörü (yeni bebek, yeni eşya, taşınma)',
       'Hatalı temizlik (Çamaşır suyu amonyak içerir ve köpeğe tekrar buraya yap sinyali verir)'
     ],
@@ -324,19 +377,25 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
         {
           stepNumber: 1,
           title: 'Önce Veteriner İdrar Tahlili',
-          instruction: 'Ani tuvalet kaçırma vakalarının %60\'ı sistit veya böbrek sorunudur.',
+          instruction: 'Ani tuvalet kaçırma vakalarının %60\'ı sistit veya böbrek sorunudur.'
         },
         {
           stepNumber: 2,
           title: 'Enzimatik Temizleyici ile Kokuyu Moleküler Yok Edin',
-          instruction: 'Halılardaki kokuyu amonyaksız enzimatik sprey ile nötrleştirin.',
+          instruction: 'Halılardaki kokuyu amonyaksız enzimatik sprey ile nötrleştirin.'
         },
         {
           stepNumber: 3,
           title: 'Dışarı Yaptığında Yüksek Coşkuyla Ödüllendirin',
-          instruction: 'Dışarıda tuvaletini bitirdiği an son damlası düşer düşmez en sevdiği ödülü verin.',
+          instruction: 'Dışarıda tuvaletini bitirdiği an son damlası düşer düşmez en sevdiği ödülü verin.'
         }
       ]
+    },
+    merckProtocol: {
+      management: 'Kaza yapılan alanları enzimatik temizleyici ile temizleyin; dışarı çıkarma sıklığını geçici olarak 2-3 saatte bire yükseltin.',
+      modification: 'Dışarıda tuvaletini yapar yapmaz 3 saniye içinde yüksek değerli ödül ile pekiştirme.',
+      responseSubstitution: 'Tepki İkamesi: Kapı önündeki zili çalarak dışarı çıkma isteğini haber verme (Pati zili eğitimi).',
+      medicalRuleOut: 'İdrar yolu enfeksiyonu (Sistit), böbrek taşı, diyabet, Cushing sendromu ve 8 yaş üstü köpeklerde Merck DISHAA Kognitif Disfonksiyon Sendromu (CDS) hekimce mutlaka dışlanmalıdır.'
     },
     whatNotToDo: [
       'Burnunu pisliğe sürtmeyin (İğrenç, bilim dışı ve travmatik bir harekettir; dışkı yeme hastalığına yol açar).',

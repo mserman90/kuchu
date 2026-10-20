@@ -210,6 +210,57 @@ export const ProblemCenterPage: React.FC = () => {
               </div>
             </div>
 
+            {/* Merck Veterinary Clinical Protocol (3M Model) */}
+            <div className="p-5 border-2 border-black dark:border-white bg-blue-50 dark:bg-zinc-950 space-y-4 shadow-brutal-sm">
+              <div className="flex items-center justify-between border-b-2 border-black dark:border-white pb-2">
+                <span className="font-mono text-xs font-black uppercase tracking-wider text-blue-900 dark:text-blue-300 flex items-center gap-1.5">
+                  <span className="w-3 h-3 bg-blue-600 inline-block border border-black"></span>
+                  MERCK VETERINARY MANUAL — KLİNİK DAVRANIŞ DÜZENLEME PROTOKOLÜ (3M)
+                </span>
+                <span className="font-mono text-[10px] font-bold px-2 py-0.5 border border-black bg-white dark:bg-zinc-900 text-blue-800 dark:text-blue-300 uppercase">
+                  Altın Standart
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div className="p-3 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 space-y-1">
+                  <div className="font-mono font-black text-black dark:text-white uppercase flex items-center gap-1 text-[11px]">
+                    🛡️ 1. Çevresel Yönetim (Management)
+                  </div>
+                  <p className="text-zinc-700 dark:text-zinc-300 text-[11px] leading-relaxed">
+                    {activeProblem.merckProtocol.management}
+                  </p>
+                </div>
+
+                <div className="p-3 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 space-y-1">
+                  <div className="font-mono font-black text-black dark:text-white uppercase flex items-center gap-1 text-[11px]">
+                    🧬 2. Pozitif Modifikasyon (Modification)
+                  </div>
+                  <p className="text-zinc-700 dark:text-zinc-300 text-[11px] leading-relaxed">
+                    {activeProblem.merckProtocol.modification}
+                  </p>
+                </div>
+
+                <div className="p-3 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 space-y-1">
+                  <div className="font-mono font-black text-black dark:text-white uppercase flex items-center gap-1 text-[11px]">
+                    🎯 3. Tepki İkamesi (Response Substitution / DRI)
+                  </div>
+                  <p className="text-zinc-700 dark:text-zinc-300 text-[11px] leading-relaxed">
+                    {activeProblem.merckProtocol.responseSubstitution}
+                  </p>
+                </div>
+
+                <div className="p-3 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 space-y-1">
+                  <div className="font-mono font-black text-red-600 dark:text-red-400 uppercase flex items-center gap-1 text-[11px]">
+                    🩺 4. Ağrı & Tıbbi Dışlama (Medical Rule-Out)
+                  </div>
+                  <p className="text-zinc-700 dark:text-zinc-300 text-[11px] leading-relaxed">
+                    {activeProblem.merckProtocol.medicalRuleOut}
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* What NOT to do */}
             <div className="p-4 border-2 border-black dark:border-white bg-red-50 dark:bg-zinc-950 space-y-2">
               <h4 className="font-mono text-xs font-black uppercase text-red-600 flex items-center gap-1.5">
