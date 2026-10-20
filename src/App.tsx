@@ -29,6 +29,7 @@ export function App() {
               <Route path="/" element={<AppLayout />}>
                 <Route index element={<Index />} />
                 <Route path="analiz" element={<BehaviorAnalysisPage />} />
+                <Route path="gorsel-analiz" element={<BehaviorAnalysisPage />} />
                 <Route path="hizli-cozum" element={<QuickSolutionPage />} />
                 <Route path="sorunlar" element={<ProblemCenterPage />} />
                 <Route path="zehirli-gidalar" element={<ToxicFoodsPage />} />

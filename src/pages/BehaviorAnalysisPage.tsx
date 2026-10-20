@@ -21,12 +21,14 @@ import {
 import { analyzeDogBehavior } from '@/lib/analysis/engine';
 import { OptionGroup } from '@/components/analysis/OptionGroup';
 import { AnalysisResultView } from '@/components/analysis/AnalysisResultView';
+import { VisionScanner } from '@/components/analysis/VisionScanner';
 import { DisclaimerBar } from '@/components/common/Ui';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Camera, SlidersHorizontal } from 'lucide-react';
 
 export const BehaviorAnalysisPage: React.FC = () => {
   const { activeDog } = useDog();
   const [eduMode, setEduMode] = useState(true);
+  const [analysisMode, setAnalysisMode] = useState<'vision' | 'manual'>('vision');
   const [activeStep, setActiveStep] = useState<number>(0);
   const [result, setResult] = useState<BehaviorAnalysisResult | null>(null);
 
@@ -52,6 +54,17 @@ export const BehaviorAnalysisPage: React.FC = () => {
     { id: 'face_posture', label: '3. AĞIZ & GÖVDE', desc: 'Dudak mimikleri ve beden ağırlığı' },
     { id: 'context', label: '4. ENERJİ & BAĞLAM', desc: 'Hareket modu ve tetikleyiciler' }
   ];
+
+  const handleApplyVision = (detectedState: Partial<BehaviorInputState>) => {
+    const nextForm = { ...formState, ...detectedState };
+    setFormState(nextForm);
+    const evaluated = analyzeDogBehavior({
+      ...nextForm,
+      dogName: activeDog?.name || nextForm.dogName || 'Kuçu'
+    });
+    setResult(evaluated);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -112,30 +125,64 @@ export const BehaviorAnalysisPage: React.FC = () => {
       {result ? (
         <AnalysisResultView result={result} onReset={handleReset} />
       ) : (
-        /* STEP WIZARD FORM */
         <div className="space-y-6">
           
-          {/* Step Navigation Tabs */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            {steps.map((s, idx) => {
-              const isCurrent = activeStep === idx;
-              return (
-                <button
-                  key={s.id}
-                  type="button"
-                  onClick={() => setActiveStep(idx)}
-                  className={`p-3 text-left border-2 transition-all cursor-pointer ${
-                    isCurrent
-                      ? 'bg-red-600 text-white border-black dark:border-white shadow-brutal-sm'
-                      : 'bg-white dark:bg-zinc-900 border-black dark:border-white text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800'
-                  }`}
-                >
-                  <div className="font-mono text-xs font-black uppercase">{s.label}</div>
-                  <div className="text-[10px] font-medium opacity-80 truncate">{s.desc}</div>
-                </button>
-              );
-            })}
+          {/* Analysis Mode Switcher */}
+          <div className="flex flex-col sm:flex-row border-2 border-black dark:border-white p-1.5 bg-zinc-100 dark:bg-zinc-800 gap-2 font-mono text-xs font-black uppercase shadow-brutal-sm">
+            <button
+              type="button"
+              onClick={() => setAnalysisMode('vision')}
+              className={`flex-1 py-3 px-4 flex items-center justify-center gap-2 border-2 transition-all cursor-pointer ${
+                analysisMode === 'vision'
+                  ? 'bg-red-600 text-white border-black dark:border-white shadow-brutal-sm'
+                  : 'bg-white dark:bg-zinc-900 text-black dark:text-white border-transparent hover:bg-zinc-200 dark:hover:bg-zinc-700'
+              }`}
+            >
+              <Camera className="w-4 h-4" />
+              <span>1. FOTOĞRAFLA VISION AI TARA (YAPAY ZEKA)</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setAnalysisMode('manual')}
+              className={`flex-1 py-3 px-4 flex items-center justify-center gap-2 border-2 transition-all cursor-pointer ${
+                analysisMode === 'manual'
+                  ? 'bg-red-600 text-white border-black dark:border-white shadow-brutal-sm'
+                  : 'bg-white dark:bg-zinc-900 text-black dark:text-white border-transparent hover:bg-zinc-200 dark:hover:bg-zinc-700'
+              }`}
+            >
+              <SlidersHorizontal className="w-4 h-4" />
+              <span>2. MANUEL PARAMETRE SEÇİCİ (4 BOYUTLU MOTOR)</span>
+            </button>
           </div>
+
+          {analysisMode === 'vision' ? (
+            <VisionScanner onApplyToAnalysis={handleApplyVision} />
+          ) : (
+            /* STEP WIZARD FORM */
+            <div className="space-y-6">
+              
+              {/* Step Navigation Tabs */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {steps.map((s, idx) => {
+                  const isCurrent = activeStep === idx;
+                  return (
+                    <button
+                      key={s.id}
+                      type="button"
+                      onClick={() => setActiveStep(idx)}
+                      className={`p-3 text-left border-2 transition-all cursor-pointer ${
+                        isCurrent
+                          ? 'bg-red-600 text-white border-black dark:border-white shadow-brutal-sm'
+                          : 'bg-white dark:bg-zinc-900 border-black dark:border-white text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800'
+                      }`}
+                    >
+                      <div className="font-mono text-xs font-black uppercase">{s.label}</div>
+                      <div className="text-[10px] font-medium opacity-80 truncate">{s.desc}</div>
+                    </button>
+                  );
+                })}
+              </div>
 
           <form onSubmit={handleSubmit} className="space-y-8">
             
@@ -317,6 +364,8 @@ export const BehaviorAnalysisPage: React.FC = () => {
             </div>
 
           </form>
+            </div>
+          )}
 
         </div>
       )}
