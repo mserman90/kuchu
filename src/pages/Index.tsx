@@ -80,7 +80,7 @@ export const Index: React.FC = () => {
             {/* Top Eyebrow Badge */}
             <div className="inline-flex items-center gap-2 border-2 border-black dark:border-white px-3 py-1 bg-zinc-100 dark:bg-zinc-900 font-mono text-xs font-black uppercase shadow-brutal-sm">
               <span className="w-2 h-2 bg-red-600 animate-ping inline-block" />
-              <span>TÜRKİYE'NİN İLK MERCK STANDARTLI KÖPEK DAVRANIŞ PLATFORMU</span>
+              <span>TÜRKİYE'NİN İLK KANITA DAYALI KÖPEK DAVRANIŞ PLATFORMU</span>
             </div>
 
             {/* Giant High-Contrast Headline */}
@@ -94,7 +94,7 @@ export const Index: React.FC = () => {
               </h1>
               
               <p className="text-base sm:text-lg font-medium text-zinc-700 dark:text-zinc-300 leading-relaxed max-w-xl">
-                Aşırı havlama, tasma çekiştirme, yalnız kalamama veya agresyon... Köpeğiniz size bir şey anlatmaya çalışıyor. Eski ceza mitlerini unutun; <strong>Merck Klinik Protokolleri</strong> ve <strong>Yapay Zeka</strong> ile dostunuzun gerçek ruh halini ve ihtiyaçlarını saniyeler içinde keşfedin.
+                Aşırı havlama, tasma çekiştirme, yalnız kalamama veya agresyon... Köpeğiniz size bir şey anlatmaya çalışıyor. Eski ceza mitlerini unutun; <strong>kanıta dayalı bilimsel protokoller</strong> ve <strong>Yapay Zeka</strong> ile dostunuzun gerçek ruh halini ve ihtiyaçlarını saniyeler içinde keşfedin.
               </p>
             </div>
 
@@ -267,7 +267,7 @@ export const Index: React.FC = () => {
                 KLİNİK TRİYAJ MOTORU
               </h3>
               <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                Sorunun adını koyamıyor musunuz? 5 soruyla köpeğinizin aciliyet derecesini ve Merck 3M reçetesini anında belirleyin.
+                Sorunun adını koyamıyor musunuz? 5 soruyla köpeğinizin aciliyet derecesini ve bilimsel eylem planını anında belirleyin.
               </p>
             </div>
             <div className="font-mono text-xs font-black uppercase text-red-600 flex items-center gap-1 pt-2 border-t border-zinc-200 dark:border-zinc-800">
@@ -568,7 +568,7 @@ export const Index: React.FC = () => {
 
             <div className="p-4 border-2 border-zinc-800 bg-zinc-900/60 space-y-2">
               <span className="text-2xl font-black text-red-500 font-mono">02 ■</span>
-              <h4 className="font-mono text-xs font-black uppercase text-white">Merck 3M Modeli</h4>
+              <h4 className="font-mono text-xs font-black uppercase text-white">3M Bütüncül Yaklaşım</h4>
               <p className="text-xs text-zinc-400 leading-relaxed">
                 Çevresel Yönetim (Management) + Pozitif Modifikasyon (Modification) + Medikal Destek (Medication). Başarı bu 3 ayağın dengesiyle gelir.
               </p>

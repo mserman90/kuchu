@@ -14,7 +14,7 @@ interface KuchuLogoProps {
  *   - Beyaz köpek baş silueti (frontview, simetrik, blok geometri)
  *   - Dik, sivri kulaklar: Etolojik uyanıklık + analiz durumu
  *   - Kırmızı (#DC2626) gözler: Vision AI odak noktaları
- *   - Alt kırmızı bar: Merck klinik vurgusu / tehlike ölçeği
+ *   - Alt pati izi motifi: Köpek kimliği vurgusu
  *   - 2px siyah dış çerçeve: Brutalist imza
  */
 export const KuchuLogoIcon: React.FC<{ size?: number; className?: string }> = ({
@@ -64,18 +64,14 @@ export const KuchuLogoIcon: React.FC<{ size?: number; className?: string }> = ({
       <rect x="32" y="41" width="1" height="3" fill="#0a0a0a" />
       <rect x="26" y="41" width="12" height="1" fill="#0a0a0a" />
 
-      {/* ── Alt Merck klinik vurgu barı ── */}
-      {/* Kırmızı bar: Risk göstergesi sembolü */}
-      <rect x="3" y="52" width="14" height="9" fill="#DC2626" />
-      {/* Sarı bar: Uyarı düzeyi */}
-      <rect x="19" y="52" width="10" height="9" fill="#FACC15" />
-      {/* Yeşil bar: Güvenli düzey */}
-      <rect x="31" y="52" width="10" height="9" fill="#16A34A" />
-      {/* Siyah dolgu (sağ kalan) */}
-      <rect x="43" y="52" width="18" height="9" fill="#0a0a0a" />
-
-      {/* Çerçeve çizgisi (üst beyaz ince çizgi - barı yukarıdan ayırır) */}
-      <rect x="3" y="51" width="58" height="1" fill="#FFFFFF" />
+      {/* ── Alt pati izi motifi (Kuçu kimlik vurgusu) ── */}
+      {/* Geometrik köpek pati: 3 parmak bloğu + sağda kırmızı nokta */}
+      <rect x="3"  y="51" width="58" height="1"  fill="#FFFFFF" />
+      <rect x="5"  y="53" width="8"  height="8"  fill="#FFFFFF" />
+      <rect x="16" y="52" width="8"  height="8"  fill="#FFFFFF" />
+      <rect x="27" y="53" width="8"  height="8"  fill="#FFFFFF" />
+      {/* Tek kırmızı vurgu karesi — sağ köşe */}
+      <rect x="50" y="54" width="9"  height="6"  fill="#DC2626" />
     </svg>
   );
 };
