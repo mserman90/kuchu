@@ -57,6 +57,92 @@ export const SiteHeader: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-40 bg-white dark:bg-zinc-950 border-b-2 border-black dark:border-white select-none">
+      
+      {/* Top Utility Bar: Highly-Visible Segmented Language & Theme Selectors */}
+      <div className="bg-zinc-100 dark:bg-zinc-900 border-b-2 border-black dark:border-white">
+        <div className="max-w-swiss mx-auto px-4 sm:px-6 lg:px-8 py-1.5 flex items-center justify-between font-mono text-[11px]">
+          
+          <div className="hidden sm:flex items-center gap-2 font-black tracking-wider text-black dark:text-white uppercase text-[10px]">
+            <span className="w-2 h-2 bg-red-600 inline-block animate-pulse" />
+            <span>{t('header.topbar.tag')}</span>
+          </div>
+
+          <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-3 sm:gap-4 ml-auto">
+            
+            {/* Language Switcher (Segmented TR / EN) */}
+            <div className="flex items-center gap-1.5">
+              <span className="font-mono text-[10px] font-black uppercase text-zinc-600 dark:text-zinc-400 flex items-center gap-1">
+                <Globe className="w-3 h-3 text-red-600" />
+                <span>DİL / LANG:</span>
+              </span>
+              <div className="inline-flex border-2 border-black dark:border-white bg-white dark:bg-black shadow-brutal-xs">
+                <button
+                  type="button"
+                  onClick={() => setLang('tr')}
+                  className={`px-2 py-0.5 font-mono text-[10px] font-black uppercase transition-all cursor-pointer ${
+                    lang === 'tr'
+                      ? 'bg-red-600 text-white'
+                      : 'text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800'
+                  }`}
+                  title="Türkçe"
+                >
+                  🇹🇷 TR
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLang('en')}
+                  className={`px-2 py-0.5 font-mono text-[10px] font-black uppercase transition-all cursor-pointer ${
+                    lang === 'en'
+                      ? 'bg-red-600 text-white'
+                      : 'text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800'
+                  }`}
+                  title="English"
+                >
+                  🇬🇧 EN
+                </button>
+              </div>
+            </div>
+
+            {/* Day / Night Theme Switcher (Segmented Light / Dark) */}
+            <div className="flex items-center gap-1.5">
+              <span className="font-mono text-[10px] font-black uppercase text-zinc-600 dark:text-zinc-400 flex items-center gap-1">
+                <Sun className="w-3 h-3 text-amber-500" />
+                <span>TEMA:</span>
+              </span>
+              <div className="inline-flex border-2 border-black dark:border-white bg-white dark:bg-black shadow-brutal-xs">
+                <button
+                  type="button"
+                  onClick={() => setTheme('light')}
+                  className={`px-2 py-0.5 font-mono text-[10px] font-black uppercase flex items-center gap-1 transition-all cursor-pointer ${
+                    !isDark
+                      ? 'bg-amber-400 text-black font-black'
+                      : 'text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800'
+                  }`}
+                  title={t('header.theme.toLight')}
+                >
+                  <Sun className="w-3 h-3 text-black" />
+                  <span>{t('header.theme.light')}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setTheme('dark')}
+                  className={`px-2 py-0.5 font-mono text-[10px] font-black uppercase flex items-center gap-1 transition-all cursor-pointer ${
+                    isDark
+                      ? 'bg-zinc-900 text-white border-l border-zinc-700 font-black'
+                      : 'text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800'
+                  }`}
+                  title={t('header.theme.toDark')}
+                >
+                  <Moon className="w-3 h-3 text-yellow-400" />
+                  <span>{t('header.theme.dark')}</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
       <div className="max-w-swiss mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           

@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { 
   Home, 
   Zap, 
@@ -10,13 +11,14 @@ import {
 
 export const MobileBottomNav: React.FC = () => {
   const location = useLocation();
+  const { t } = useLanguage();
 
   const navItems = [
-    { to: '/', label: 'GİRİŞ', icon: Home, exact: true },
-    { to: '/hizli-cozum', label: 'ÇÖZÜM', icon: Zap, badge: 'YENİ' },
-    { to: '/analiz', label: 'ANALİZ', icon: Compass },
-    { to: '/sorunlar', label: 'SORUNLAR', icon: HelpCircle },
-    { to: '/panel', label: 'PANEL', icon: LayoutDashboard }
+    { to: '/', label: t('nav.bottom.home'), icon: Home, exact: true },
+    { to: '/hizli-cozum', label: t('nav.bottom.solution'), icon: Zap, badge: t('nav.badge.new') },
+    { to: '/analiz', label: t('nav.bottom.analysis'), icon: Compass },
+    { to: '/sorunlar', label: t('nav.bottom.problems'), icon: HelpCircle },
+    { to: '/panel', label: t('nav.bottom.panel'), icon: LayoutDashboard }
   ];
 
   return (

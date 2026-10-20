@@ -32,6 +32,12 @@ const translations = {
     'header.activeDog': 'AKTİF KÖPEK',
     'header.theme.label': 'GÖRÜNÜM / TEMA',
     'header.lang.label': 'DİL / LANGUAGE',
+    'header.topbar.tag': 'BİLİMSEL KÖPEK PSİKOLOJİSİ & ETOLOJİ ENSTİTÜSÜ',
+    'nav.bottom.home': 'GİRİŞ',
+    'nav.bottom.solution': 'ÇÖZÜM',
+    'nav.bottom.analysis': 'ANALİZ',
+    'nav.bottom.problems': 'SORUNLAR',
+    'nav.bottom.panel': 'PANEL',
     // Hero
     'hero.eyebrow': "TÜRKİYE'NİN İLK KANITA DAYALI KÖPEK DAVRANIŞ PLATFORMU",
     'hero.headline1': 'KÖPEĞİNİZİ ANLAYIN.',
@@ -126,6 +132,12 @@ const translations = {
     'header.activeDog': 'ACTIVE DOG',
     'header.theme.label': 'APPEARANCE / THEME',
     'header.lang.label': 'LANGUAGE / DİL',
+    'header.topbar.tag': 'CANINE PSYCHOLOGY & SCIENCE-BASED ETHOLOGY PLATFORM',
+    'nav.bottom.home': 'HOME',
+    'nav.bottom.solution': 'SOLUTION',
+    'nav.bottom.analysis': 'ANALYSIS',
+    'nav.bottom.problems': 'PROBLEMS',
+    'nav.bottom.panel': 'PANEL',
     // Hero
     'hero.eyebrow': "TURKEY'S FIRST EVIDENCE-BASED CANINE BEHAVIOR PLATFORM",
     'hero.headline1': 'UNDERSTAND YOUR DOG.',
@@ -223,6 +235,12 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setLangState(newLang);
     try { localStorage.setItem('kuchu-lang', newLang); } catch { /* ignore */ }
   }, []);
+
+  useEffect(() => {
+    try {
+      document.documentElement.lang = lang;
+    } catch { /* ignore */ }
+  }, [lang]);
 
   const toggleLang = useCallback(() => {
     setLang(lang === 'tr' ? 'en' : 'tr');
