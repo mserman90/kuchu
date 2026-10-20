@@ -1,111 +1,127 @@
-# Kuchu — Köpek Psikolojisi ve Eğitimi Web Uygulaması
-### Swiss Modernism & Pozitif Etoloji Platformu
+<div align="center">
 
-Köpek sahiplerinin köpek psikolojisini anlamasına ve bilimsel temelli, pozitif pekiştirme odaklı eğitim yapmasına yardımcı olan interaktif web uygulaması. Birincil dil Türkçe’dir.
+# 🐾 KUCHU — Köpek Psikolojisi & Pozitif Eğitim Platformu
+### *Swiss Modernism Estetiği & Kanıta Dayalı Klinik Etoloji Sistemi*
 
----
+[![Deploy to GitHub Pages](https://github.com/mserman90/kuchu/actions/workflows/deploy.yml/badge.svg)](https://github.com/mserman90/kuchu/actions/workflows/deploy.yml)
+[![Canlı Demo](https://img.shields.io/badge/Canlı%20Yayın-GitHub%20Pages-dc2626?style=flat&logo=github)](https://mserman90.github.io/kuchu/)
+[![PWA Ready](https://img.shields.io/badge/PWA-Çevrimdışı%20Destekli-black?style=flat&logo=pwa)](https://mserman90.github.io/kuchu/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-6.x-646CFF?style=flat&logo=vite)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## 🌐 Canlı Yayın ve Bağlantılar
+**Köpek sahiplerinin köpek psikolojisini anlamasına, beden dilini doğru okumasına ve bilimsel temelli pozitif pekiştirme (+R) ile şiddetsiz eğitim yapmasına yardımcı olan açık kaynaklı PWA web uygulaması.**
 
-- **Canlı Web Uygulaması (GitHub Pages):** [https://mserman90.github.io/kuchu/](https://mserman90.github.io/kuchu/)
-- **GitHub Kaynak Kod Deposu:** [https://github.com/mserman90/kuchu](https://github.com/mserman90/kuchu)
-- **CI/CD:** GitHub Actions otomatik derleme ve dağıtım iş akışı (`.github/workflows/deploy.yml`) aktif.
-
----
-
-## 🎨 Tasarım Dili (Swiss Modernism & Neo-Brutalism)
-Görsel dil `DESIGN.md` içinde tanımlanmıştır:
-- **900 ağırlıkta üst-simge tipografi** (`font-black uppercase tracking-tight`)
-- **2px siyah çerçeveler** (`border-2 border-black dark:border-white`)
-- **Sert offset gölgeler** (`shadow-[4px_4px_0px_0px_#000000]`)
-- **Sıfır köşe yarıçapı** (`rounded-none`)
-- **Kırmızı birincil vurgu** (`#dc2626`)
-- Renk, tipografi ve gölgeler `src/index.css` içindeki semantik CSS değişkenleri ve `tailwind.config.ts` üzerinden yönetilir.
+[🌐 Canlı Uygulamayı Aç (PWA)](https://mserman90.github.io/kuchu/) • [⚡ Hızlı Çözüm Sihirbazı](https://mserman90.github.io/kuchu/#/hizli-cozum) • [🧭 Davranış Analizi](https://mserman90.github.io/kuchu/#/analiz) • [🩺 Sorun Çözüm Merkezi](https://mserman90.github.io/kuchu/#/sorunlar)
 
 ---
 
-## 🧭 Uygulama Rotaları ve Özellikler
+</div>
 
-### ⚡ 1. Akıllı Hızlı Çözüm ve Klinik Triyaj (`/hizli-cozum`) [YENİ]
-- **5 Aşamalı Klinik Karar Ağacı:** Temel belirti, başlangıç zamanı, yaş grubu, beden dili ve sahibin mevcut tepkisi analiz edilir.
-- **Kişiselleştirilmiş Çözüm Reçetesi:**
-  - Aciliyet seviyesi (`DÜŞÜK`, `ORTA`, `YÜKSEK`, `KRİTİK`)
-  - Merck 3M Eylem Planı (Management, Modification, Response Substitution DRI, Medical Threshold)
-  - Bugün uygulanacak 3 acil adım ve durdurulması gereken hatalı tepkiler
-  - İlgili rehber ve makale kısayolları
+## 📌 Proje Özeti ve Manifestomuz
 
-### 🐾 2. Köpek Davranış Analizi (`/analiz`)
-- **Girdiler:** Kuyruk (pozisyon, sallama hızı/genişliği/yönü, gerginlik), kulaklar, gözler, ağız-yüz, vücut duruşu ve genel enerji sinyalleri adım adım seçilir.
-- **Deterministik Motor:** Kural tabanlı ağırlıklı puanlama motoru:
-  - Kuyruk %30 (Vallortigara sağ/sol hemisfer asimetrisi)
-  - Duruş %25
-  - Göz + Ağız %20 (Turid Rugaas sakinleşme sinyalleri)
-  - Kulaklar %15
-  - Enerji %10
-- **Çıktılar:**
-  - 8 ruh hali kategorisi (*Rahat/Mutlu, Meraklı, Oyun İstiyor, Belirsiz/Temkinli, Stresli, Korkmuş, Aşırı Uyarılmış, Tehditkâr/Agresif*)
-  - 3 kademeli risk seviyesi (*Yeşil, Sarı, Kırmızı*)
-  - Güven düzeyi (%88 - %98)
-  - Puan dağılımı (Score Breakdown)
-  - Merck gizli fiziksel ağrı dışlama uyarısı
-  - "Ne yapmalısınız / Ne yapmamalısınız" listeleri
-- **Eğitim Modu Anahtarı:** Her seçeneğin yanında etolojik bilimsel açıklamayı anında görüntüler.
+Yıllardır televizyon ve sosyal medyada yayılan *"alfa kurt olun"*, *"köpeğe hükmedin"*, *"sırt üstü devirin (alpha roll)"* gibi çağ dışı baskı ve ceza yöntemleri; binlerce köpeğin travmatize olmasına, güvensizlik krizlerine ve savunma amaçlı ısırma vakalarına yol açmıştır.
 
-### 🩺 3. Davranış Sorunu Çözüm Merkezi (`/sorunlar`)
-Aşırı havlama, ısırma, ayrılık anksiyetesi, tasma çekme, tuvalet eğitimi, korku, kaynak koruma/agresyon ve zıplama başlıkları için:
-- **Merck Veterinary Manual 3M Protokolü:** 1. Çevresel Yönetim, 2. Pozitif Modifikasyon, 3. Tepki İkamesi (DRI), 4. Tıbbi & Ağrı Taraması
-- Olası kök nedenler ve adım adım pozitif çözüm yöntemleri
-- Yapılmaması gerekenler (mitler ve cezalar)
-- Ne zaman profesyonel yardım alınması gerektiği
-
-### 📅 4. Eğitim Planı Oluşturucu (`/egitim-planlari`)
-- Köpek bilgileri (ırk, yaş, boyut, enerji, bilinen sorunlar)
-- Hedef seçimi (temel itaat, gevşek tasma, ayrılık anksiyetesi, sosyalleşme, reaktivite, zihinsel zenginleştirme)
-- 7 / 14 / 30 gün + Seviye seçimi (Başlangıç, Orta, İleri)
-- Gün gün plan üretimi; günlük görev onay kutusu ve yüzde ilerleme takibi
-- Yazdırma ve köpeğin profiline kaydetme
-
-### 📚 5. Bilgi Kütüphanesi (`/kutuphane`)
-- **Merck Vet Klinik Rehberi (5 Özel Klinik Makale):**
-  - Agresyon Taksonomisi ve Ayırt Edici Tanı
-  - Yaşlı Köpeklerde DISHAA Modeli ve Demans (CDS)
-  - Tepki İkamesi (Response Substitution / DRI)
-  - Normal Sosyal Davranış, İletişim ve Alfa Miti
-  - 3M Davranış Tedavi Modeli (Management, Modification, Medication)
-- Sakinleşme Sinyalleri (Turid Rugaas)
-- Kuyruk Asimetrisi ve Beyin Yarıküreleri (Vallortigara & Quaranta)
-- Alfa Miti ve Kurt Sürü Dinamikleri (Dr. David Mech)
-- Edimsel Koşullanma (+R / -P)
-- Yavruluk ve Ergenlik Korku Dönemleri (Fear Periods)
-
-### 💬 6. PatiAsistan (`/patiasistan`)
-- Köpek psikolojisi ve eğitimi hakkında AI destekli Türkçe sohbet asistanı
-- Yanıtlar akış (*streaming*) hâlinde gelir
-- Merck Veterinary Manual ilkeleriyle (Ağrı dışlama, 3M, DISHAA, pozitif pekiştirme) yanıt üretimi
-- Zorunlu veteriner hekim ve davranış uzmanı sorumluluk reddi uyarısı
-
-### 👤 7. Hesap Paneli (`/panel`)
-- Köpek profilleri (ekle, düzenle, sil, aktif seç)
-- Analiz geçmişi
-- **Analiz Karşılaştırma:** İki geçmiş analizi yan yana koyarak gelişim farkını ve gerilim skoru değişimini inceleme
-- Eğitim planı ilerlemesi ve günlük görev kutucukları
-- Favoriler (yıldızlanan makaleler ve sorunlar)
-- Kişisel notlar ve gözlem günlüğü
+**Kuchu**, modern hayvan davranışı bilimini (klinik etoloji) ve **Merck Veterinary Manual** standartlarını temel alır:
+1. **İnatçılık Değil, İletişim:** Köpekler asla "inat olsun" diye davranmaz; her istenmeyen hareketin ardında ya korku, ya karşılanmamış enerji ya da fiziksel bir acı yatar.
+2. **Merck 3M Modeli:** Başarılı davranış tedavisi yalnızca komut öğretmek değildir; **Çevresel Yönetim (Management)**, **Pozitif Modifikasyon (Modification)** ve **Medikal Destek (Medication)** bileşenlerinden oluşur.
+3. **Önce Fiziksel Sağlık:** Ani başlayan agresyon, huysuzluk veya tuvalet kaçırma vakalarının büyük çoğunluğunda gizli fiziksel ağrı (artrit, diş çürüğü, kulak iltihabı) yatmaktadır. Tıbbi nedenler dışlanmadan davranış eğitimi yapılamaz.
+4. **Güven Odaklı Ebeveynlik:** Köpeğiniz sizi bir rakip değil; hayatını emanet ettiği güvenilir bir rehber ebeveyn olarak görür.
 
 ---
 
-## 🛠️ Teknoloji & Mimari
+## 🎨 Tasarım Sistemi (Swiss Modernism & Neo-Brutalism)
 
-- **Frontend:** React + Vite + TypeScript + Tailwind CSS + Lucide Icons + next-themes + sonner
-- **Backend Entegrasyonu:** Atoms Cloud — `@metagptx/web-sdk` üzerinden:
-  - `client.auth` (e-posta tabanlı kimlik doğrulama)
-  - `client.entities` (`dog_profiles`, `behavior_analyses`, `training_plans`, `favorites`, `assistant_messages`)
-  - `client.ai` (streaming AI asistanı)
-  - Çevrimdışı / LocalStorage ayna katmanı (kesintisiz veri sürekliliği)
-- **Analiz Motoru:** Tamamen istemci tarafında çalışan deterministik ve kural tabanlıdır; aynı seçimler her zaman aynı sonucu üretir. AI yalnızca PatiAsistan sohbetinde kullanılır.
+Kuchu'nun görsel dili, basmakalıp sevimli evcil hayvan sitelerinden ayrışarak **Josef Müller-Brockmann** İsviçre grafik poster disiplinini yansıtır:
+- **Sıfır Köşe Yarıçapı (`rounded-none`):** Tüm butonlar, kartlar ve pencereler 0px keskin köşelidir.
+- **2px Sert Siyah Çerçeveler:** Her modül ve kart `border-2 border-black dark:border-white` ile çevrelenir.
+- **Sert Offset Gölgeler:** Yumuşak bulanık gölgeler yerine sert açılı `shadow-[4px_4px_0px_0px_#000000]` kullanılır.
+- **Ağırlıklı Tipografi:** Başlıklarda sıkı harf aralıklı devasa **Inter 900**, teknik metin ve göstergelerde **JetBrains Mono**.
+- **İsviçre Kırmızısı Vurgusu (`#dc2626`):** Saf kırmızı yalnızca kritik eylemlerde ve risk göstergelerinde odak noktasıdır.
 
 ---
 
-## ⚖️ Yasal Sorumluluk Reddi (Disclaimer)
+## 🧭 Uygulama Modülleri ve Mimari
 
-Uygulama tıbbi veya veteriner teşhis ve tedavi hizmeti sunmaz. Analiz sonuçları genel bir rehberdir; ciddi davranış sorunlarında profesyonel köpek eğitmeni veya veteriner davranış uzmanına danışılmalıdır. Kişisel veriler KVKK kapsamında yalnızca hesap, profil ve eğitim kayıtlarını saklamak amacıyla işlenir.
+| Modül | Rota | Açıklama ve Bilimsel Temel |
+| :--- | :--- | :--- |
+| **⚡ Akıllı Hızlı Çözüm** | `/#/hizli-cozum` | 5 soruluk klinik karar ağacı; köpeğin belirtisini, başlangıç şeklini, yaşını ve sahibin tepkisini değerlendirerek anında **Merck 3M Çözüm Reçetesi** üretir. |
+| **🧭 Köpek Davranış Analizi** | `/#/analiz` | Kuyruk (%30), Duruş (%25), Yüz (%20), Kulak (%15) ve Enerji (%10) ağırlıklı deterministik etoloji motoru. Vallortigara lateralitesi ve Turid Rugaas sakinleşme sinyallerini tarar. |
+| **🩺 Davranış Sorunları** | `/#/sorunlar` | Havlama, ısırma, ayrılık anksiyetesi, tasma çekme, kaynak koruma, tuvalet gerilemesi ve fırtına korkusu için 3M adımları ve **Tepki İkamesi (DRI)**. |
+| **📅 Eğitim Planlayıcı** | `/#/egitim-planlari` | 7, 14 ve 30 günlük pozitif pekiştirme müfredatları, görev onay kutuları ve yüzde ilerleme takipçisi. |
+| **📚 Bilgi Kütüphanesi** | `/#/kutuphane` | Merck Veterinary Manual klinik serisi (Agresyon, DISHAA Demans, Tepki İkamesi, Sosyal Sürü Miti, 3M) dahil 10 hakemli makale. |
+| **🤖 PatiAsistan AI** | `/#/patiasistan` | Etoloji ve veteriner davranış tıbbı ilkeleriyle konuşan Türkçe akış (streaming) yapay zekâ asistanı. |
+| **👤 Hesap & Köpek Paneli** | `/#/panel` | Profil yönetimi, analiz geçmişi, **Yan Yana Analiz Karşılaştırma Modalı**, favoriler ve kişisel eğitim notları. |
+
+---
+
+## 🧬 Bilimsel Literatür Entegrasyonu
+
+- **Merck Veterinary Manual (Canine Behavior Series):**
+  - **3M Modeli:** Çevresel Yönetim (Management), Pozitif Modifikasyon (Modification), Medikal Destek (Medication).
+  - **DISHAA Kriterleri:** 8 yaş üstü köpeklerde demans taraması (*Disorientation, Interactions, Sleep-wake, House soiling, Anxiety, Activity*).
+  - **Tepki İkamesi (Response Substitution / DRI):** İstenmeyen davranışla fiziken uyuşmayan pozitif alternatif davranışın ödüllendirilmesi.
+  - **Ağrı Dışlama Kuralı:** Ani davranış değişimlerinde önce altta yatan gizli ağrının hekimce elenmesi zorunluluğu.
+- **Giorgio Vallortigara & Marcello Quaranta (2007, 2013 - Current Biology):**
+  - Kuyruk sağa salınımı = Sol beyin yarıküresi (Pozitif yaklaşım / Güven).
+  - Kuyruk sola salınımı = Sağ beyin yarıküresi (Korku / Çekingenlik / Tehdit algısı).
+- **Turid Rugaas (1997 - Calming Signals):**
+  - 30'dan fazla yatıştırıcı vücut dili sinyali (dudak yalama, stres esnemesi, baş çevirme, donma).
+- **Dr. L. David Mech (1999):**
+  - Esaret altındaki kurt çalışmalarına dayanan "alfa kurt" safsatasının doğadaki aile hiyerarşisiyle çürütülmesi.
+
+---
+
+## 📱 PWA (Progressive Web App) Kurulumu
+
+Kuchu, yerel mobil uygulama performansında çalışan tam teşekküllü bir PWA'dır:
+- **Çevrimdışı Çalışma:** `sw.js` Service Worker sayesinde çekirdek varlıklar önbelleğe alınır, internet kesildiğinde dahi açılır.
+- **Android Kurulumu:** Chrome üzerinden `https://mserman90.github.io/kuchu/` adresini açıp *"Ana Ekrana Ekle"* veya *"Yükle"* butonuna dokunun.
+- **iOS Kurulumu:** Safari üzerinden *"Paylaş"* menüsünden *"Ana Ekrana Ekle"* seçeneğini seçin. Tam ekran, çentik uyumlu (notch-safe) olarak çalışır.
+
+---
+
+## 💻 Kurulum ve Geliştirme (Lokal Ortam)
+
+Projeyi bilgisayarınızda yerel olarak çalıştırmak için:
+
+```bash
+# 1. Depoyu klonlayın
+git clone https://github.com/mserman90/kuchu.git
+cd kuchu
+
+# 2. Bağımlılıkları yükleyin (pnpm önerilir)
+pnpm install
+
+# 3. Geliştirme sunucusunu başlatın
+pnpm run dev
+
+# Tarayıcınızda açın: http://localhost:5173
+```
+
+### Derleme ve Doğrulama
+
+```bash
+# Statik kod analizi (Linter)
+pnpm run lint
+
+# Üretim paketi derleme (TypeScript + Vite)
+pnpm run build
+```
+
+---
+
+## 🛡️ Yasal Sorumluluk Reddi (Disclaimer) & KVKK
+
+> [!IMPORTANT]
+> **Kuchu bir veteriner tıp teşhis ve tedavi aracı değildir.** Uygulamada sunulan analizler, rehberler ve yapay zekâ yanıtları genel bilgilendirme ve pozitif pekiştirme eğitimi amaçlıdır. Köpeğinizde ani başlayan davranış değişikliklerinde, yaralama riski taşıyan şiddetli agresyonda veya şüpheli sağlık sorunlarında mutlaka ruhsatlı bir **veteriner hekim** veya **uzman veteriner davranış terapistine** başvurulmalıdır.
+
+Kişisel veriler KVKK ilkeleri uyarınca yalnızca kullanıcının tarayıcısında ve kendi kullanıcı oturumunda saklanır; üçüncü şahıslarla paylaşılmaz veya satılmaz.
+
+---
+
+## 📄 Lisans
+
+Bu proje [MIT Lisansı](LICENSE) kapsamında açık kaynak olarak sunulmaktadır.
+Etolojik bilimlerin ve pozitif eğitimin yaygınlaşması adına katkılarınızı memnuniyetle bekliyoruz! 🐾

@@ -418,6 +418,79 @@ export const Index: React.FC = () => {
         </div>
       </section>
 
+      {/* Manifesto & Platform Presentation Section */}
+      <section className="max-w-swiss mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="border-2 border-black dark:border-white p-6 sm:p-10 bg-black text-white dark:bg-zinc-950 dark:text-white shadow-brutal-xl space-y-8">
+          <div className="space-y-2 border-b-2 border-zinc-800 pb-4">
+            <span className="font-mono text-xs font-black uppercase tracking-widest text-red-500">
+              VİZYONUMUZ VE MANİFESTOMUZ
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight">
+              NEDEN KUCHU? CEZA DEĞİL, BİLİMSEL İLETİŞİM.
+            </h2>
+            <p className="text-xs sm:text-sm font-medium text-zinc-400 max-w-3xl leading-relaxed">
+              Yıllardır televizyonlarda ve sosyal medyada yayılan "alfa olun", "köpeğe hükmedin", "sırt üstü devirin" gibi 
+              eski moda ceza mitleri, binlerce köpeğin travmatize olmasına ve savunma ısırıklarının patlamasına yol açtı. 
+              Kuchu; modern klinik etoloji ve veteriner davranış tıbbını herkes için anlaşılır, uygulanabilir ve pratik araçlara dönüştürmek için geliştirildi.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="p-4 border-2 border-zinc-800 bg-zinc-900/60 space-y-2">
+              <span className="text-2xl font-black text-red-500 font-mono">01 ■</span>
+              <h4 className="font-mono text-xs font-black uppercase text-white">İnatçılık Değil, İletişim</h4>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Köpekler asla "inat olsun" diye davranmaz. Her istenmeyen tepkinin ardında ya korku, ya karşılanmamış enerji ya da fiziksel acı yatar.
+              </p>
+            </div>
+
+            <div className="p-4 border-2 border-zinc-800 bg-zinc-900/60 space-y-2">
+              <span className="text-2xl font-black text-red-500 font-mono">02 ■</span>
+              <h4 className="font-mono text-xs font-black uppercase text-white">Merck 3M Modeli</h4>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Çevresel Yönetim (Management) + Pozitif Modifikasyon (Modification) + Medikal Destek (Medication). Başarı bu 3 ayağın dengesiyle gelir.
+              </p>
+            </div>
+
+            <div className="p-4 border-2 border-zinc-800 bg-zinc-900/60 space-y-2">
+              <span className="text-2xl font-black text-red-500 font-mono">03 ■</span>
+              <h4 className="font-mono text-xs font-black uppercase text-white">Önce Fiziksel Sağlık</h4>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Ani reaktivite ve hırçınlaşma vakalarının çoğunda osteoartrit veya diş ağrısı yatar. Tıbbi ağrı dışlanmadan eğitim yapılamaz.
+              </p>
+            </div>
+
+            <div className="p-4 border-2 border-zinc-800 bg-zinc-900/60 space-y-2">
+              <span className="text-2xl font-black text-red-500 font-mono">04 ■</span>
+              <h4 className="font-mono text-xs font-black uppercase text-white">Güven Odaklı Ebeveynlik</h4>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Köpeğiniz sizi bir rakip ya da "alfa kurt" olarak görmez; hayatını size emanet eden güvenilir bir rehber ebeveyn arar.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t-2 border-zinc-800">
+            <div className="font-mono text-xs font-bold text-zinc-400 uppercase">
+              Köpeğinizin iç dünyasını anlamak için hemen bir araç seçin:
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Link
+                to="/hizli-cozum"
+                className="px-5 py-2.5 bg-red-600 text-white font-mono text-xs font-black uppercase border-2 border-white shadow-brutal-white-sm hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
+              >
+                ⚡ HIZLI ÇÖZÜM TESTİ
+              </Link>
+              <Link
+                to="/kutuphane"
+                className="px-5 py-2.5 bg-white text-black font-mono text-xs font-black uppercase border-2 border-white shadow-brutal-white-sm hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
+              >
+                📖 BİLGİ KÜTÜPHANESİ
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 };

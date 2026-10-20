@@ -39,6 +39,11 @@ export const SiteFooter: React.FC = () => {
             </h4>
             <ul className="space-y-2 font-mono text-xs font-bold uppercase">
               <li>
+                <Link to="/hizli-cozum" className="hover:text-red-500 transition-colors text-yellow-400">
+                  ⚡ Hızlı Çözüm Sihirbazı (/hizli-cozum)
+                </Link>
+              </li>
+              <li>
                 <Link to="/analiz" className="hover:text-red-500 transition-colors">
                   Köpek Davranış Analizi (/analiz)
                 </Link>
@@ -51,6 +56,11 @@ export const SiteFooter: React.FC = () => {
               <li>
                 <Link to="/egitim-planlari" className="hover:text-red-500 transition-colors">
                   Eğitim Planı Oluşturucu (/egitim-planlari)
+                </Link>
+              </li>
+              <li>
+                <Link to="/kutuphane" className="hover:text-red-500 transition-colors">
+                  Bilgi Kütüphanesi (/kutuphane)
                 </Link>
               </li>
               <li>
@@ -72,24 +82,35 @@ export const SiteFooter: React.FC = () => {
               BİLİMSEL LİTERATÜR
             </h4>
             <ul className="space-y-2 text-xs text-zinc-300 font-medium">
-              <li>Turid Rugaas: Calming Signals</li>
+              <li>Merck Veterinary Manual: 3M Klinik Modifikasyon Protokolü</li>
+              <li>Merck Vet Manual: DISHAA Geriatrik Demans Kriterleri</li>
+              <li>Turid Rugaas: Calming Signals & Stres Belirtileri</li>
               <li>Vallortigara & Quaranta: Tail Asymmetry (Current Biology)</li>
               <li>Dr. L. David Mech: Dominance Myth Debunked</li>
               <li>AVSAB: Humane Dog Training Standards</li>
-              <li>4F Stres Modeli: Fight, Flight, Freeze, Fiddle</li>
             </ul>
           </div>
 
           {/* Legal & KVKK */}
           <div className="space-y-3">
             <h4 className="font-mono text-xs font-black uppercase tracking-wider text-red-500 border-b border-zinc-800 pb-1">
-              YASAL & VERİ GÜVENLİĞİ
+              AÇIK KAYNAK & YASAL
             </h4>
             <p className="text-xs text-zinc-400 font-medium leading-relaxed">
-              Kişisel veriler KVKK kapsamında yalnızca hesap, köpek profili ve eğitim planı ilerleme kayıtlarını saklamak amacıyla işlenir. Üçüncü taraflara satılmaz.
+              Kişisel veriler KVKK kapsamında yalnızca hesap, köpek profili ve eğitim planı ilerleme kayıtlarını saklamak amacıyla işlenir. Üçüncü taraflara aktarılmaz.
             </p>
+            <div className="pt-1">
+              <a 
+                href="https://github.com/mserman90/kuchu" 
+                target="_blank" 
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase text-white hover:text-red-500 underline"
+              >
+                <span>GİTHUB REPOSU (KODLAR) →</span>
+              </a>
+            </div>
             <p className="text-[11px] text-zinc-300 font-semibold border-l-2 border-red-500 pl-2">
-              Uygulama veteriner hekim teşhis ve tedavisi sunmaz; genel rehberliktir.
+              Uygulama veteriner hekim teşhis ve tedavisi sunmaz; genel etolojik rehberliktir.
             </p>
           </div>
 
