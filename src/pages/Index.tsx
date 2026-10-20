@@ -11,6 +11,7 @@ import {
   Brain,
   Zap
 } from 'lucide-react';
+import heroDogImage from '@/assets/hero-dog.jpg';
 
 export const Index: React.FC = () => {
   const [selectedTail, setSelectedTail] = useState<'right' | 'left' | 'tucked' | 'stiff'>('right');
@@ -146,17 +147,21 @@ export const Index: React.FC = () => {
           <div className="lg:col-span-5 space-y-6">
             
             {/* 4:3 High-contrast monochrome dog portrait */}
-            <div className="border-2 border-black dark:border-white aspect-[4/3] w-full overflow-hidden shadow-brutal-xl dark:shadow-brutal-white-xl bg-black relative">
+            <div className="border-2 border-black dark:border-white aspect-[4/3] w-full overflow-hidden shadow-brutal-xl dark:shadow-brutal-white-xl bg-zinc-950 relative group">
               <img 
-                src="/assets/hero-dog.jpg" 
+                src={heroDogImage} 
                 alt="Kuchu Etoloji ve Köpek Psikolojisi" 
-                className="w-full h-full object-cover grayscale contrast-125 brightness-95" 
+                className="w-full h-full object-cover grayscale contrast-125 brightness-95 group-hover:scale-105 transition-transform duration-500" 
                 onError={(e) => {
-                  (e.target as HTMLElement).style.display = 'none';
+                  const target = e.target as HTMLImageElement;
+                  target.src = 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=1200&q=80';
                 }}
               />
               <div className="absolute top-2 left-2 bg-black text-white px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest border border-white">
                 ETOLOJİK GÖZLEM ■ 01
+              </div>
+              <div className="absolute bottom-2 right-2 bg-black/85 text-white px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider border border-white">
+                UNSPLASH LİSANSLI STOK
               </div>
             </div>
 
