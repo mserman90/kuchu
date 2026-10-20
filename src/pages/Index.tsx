@@ -10,231 +10,352 @@ import {
   ArrowRight, 
   Activity,
   Brain,
-  Zap
+  Zap,
+  Camera,
+  Check,
+  Sparkles,
+  ShieldCheck,
+  Flame,
+  ShieldAlert,
+  Award,
+  Eye,
+  SlidersHorizontal
 } from 'lucide-react';
 import heroDogImage from '@/assets/hero-dog.jpg';
 
 export const Index: React.FC = () => {
-  const [selectedTail, setSelectedTail] = useState<'right' | 'left' | 'tucked' | 'stiff'>('right');
+  const [heroMood, setHeroMood] = useState<'relaxed' | 'stress' | 'play' | 'alert'>('relaxed');
 
-  const previews = {
-    right: {
-      title: 'SAĞA DOĞRU KUYRUK SALINIMI',
-      mood: 'POZİTİF YAKLAŞIM / SEVGİ',
-      risk: 'GÜVENLİ',
-      riskColor: 'bg-green-600 text-white',
-      hemisphere: 'SOL BEYİN YARIKÜRESİ AKTİF',
-      desc: 'Vallortigara bulgusu: Köpek ortamı veya yaklaşan bireyi dost canlısı ve güvenli olarak algılıyor.',
+  const heroShowcaseData = {
+    relaxed: {
+      label: '🟢 SAKİN & GÜVENDE',
+      score: 'RİSK: %8 (GÜVENLİ)',
+      scoreBg: 'bg-green-600 text-white',
+      ear: { text: 'KULAK: Gevşek & Doğal', status: 'positive', top: '24%', left: '36%' },
+      eye: { text: 'GÖZ: Yumuşak Badem Bakış', status: 'positive', top: '34%', left: '48%' },
+      mouth: { text: 'AĞIZ: Açık & Rahat Nefes', status: 'positive', top: '56%', left: '50%' },
+      summary: 'Köpeğiniz tamamen konfor alanında; öğrenmeye ve pozitif pekiştirme eğitimine en açık zihinsel durum.'
     },
-    left: {
-      title: 'SOLA DOĞRU KUYRUK SALINIMI',
-      mood: 'ÇEKİNGENLİK / TEHDİT ALGISI',
-      risk: 'TEMKİNLİ',
-      riskColor: 'bg-yellow-400 text-black',
-      hemisphere: 'SAĞ BEYİN YARIKÜRESİ AKTİF',
-      desc: 'Vallortigara bulgusu: Tedirgin edici veya yabancı bir unsur algılandı; köpeğe hemen güvenli mesafe tanınmalıdır.',
+    stress: {
+      label: '🟡 KAYGILI (BALİNA GÖZÜ)',
+      score: 'RİSK: %78 (YÜKSEK GERİLİM)',
+      scoreBg: 'bg-yellow-400 text-black',
+      ear: { text: 'KULAK: Geriye Çekilmiş', status: 'warning', top: '22%', left: '33%' },
+      eye: { text: 'GÖZ: Balina Gözü (Whale Eye)', status: 'alert', top: '34%', left: '48%' },
+      mouth: { text: 'AĞIZ: Gergin Kapalı Dudak', status: 'warning', top: '56%', left: '50%' },
+      summary: 'Köpek baskı altında ve huzursuz. Üzerine gidilirse savunma ısırığı tetiklenebilir; derhal mesafe tanıyın.'
     },
-    tucked: {
-      title: 'BACAK ARASINA SIKIŞMIŞ KUYRUK',
-      mood: 'YOĞUN KORKU / YATIŞTIRMA',
-      risk: 'YÜKSEK KAYGI',
-      riskColor: 'bg-red-600 text-white',
-      hemisphere: 'SAVUNMA REFLEKSİ',
-      desc: 'Köpek kendini küçültüp görünmez kılmak istiyor. Üzerine gidilirse savunma amaçlı ısırma tetiklenebilir.',
+    play: {
+      label: '🔵 OYUN ÇAĞRISI (PLAY BOW)',
+      score: 'RİSK: %15 (POZİTİF ENERJİ)',
+      scoreBg: 'bg-blue-600 text-white',
+      ear: { text: 'KULAK: Dik & İleri Odaklı', status: 'positive', top: '20%', left: '38%' },
+      eye: { text: 'GÖZ: Parlak & Neşeli', status: 'positive', top: '33%', left: '48%' },
+      mouth: { text: 'AĞIZ: Gülümseyen Çene', status: 'positive', top: '54%', left: '50%' },
+      summary: 'Dostça bir oyun daveti! Ön patiler yerde, kuyruk sallanıyor; enerjiyi ödüllü oyunla deşarj edin.'
     },
-    stiff: {
-      title: 'DİK, SERT VE TİTREŞİMLİ KUYRUK',
-      mood: 'YÜKSEK UYARILMA / ALARM',
-      risk: 'YÜKSEK RİSK',
-      riskColor: 'bg-red-600 text-white',
-      hemisphere: 'TEHDİT / MEYDAN OKUMA',
-      desc: 'En kritik yanılgı: "Kuyruk sallıyor, sevebilirim". Dik ve kaskatı kuyruk bir mesafe ve sınır uyarısıdır.',
+    alert: {
+      label: '🔴 DONMA (STIFF FREEZE)',
+      score: 'RİSK: %92 (KRİTİK ALARM)',
+      scoreBg: 'bg-red-600 text-white animate-pulse',
+      ear: { text: 'KULAK: Kilitlenmiş Dik', status: 'alert', top: '18%', left: '38%' },
+      eye: { text: 'GÖZ: Sert Tehdit Bakışı', status: 'alert', top: '34%', left: '48%' },
+      mouth: { text: 'AĞIZ: Kaskatı Hareketsiz', status: 'alert', top: '55%', left: '50%' },
+      summary: 'Kritik uyarı! Köpek eşiği aşmış durumda (Over-threshold). Göz temasını kesin ve yan adımlarla uzaklaşın.'
     }
   };
 
-  const currentPreview = previews[selectedTail];
+  const currentShowcase = heroShowcaseData[heroMood];
 
   return (
     <div className="space-y-16 md:space-y-24 py-8 md:py-12">
       
-      {/* Hero Section: Asymmetric 12-column grid (7/5 ratio) */}
+      {/* Hero Section: High-Converting Product Showcase */}
       <section className="max-w-swiss mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
           
-          {/* Left Column (7 cols): Giant Typographic Poster */}
+          {/* Left Column (7 cols): High-Impact Value Pitch & Conversions */}
           <div className="lg:col-span-7 space-y-6">
             
-            {/* Meta Tags */}
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="font-mono text-xs uppercase tracking-widest bg-black text-white dark:bg-white dark:text-black px-2.5 py-1 border-2 border-black dark:border-white">
-                ETOLOJİK DAVRANIŞ SİSTEMİ
-              </span>
-              <span className="font-mono text-xs uppercase tracking-widest bg-red-600 text-white px-2.5 py-1 border-2 border-black dark:border-white">
-                BİLİMSEL ETİK PROTOKOL
-              </span>
+            {/* Top Eyebrow Badge */}
+            <div className="inline-flex items-center gap-2 border-2 border-black dark:border-white px-3 py-1 bg-zinc-100 dark:bg-zinc-900 font-mono text-xs font-black uppercase shadow-brutal-sm">
+              <span className="w-2 h-2 bg-red-600 animate-ping inline-block" />
+              <span>TÜRKİYE'NİN İLK MERCK STANDARTLI KÖPEK DAVRANIŞ PLATFORMU</span>
             </div>
 
-            {/* Headline: 900 weight, -0.05em tracking, uppercase poster style */}
-            <div className="space-y-3">
-              <h1 className="text-4xl sm:text-6xl xl:text-7xl font-black uppercase tracking-tightest text-black dark:text-white leading-[0.98]">
-                KÖPEĞİNİZİN <br />
-                RUH HALİNİ <br />
+            {/* Giant High-Contrast Headline */}
+            <div className="space-y-4">
+              <h1 className="text-4xl sm:text-6xl xl:text-7xl font-black uppercase tracking-tightest text-black dark:text-white leading-[0.96]">
+                KÖPEĞİNİZİ ANLAYIN. <br />
+                SORUNLARI <br />
                 <span className="inline-block bg-red-600 text-white px-3 py-0.5 mt-1 border-2 border-black dark:border-white shadow-brutal">
-                  BİLİMSEL
-                </span> <br />
-                OLARAK OKUYUN.
+                  CEZASIZ
+                </span> ÇÖZÜN.
               </h1>
-              <p className="text-base sm:text-lg font-medium text-zinc-700 dark:text-zinc-300 leading-relaxed max-w-xl pt-2">
-                Kuyruk asimetrisi, sakinleşme sinyalleri, balina gözü ve kas gerginliği. Modası geçmiş ceza yöntemlerini çöpe atın; deterministik etoloji kurallarıyla köpeğinizin gerçek duygu durumunu ve ihtiyaçlarını anlayın.
+              
+              <p className="text-base sm:text-lg font-medium text-zinc-700 dark:text-zinc-300 leading-relaxed max-w-xl">
+                Aşırı havlama, tasma çekiştirme, yalnız kalamama veya agresyon... Köpeğiniz size bir şey anlatmaya çalışıyor. Eski ceza mitlerini unutun; <strong>Merck Klinik Protokolleri</strong> ve <strong>Yapay Zeka</strong> ile dostunuzun gerçek ruh halini ve ihtiyaçlarını saniyeler içinde keşfedin.
               </p>
             </div>
 
-            {/* Primary Action Buttons */}
-            <div className="flex flex-wrap items-center gap-4 pt-2">
+            {/* Primary & Secondary Action Buttons (High Conversion) */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
               <Link
                 to="/hizli-cozum"
-                className="h-[44px] sm:h-[40px] px-6 bg-black text-white dark:bg-white dark:text-black font-black text-xs sm:text-sm uppercase tracking-wider border-2 border-black dark:border-white shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-sm active:translate-x-1 active:translate-y-1 active:shadow-none transition-all inline-flex items-center gap-2"
+                className="h-[52px] sm:h-[48px] px-8 bg-red-600 text-white font-mono text-sm font-black uppercase tracking-wider border-2 border-black dark:border-white shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-sm active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2.5 cursor-pointer group"
               >
-                <Zap className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                <span>HIZLI ÇÖZÜM SİHİRBAZI</span>
-                <span className="font-mono text-[9px] bg-red-600 text-white px-1.5 py-0.5">YENİ</span>
+                <Zap className="w-5 h-5 fill-yellow-300 text-yellow-300 group-hover:scale-110 transition-transform" />
+                <span>1 DAKİKADA HIZLI ÇÖZÜMÜ BAŞLAT</span>
+                <ArrowRight className="w-4 h-4 stroke-[3]" />
               </Link>
 
               <Link
                 to="/analiz"
-                className="h-[44px] sm:h-[40px] px-6 bg-red-600 text-white font-black text-xs sm:text-sm uppercase tracking-wider border-2 border-black dark:border-white shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-sm active:translate-x-1 active:translate-y-1 active:shadow-none transition-all inline-flex items-center gap-2"
+                className="h-[52px] sm:h-[48px] px-6 bg-white dark:bg-zinc-900 text-black dark:text-white font-mono text-xs sm:text-sm font-black uppercase tracking-wider border-2 border-black dark:border-white shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
-                <Compass className="w-4 h-4 stroke-[2.5]" />
-                <span>DAVRANIŞ ANALİZİ</span>
-                <ArrowRight className="w-4 h-4 stroke-[2.5]" />
-              </Link>
-
-              <Link
-                to="/sorunlar"
-                className="h-[44px] sm:h-[40px] px-6 bg-white dark:bg-zinc-900 text-black dark:text-white font-black text-xs sm:text-sm uppercase tracking-wider border-2 border-black dark:border-white shadow-brutal dark:shadow-brutal-white hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-sm active:translate-x-1 active:translate-y-1 active:shadow-none transition-all inline-flex items-center gap-2"
-              >
-                <HelpCircle className="w-4 h-4 stroke-[2.5] text-red-600" />
-                <span>SORUN ÇÖZÜMÜ</span>
+                <Camera className="w-4 h-4 text-red-600" />
+                <span>FOTOĞRAFLA VISION AI TARA</span>
               </Link>
             </div>
 
-            {/* Scientific Foundations / Trust Points */}
-            <div className="border-t-2 border-black dark:border-white pt-6 space-y-2">
-              <div className="font-mono text-xs uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
-                BİLİMSEL DAYANAKLAR & KANITLAR:
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-                <div className="p-3 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-brutal-sm">
-                  <div className="font-mono text-[11px] font-bold uppercase text-red-600">01 / ETOLOJİ</div>
-                  <div className="text-xs font-black uppercase mt-1">Turid Rugaas</div>
-                  <div className="text-[11px] text-zinc-600 dark:text-zinc-400 leading-tight mt-0.5">30+ sakinleşme sinyali</div>
-                </div>
-                <div className="p-3 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-brutal-sm">
-                  <div className="font-mono text-[11px] font-bold uppercase text-red-600">02 / NÖROLOJİ</div>
-                  <div className="text-xs font-black uppercase mt-1">Vallortigara</div>
-                  <div className="text-[11px] text-zinc-600 dark:text-zinc-400 leading-tight mt-0.5">Kuyruk lateralitesi</div>
-                </div>
-                <div className="p-3 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-brutal-sm">
-                  <div className="font-mono text-[11px] font-bold uppercase text-red-600">03 / PSİKOLOJİ</div>
-                  <div className="text-xs font-black uppercase mt-1">B.F. Skinner</div>
-                  <div className="text-[11px] text-zinc-600 dark:text-zinc-400 leading-tight mt-0.5">Pozitif pekiştirme R+</div>
-                </div>
-              </div>
+            {/* Friction Killers (Friction reduction badges) */}
+            <div className="flex flex-wrap items-center gap-y-2 gap-x-4 pt-1 font-mono text-xs font-bold text-zinc-600 dark:text-zinc-400">
+              <span className="flex items-center gap-1.5 text-black dark:text-white">
+                <Check className="w-4 h-4 text-green-600 stroke-[3]" />
+                %100 ÜCRETSİZ & AÇIK BİLİM
+              </span>
+              <span className="flex items-center gap-1.5 text-black dark:text-white">
+                <Check className="w-4 h-4 text-green-600 stroke-[3]" />
+                HESAP / KREDİ KARTI ŞARTI YOK
+              </span>
+              <span className="flex items-center gap-1.5 text-black dark:text-white">
+                <Check className="w-4 h-4 text-green-600 stroke-[3]" />
+                ÇEVRİMDIŞI ÇALIŞIR (PWA)
+              </span>
             </div>
 
           </div>
 
-          {/* Right Column (5 cols): High-Contrast B&W Dog Portrait + Quick Tool */}
-          <div className="lg:col-span-5 space-y-6">
+          {/* Right Column (5 cols): Interactive Live Canine Vision AI Showcase */}
+          <div className="lg:col-span-5 space-y-4">
             
-            {/* 4:3 High-contrast monochrome dog portrait */}
-            <div className="border-2 border-black dark:border-white aspect-[4/3] w-full overflow-hidden shadow-brutal-xl dark:shadow-brutal-white-xl bg-zinc-950 relative group">
+            <div className="border-4 border-black dark:border-white aspect-4/3 w-full overflow-hidden shadow-brutal-xl dark:shadow-brutal-white-xl bg-zinc-950 relative group">
               <img 
                 src={heroDogImage} 
-                alt="Kuchu Etoloji ve Köpek Psikolojisi" 
-                className="w-full h-full object-cover grayscale contrast-125 brightness-95 group-hover:scale-105 transition-transform duration-500" 
+                alt="Kuçu Etoloji ve Köpek Psikolojisi" 
+                className="w-full h-full object-cover grayscale contrast-125 brightness-95 group-hover:scale-102 transition-transform duration-500" 
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.src = 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=1200&q=80';
                 }}
               />
-              <div className="absolute top-2 left-2 bg-black text-white px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest border border-white">
-                ETOLOJİK GÖZLEM ■ 01
+
+              {/* HUD Header Bar */}
+              <div className="absolute top-2 left-2 bg-black text-white px-2.5 py-1 font-mono text-[10px] font-black uppercase tracking-widest border border-white flex items-center gap-1.5">
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-ping" />
+                <span>CANINE VISION AI // CANLI GÖZLEM</span>
               </div>
-              <div className="absolute bottom-2 right-2 bg-black/85 text-white px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider border border-white">
-                UNSPLASH LİSANSLI STOK
+
+              {/* Dynamic Interactive HUD Landmarks */}
+              <div 
+                style={{ top: currentShowcase.ear.top, left: currentShowcase.ear.left }}
+                className="absolute -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-300"
+              >
+                <div className={`px-2 py-0.5 border-2 font-mono text-[10px] font-black uppercase tracking-wider flex items-center gap-1 shadow-brutal-sm ${
+                  currentShowcase.ear.status === 'alert' ? 'bg-red-600 text-white' : currentShowcase.ear.status === 'warning' ? 'bg-yellow-400 text-black' : 'bg-green-600 text-white'
+                }`}>
+                  <Eye className="w-3 h-3" />
+                  <span>{currentShowcase.ear.text}</span>
+                </div>
+              </div>
+
+              <div 
+                style={{ top: currentShowcase.eye.top, left: currentShowcase.eye.left }}
+                className="absolute -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-300"
+              >
+                <div className={`px-2 py-0.5 border-2 font-mono text-[10px] font-black uppercase tracking-wider flex items-center gap-1 shadow-brutal-sm ${
+                  currentShowcase.eye.status === 'alert' ? 'bg-red-600 text-white animate-pulse' : currentShowcase.eye.status === 'warning' ? 'bg-yellow-400 text-black' : 'bg-green-600 text-white'
+                }`}>
+                  <Eye className="w-3 h-3" />
+                  <span>{currentShowcase.eye.text}</span>
+                </div>
+              </div>
+
+              <div 
+                style={{ top: currentShowcase.mouth.top, left: currentShowcase.mouth.left }}
+                className="absolute -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-300"
+              >
+                <div className={`px-2 py-0.5 border-2 font-mono text-[10px] font-black uppercase tracking-wider flex items-center gap-1 shadow-brutal-sm ${
+                  currentShowcase.mouth.status === 'alert' ? 'bg-red-600 text-white' : currentShowcase.mouth.status === 'warning' ? 'bg-yellow-400 text-black' : 'bg-green-600 text-white'
+                }`}>
+                  <Eye className="w-3 h-3" />
+                  <span>{currentShowcase.mouth.text}</span>
+                </div>
+              </div>
+
+              {/* Bottom Telemetry Overlay */}
+              <div className="absolute bottom-2 left-2 right-2 bg-black/90 text-white p-2.5 border border-white font-mono text-xs flex items-center justify-between">
+                <span className="font-bold truncate text-[11px]">{currentShowcase.label}</span>
+                <span className={`px-2 py-0.5 font-black uppercase text-[10px] border border-white ${currentShowcase.scoreBg}`}>
+                  {currentShowcase.score}
+                </span>
               </div>
             </div>
 
-            {/* Quick Analysis Widget with Hard Borders */}
-            <div className="border-2 border-black dark:border-white p-5 bg-white dark:bg-zinc-900 shadow-brutal space-y-4">
-              
-              <div className="flex items-center justify-between border-b-2 border-black dark:border-white pb-3">
-                <div className="flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-red-600 stroke-[2.5]" />
-                  <span className="font-mono text-xs font-bold uppercase tracking-widest text-black dark:text-white">
-                    HIZLI KUYRUK GÖSTERGESİ
-                  </span>
-                </div>
-                <span className="font-mono text-[10px] uppercase bg-black text-white dark:bg-white dark:text-black px-2 py-0.5">
-                  LATERALİTE TESTİ
+            {/* Quick Interactive Mood Switcher Buttons */}
+            <div className="p-3 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-brutal space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[10px] font-black uppercase text-zinc-500">
+                  DOKUNUN & ANINDA GÖRSELİ DEĞİŞTİRİN:
+                </span>
+                <span className="font-mono text-[10px] text-red-600 font-bold uppercase">
+                  İNTERAKTİF TEST
                 </span>
               </div>
 
-              {/* 4 Quick Selector Buttons */}
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 font-mono text-[11px] font-black uppercase">
                 {[
-                  { id: 'right' as const, label: 'SAĞA SALINIM', sub: 'Pozitif / Güvenli' },
-                  { id: 'left' as const, label: 'SOLA SALINIM', sub: 'Kaygı / Çekinme' },
-                  { id: 'tucked' as const, label: 'BACAK ARASINDA', sub: 'Yoğun Korku' },
-                  { id: 'stiff' as const, label: 'DİK & TİTREŞİMLİ', sub: 'Yüksek Gerilim' },
-                ].map((btn) => (
+                  { id: 'relaxed' as const, label: '🟢 SAKİN' },
+                  { id: 'stress' as const, label: '🟡 STRESLİ' },
+                  { id: 'play' as const, label: '🔵 OYUN' },
+                  { id: 'alert' as const, label: '🔴 DONMA' }
+                ].map((item) => (
                   <button
-                    key={btn.id}
+                    key={item.id}
                     type="button"
-                    onClick={() => setSelectedTail(btn.id)}
-                    className={`p-2.5 text-left border-2 transition-all cursor-pointer ${
-                      selectedTail === btn.id
-                        ? 'border-black bg-red-600 text-white shadow-brutal-sm dark:border-white'
-                        : 'border-black dark:border-white bg-white dark:bg-zinc-900 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800'
+                    onClick={() => setHeroMood(item.id)}
+                    className={`py-1.5 px-2 text-center border-2 transition-all cursor-pointer ${
+                      heroMood === item.id
+                        ? 'bg-red-600 text-white border-black dark:border-white shadow-brutal-sm'
+                        : 'bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white border-black dark:border-white hover:bg-zinc-200'
                     }`}
                   >
-                    <div className="font-mono text-[11px] font-black uppercase leading-tight">{btn.label}</div>
-                    <div className="text-[10px] font-medium opacity-80 mt-0.5">{btn.sub}</div>
+                    {item.label}
                   </button>
                 ))}
               </div>
 
-              {/* Dynamic Live Result */}
-              <div className="p-3 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950 space-y-2">
-                <div className="flex items-center justify-between gap-2 border-b border-black dark:border-white pb-2">
-                  <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-black dark:text-white">
-                    {currentPreview.title}
-                  </span>
-                  <span className={`font-mono text-[10px] font-black uppercase px-2 py-0.5 border border-black dark:border-white ${currentPreview.riskColor}`}>
-                    {currentPreview.risk}
-                  </span>
-                </div>
-                <div className="text-xs font-black uppercase text-red-600 dark:text-red-400">
-                  {currentPreview.mood}
-                </div>
-                <p className="text-xs font-medium text-zinc-700 dark:text-zinc-300 leading-snug">
-                  {currentPreview.desc}
-                </p>
-              </div>
-
-              {/* Link to Full Analysis */}
-              <Link
-                to="/analiz"
-                className="w-full h-[38px] bg-black text-white dark:bg-white dark:text-black font-mono text-xs font-bold uppercase tracking-wider border-2 border-black dark:border-white flex items-center justify-center gap-2 hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors"
-              >
-                <span>6 PARAMETRELİ TAM ANALİZİ BAŞLAT</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-
+              <p className="text-[11px] font-medium text-zinc-600 dark:text-zinc-400 leading-tight pt-1">
+                {currentShowcase.summary}
+              </p>
             </div>
 
           </div>
+
+        </div>
+      </section>
+
+      {/* 4 Feature Advertisement Cards (Reklam ve Değer Önerisi Şeridi) */}
+      <section className="max-w-swiss mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          {/* Ad Card 1: Hızlı Çözüm */}
+          <Link
+            to="/hizli-cozum"
+            className="p-5 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 transition-all flex flex-col justify-between space-y-4 group"
+          >
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="w-9 h-9 bg-red-600 text-white border-2 border-black dark:border-white flex items-center justify-center font-black">
+                  <Zap className="w-5 h-5 fill-yellow-300 text-yellow-300" />
+                </div>
+                <span className="font-mono text-[10px] font-black uppercase bg-black text-white dark:bg-white dark:text-black px-1.5 py-0.5">
+                  1 DAKİKA
+                </span>
+              </div>
+              <h3 className="text-base font-black uppercase text-black dark:text-white group-hover:text-red-600 transition-colors">
+                KLİNİK TRİYAJ MOTORU
+              </h3>
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                Sorunun adını koyamıyor musunuz? 5 soruyla köpeğinizin aciliyet derecesini ve Merck 3M reçetesini anında belirleyin.
+              </p>
+            </div>
+            <div className="font-mono text-xs font-black uppercase text-red-600 flex items-center gap-1 pt-2 border-t border-zinc-200 dark:border-zinc-800">
+              <span>TESTİ HEMEN DOLDUR</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </div>
+          </Link>
+
+          {/* Ad Card 2: Vision AI */}
+          <Link
+            to="/analiz"
+            className="p-5 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 transition-all flex flex-col justify-between space-y-4 group"
+          >
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="w-9 h-9 bg-black text-white dark:bg-white dark:text-black border-2 border-black dark:border-white flex items-center justify-center font-black">
+                  <Camera className="w-5 h-5 text-red-600" />
+                </div>
+                <span className="font-mono text-[10px] font-black uppercase bg-red-600 text-white px-1.5 py-0.5">
+                  AI VISION
+                </span>
+              </div>
+              <h3 className="text-base font-black uppercase text-black dark:text-white group-hover:text-red-600 transition-colors">
+                FOTOĞRAFLA VÜCUT DİLİ
+              </h3>
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                Köpeğinizin fotoğrafını yükleyin; postür, kulak açısı ve 'Balina Gözü' stres sinyallerini yapay zeka ile anında haritalandırın.
+              </p>
+            </div>
+            <div className="font-mono text-xs font-black uppercase text-red-600 flex items-center gap-1 pt-2 border-t border-zinc-200 dark:border-zinc-800">
+              <span>FOTOĞRAFI TARA</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </div>
+          </Link>
+
+          {/* Ad Card 3: 14 Davranış Sorunu */}
+          <Link
+            to="/sorunlar"
+            className="p-5 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 transition-all flex flex-col justify-between space-y-4 group"
+          >
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="w-9 h-9 bg-yellow-400 text-black border-2 border-black dark:border-white flex items-center justify-center font-black">
+                  <HelpCircle className="w-5 h-5" />
+                </div>
+                <span className="font-mono text-[10px] font-black uppercase bg-black text-white dark:bg-white dark:text-black px-1.5 py-0.5">
+                  14 PROTOKOL
+                </span>
+              </div>
+              <h3 className="text-base font-black uppercase text-black dark:text-white group-hover:text-red-600 transition-colors">
+                ÇİFTLİK VE EV SORUNLARI
+              </h3>
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                Tavuk/koyun avlamaktan koprofajiye, yalnızlık krizinden tırnak kesim fobisine kadar cezasız bilimsel çözümler.
+              </p>
+            </div>
+            <div className="font-mono text-xs font-black uppercase text-red-600 flex items-center gap-1 pt-2 border-t border-zinc-200 dark:border-zinc-800">
+              <span>SORUNLARI İNCELE</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </div>
+          </Link>
+
+          {/* Ad Card 4: Zehirli Gıda Rehberi */}
+          <Link
+            to="/zehirli-gidalar"
+            className="p-5 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 transition-all flex flex-col justify-between space-y-4 group"
+          >
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="w-9 h-9 bg-orange-600 text-white border-2 border-black dark:border-white flex items-center justify-center font-black">
+                  <ShieldAlert className="w-5 h-5 text-yellow-300" />
+                </div>
+                <span className="font-mono text-[10px] font-black uppercase bg-red-600 text-white px-1.5 py-0.5">
+                  ACİL TOKSİN
+                </span>
+              </div>
+              <h3 className="text-base font-black uppercase text-black dark:text-white group-hover:text-red-600 transition-colors">
+                ZEHİRLİ GIDA DEDEKTÖRÜ
+              </h3>
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                Köpeğiniz çikolata veya yabancı bir gıda mı yedi? Teobromin dozu ve acil ilk yardım adımlarını saniyeler içinde hesaplayın.
+              </p>
+            </div>
+            <div className="font-mono text-xs font-black uppercase text-red-600 flex items-center gap-1 pt-2 border-t border-zinc-200 dark:border-zinc-800">
+              <span>HESAPLAYICIYI AÇ</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </div>
+          </Link>
 
         </div>
       </section>

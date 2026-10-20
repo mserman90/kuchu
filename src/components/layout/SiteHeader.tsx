@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useDog } from '@/context/DogContext';
 import { useAppAuth } from '@/contexts/AppAuthContext';
 import { useTheme } from 'next-themes';
+import { KuchuLogo } from '@/components/common/KuchuLogo';
 import { 
   Compass, 
   HelpCircle, 
@@ -57,23 +58,8 @@ export const SiteHeader: React.FC = () => {
         <div className="flex items-center justify-between h-16 sm:h-20">
           
           {/* Logo: Swiss Modernist KUCHU ■ */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 bg-black text-white dark:bg-white dark:text-black border-2 border-black dark:border-white flex items-center justify-center font-black text-lg shadow-brutal-sm group-hover:bg-red-600 group-hover:text-white transition-colors">
-              🐾
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-xl sm:text-2xl font-black uppercase tracking-tightest text-black dark:text-white">
-                  KUCHU <span className="text-red-600">■</span>
-                </span>
-                <span className="font-mono text-[10px] font-bold uppercase bg-black text-white dark:bg-white dark:text-black px-1.5 py-0.5 border border-black dark:border-white">
-                  ETHOLOGY
-                </span>
-              </div>
-              <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-zinc-600 dark:text-zinc-400 hidden sm:block">
-                KÖPEK PSİKOLOJİSİ VE EĞİTİMİ
-              </p>
-            </div>
+          <Link to="/" className="cursor-pointer" aria-label="Kuçu Ana Sayfa">
+            <KuchuLogo />
           </Link>
 
           {/* Desktop Nav Items */}

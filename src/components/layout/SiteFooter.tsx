@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { DisclaimerBar } from '@/components/common/Ui';
+import { KuchuLogo } from '@/components/common/KuchuLogo';
 import { ShieldCheck, Heart } from 'lucide-react';
 
 export const SiteFooter: React.FC = () => {
@@ -15,14 +16,9 @@ export const SiteFooter: React.FC = () => {
           
           {/* Brand Col */}
           <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-red-600 text-white border-2 border-white flex items-center justify-center font-black text-xl shadow-brutal-white-sm">
-                🐾
-              </div>
-              <span className="text-2xl font-black uppercase tracking-tight text-white">
-                KUCHU <span className="text-red-600">■</span>
-              </span>
-            </div>
+            <Link to="/" className="inline-block">
+              <KuchuLogo size="md" />
+            </Link>
             <p className="text-xs text-zinc-400 font-medium leading-relaxed">
               Pozitif pekiştirme, Turid Rugaas sakinleşme sinyalleri ve çağdaş nöro-etoloji prensipleriyle geliştirilmiş köpek psikolojisi platformu.
             </p>
