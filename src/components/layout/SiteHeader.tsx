@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDog } from '@/context/DogContext';
 import { useAppAuth } from '@/contexts/AppAuthContext';
@@ -24,8 +24,19 @@ export const SiteHeader: React.FC = () => {
   const location = useLocation();
   const { activeDog, dogs, setActiveDog } = useDog();
   const { authState, user, logout } = useAppAuth();
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = mounted ? resolvedTheme === 'dark' : false;
+
+  const toggleTheme = () => {
+    setTheme(isDark ? 'light' : 'dark');
+  };
 
   const navLinks = [
     { to: '/hizli-cozum', label: 'HIZLI ÇÖZÜM', icon: Zap, badge: 'YENİ' },
@@ -141,12 +152,22 @@ export const SiteHeader: React.FC = () => {
 
             {/* Dark / Light Toggle */}
             <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 text-black dark:text-white shadow-brutal-sm hover:translate-x-0.5 hover:translate-y-0.5 transition-all cursor-pointer"
-              title="Tema Değiştir"
-              aria-label="Tema Değiştir"
+              onClick={toggleTheme}
+              className="p-2 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 text-black dark:text-white shadow-brutal-sm hover:translate-x-0.5 hover:translate-y-0.5 transition-all cursor-pointer flex items-center gap-1.5"
+              title={isDark ? 'Gündüz Moduna Geç' : 'Gece Moduna Geç'}
+              aria-label={isDark ? 'Gündüz Moduna Geç' : 'Gece Moduna Geç'}
             >
-              {theme === 'dark' ? <Sun className="w-4 h-4 text-yellow-400" /> : <Moon className="w-4 h-4" />}
+              {isDark ? (
+                <>
+                  <Sun className="w-4 h-4 text-yellow-400" />
+                  <span className="hidden md:inline font-mono text-[10px] font-black uppercase text-yellow-400">GÜNDÜZ</span>
+                </>
+              ) : (
+                <>
+                  <Moon className="w-4 h-4 text-zinc-900 dark:text-white" />
+                  <span className="hidden md:inline font-mono text-[10px] font-black uppercase">GECE</span>
+                </>
+              )}
             </button>
 
             {/* Hızlı Analiz Button */}
@@ -207,6 +228,38 @@ export const SiteHeader: React.FC = () => {
               <span className="text-red-600">🐕 {activeDog.name} ({activeDog.breed})</span>
             </div>
           )}
+
+          {/* Theme Selector for Mobile */}
+          <div className="p-3 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-900 flex items-center justify-between font-mono text-xs font-bold uppercase">
+            <span className="flex items-center gap-1.5">
+              {isDark ? <Moon className="w-4 h-4 text-yellow-400" /> : <Sun className="w-4 h-4 text-red-600" />}
+              GÖRÜNÜM / TEMA:
+            </span>
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={() => setTheme('light')}
+                className={`px-2.5 py-1 text-[11px] font-black border-2 border-black dark:border-white transition-all cursor-pointer ${
+                  !isDark 
+                    ? 'bg-red-600 text-white shadow-brutal-sm' 
+                    : 'bg-white text-black dark:bg-zinc-800 dark:text-zinc-300'
+                }`}
+              >
+                GÜNDÜZ
+              </button>
+              <button
+                type="button"
+                onClick={() => setTheme('dark')}
+                className={`px-2.5 py-1 text-[11px] font-black border-2 border-black dark:border-white transition-all cursor-pointer ${
+                  isDark 
+                    ? 'bg-red-600 text-white shadow-brutal-sm' 
+                    : 'bg-white text-black dark:bg-zinc-800 dark:text-zinc-300'
+                }`}
+              >
+                GECE
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </header>

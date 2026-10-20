@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { DisclaimerBar } from '@/components/common/Ui';
+import { BenchmarkComparison } from '@/components/common/BenchmarkComparison';
 import { 
   Compass, 
   HelpCircle, 
@@ -489,6 +490,11 @@ export const Index: React.FC = () => {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Sektörel Benchmark ve Karşılaştırma Bölümü */}
+      <section className="max-w-swiss mx-auto px-4 sm:px-6 lg:px-8">
+        <BenchmarkComparison />
       </section>
 
     </div>

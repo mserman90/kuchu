@@ -15,6 +15,8 @@ import {
   UserCheck
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { ThemeSelector } from '@/components/common/ThemeSelector';
+import { BenchmarkComparison } from '@/components/common/BenchmarkComparison';
 
 export const AccountPanelPage: React.FC = () => {
   const { activeDog, setActiveDog } = useDog();
@@ -487,6 +489,16 @@ export const AccountPanelPage: React.FC = () => {
         </div>
 
       </div>
+
+      {/* SECTION 5: THEME SETTINGS (GECE / GÜNDÜZ MODU) */}
+      <section className="space-y-4">
+        <ThemeSelector variant="full" />
+      </section>
+
+      {/* SECTION 6: BENCHMARK & KARŞILAŞTIRMA */}
+      <section className="space-y-4 pt-4">
+        <BenchmarkComparison />
+      </section>
 
       {/* COMPARISON MODAL (Brutalist Side-by-Side) */}
       {isCompareModalOpen && compareAnalysisA && compareAnalysisB && (

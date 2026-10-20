@@ -49,6 +49,19 @@
     --input: 0 0% 100%;
     --ring: 0 91% 54%;
   }
+
+  .dark .shadow-brutal {
+    box-shadow: 4px 4px 0px 0px #ffffff;
+  }
+  .dark .shadow-brutal-sm {
+    box-shadow: 2px 2px 0px 0px #ffffff;
+  }
+  .dark .shadow-brutal-md {
+    box-shadow: 4px 4px 0px 0px #ffffff;
+  }
+  .dark .shadow-brutal-lg {
+    box-shadow: 6px 6px 0px 0px #ffffff;
+  }
 }
 
 body {
