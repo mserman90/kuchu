@@ -2,6 +2,7 @@ import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from 'sonner';
+import { LanguageProvider } from '@/contexts/LanguageContext';
 import { AppAuthProvider } from '@/contexts/AppAuthContext';
 import { DogProvider } from '@/context/DogContext';
 import { AppLayout } from '@/components/layout/AppLayout';
@@ -22,34 +23,36 @@ import { NotFoundPage } from '@/pages/NotFoundPage';
 export function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-      <AppAuthProvider>
-        <DogProvider>
-          <HashRouter>
-            <Routes>
-              <Route path="/" element={<AppLayout />}>
-                <Route index element={<Index />} />
-                <Route path="analiz" element={<BehaviorAnalysisPage />} />
-                <Route path="gorsel-analiz" element={<BehaviorAnalysisPage />} />
-                <Route path="hizli-cozum" element={<QuickSolutionPage />} />
-                <Route path="sorunlar" element={<ProblemCenterPage />} />
-                <Route path="zehirli-gidalar" element={<ToxicFoodsPage />} />
-                <Route path="clicker" element={<ClickerPage />} />
-                <Route path="egitim-planlari" element={<TrainingPlannerPage />} />
-                <Route path="kutuphane" element={<LibraryPage />} />
-                <Route path="patiasistan" element={<PatiAsistanPage />} />
-                <Route path="panel" element={<AccountPanelPage />} />
-                <Route path="*" element={<NotFoundPage />} />
-              </Route>
-            </Routes>
-            <Toaster 
-              position="top-right" 
-              toastOptions={{
-                className: 'rounded-none border-2 border-black dark:border-white shadow-brutal font-mono text-xs font-bold uppercase'
-              }} 
-            />
-          </HashRouter>
-        </DogProvider>
-      </AppAuthProvider>
+      <LanguageProvider>
+        <AppAuthProvider>
+          <DogProvider>
+            <HashRouter>
+              <Routes>
+                <Route path="/" element={<AppLayout />}>
+                  <Route index element={<Index />} />
+                  <Route path="analiz" element={<BehaviorAnalysisPage />} />
+                  <Route path="gorsel-analiz" element={<BehaviorAnalysisPage />} />
+                  <Route path="hizli-cozum" element={<QuickSolutionPage />} />
+                  <Route path="sorunlar" element={<ProblemCenterPage />} />
+                  <Route path="zehirli-gidalar" element={<ToxicFoodsPage />} />
+                  <Route path="clicker" element={<ClickerPage />} />
+                  <Route path="egitim-planlari" element={<TrainingPlannerPage />} />
+                  <Route path="kutuphane" element={<LibraryPage />} />
+                  <Route path="patiasistan" element={<PatiAsistanPage />} />
+                  <Route path="panel" element={<AccountPanelPage />} />
+                  <Route path="*" element={<NotFoundPage />} />
+                </Route>
+              </Routes>
+              <Toaster 
+                position="top-right" 
+                toastOptions={{
+                  className: 'rounded-none border-2 border-black dark:border-white shadow-brutal font-mono text-xs font-bold uppercase'
+                }} 
+              />
+            </HashRouter>
+          </DogProvider>
+        </AppAuthProvider>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }

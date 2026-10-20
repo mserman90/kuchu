@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDog } from '@/context/DogContext';
 import { useAppAuth } from '@/contexts/AppAuthContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from 'next-themes';
 import { KuchuLogo } from '@/components/common/KuchuLogo';
 import { 
@@ -19,7 +20,8 @@ import {
   UserCheck,
   LogIn,
   Zap,
-  ShieldAlert
+  ShieldAlert,
+  Globe
 } from 'lucide-react';
 
 export const SiteHeader: React.FC = () => {
@@ -27,6 +29,7 @@ export const SiteHeader: React.FC = () => {
   const { activeDog, dogs, setActiveDog } = useDog();
   const { authState, user, logout } = useAppAuth();
   const { theme, setTheme, resolvedTheme } = useTheme();
+  const { lang, setLang, t, toggleLang } = useLanguage();
   const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -41,15 +44,15 @@ export const SiteHeader: React.FC = () => {
   };
 
   const navLinks = [
-    { to: '/hizli-cozum', label: 'HIZLI ÇÖZÜM', icon: Zap, badge: 'YENİ' },
-    { to: '/clicker', label: 'CLİCKER', icon: Zap, badge: 'SESLİ' },
-    { to: '/analiz', label: 'ANALİZ', icon: Compass, badge: 'MOTOR' },
-    { to: '/sorunlar', label: 'SORUNLAR', icon: HelpCircle },
-    { to: '/zehirli-gidalar', label: 'ZEHİRLİ GIDALAR', icon: ShieldAlert, badge: 'ACİL' },
-    { to: '/egitim-planlari', label: 'PLANLAR', icon: CalendarCheck },
-    { to: '/kutuphane', label: 'KÜTÜPHANE', icon: BookOpen },
-    { to: '/patiasistan', label: 'PATİASİSTAN', icon: MessageSquareHeart, badge: 'AI' },
-    { to: '/panel', label: 'PANEL', icon: LayoutDashboard }
+    { to: '/hizli-cozum', label: t('nav.quickSolution'), icon: Zap, badge: t('nav.badge.new') },
+    { to: '/clicker', label: t('nav.clicker'), icon: Zap, badge: t('nav.badge.audio') },
+    { to: '/analiz', label: t('nav.analysis'), icon: Compass, badge: t('nav.badge.motor') },
+    { to: '/sorunlar', label: t('nav.problems'), icon: HelpCircle },
+    { to: '/zehirli-gidalar', label: t('nav.toxicFoods'), icon: ShieldAlert, badge: t('nav.badge.emergency') },
+    { to: '/egitim-planlari', label: t('nav.plans'), icon: CalendarCheck },
+    { to: '/kutuphane', label: t('nav.library'), icon: BookOpen },
+    { to: '/patiasistan', label: t('nav.patiasistan'), icon: MessageSquareHeart, badge: t('nav.badge.ai') },
+    { to: '/panel', label: t('nav.panel'), icon: LayoutDashboard }
   ];
 
   return (
@@ -139,22 +142,37 @@ export const SiteHeader: React.FC = () => {
               </Link>
             )}
 
+            {/* Language Switch Button (TR / EN) */}
+            <button
+              onClick={toggleLang}
+              className="p-2 sm:px-2.5 sm:py-1.5 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 text-black dark:text-white shadow-brutal-sm hover:translate-x-0.5 hover:translate-y-0.5 transition-all cursor-pointer flex items-center gap-1.5 font-mono text-xs font-black uppercase"
+              title={lang === 'tr' ? 'Switch to English' : 'Türkçe\'ye Geç'}
+              aria-label="Dil / Language"
+            >
+              <Globe className="w-4 h-4 text-red-600" />
+              <span className="font-mono text-xs font-black">{lang === 'tr' ? 'TR' : 'EN'}</span>
+            </button>
+
             {/* Dark / Light Toggle */}
             <button
               onClick={toggleTheme}
               className="p-2 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 text-black dark:text-white shadow-brutal-sm hover:translate-x-0.5 hover:translate-y-0.5 transition-all cursor-pointer flex items-center gap-1.5"
-              title={isDark ? 'Gündüz Moduna Geç' : 'Gece Moduna Geç'}
-              aria-label={isDark ? 'Gündüz Moduna Geç' : 'Gece Moduna Geç'}
+              title={isDark ? t('header.theme.toLight') : t('header.theme.toDark')}
+              aria-label={isDark ? t('header.theme.toLight') : t('header.theme.toDark')}
             >
               {isDark ? (
                 <>
                   <Sun className="w-4 h-4 text-yellow-400" />
-                  <span className="hidden md:inline font-mono text-[10px] font-black uppercase text-yellow-400">GÜNDÜZ</span>
+                  <span className="hidden md:inline font-mono text-[10px] font-black uppercase text-yellow-400">
+                    {t('header.theme.light')}
+                  </span>
                 </>
               ) : (
                 <>
                   <Moon className="w-4 h-4 text-zinc-900 dark:text-white" />
-                  <span className="hidden md:inline font-mono text-[10px] font-black uppercase">GECE</span>
+                  <span className="hidden md:inline font-mono text-[10px] font-black uppercase">
+                    {t('header.theme.dark')}
+                  </span>
                 </>
               )}
             </button>
@@ -223,16 +241,48 @@ export const SiteHeader: React.FC = () => {
 
           {activeDog && (
             <div className="p-3 border-2 border-black dark:border-white bg-zinc-100 dark:bg-zinc-900 flex items-center justify-between font-mono text-xs font-bold uppercase">
-              <span>AKTİF KÖPEK:</span>
+              <span>{t('header.activeDog')}:</span>
               <span className="text-red-600">🐕 {activeDog.name} ({activeDog.breed})</span>
             </div>
           )}
+
+          {/* Language Selector for Mobile */}
+          <div className="p-3 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-900 flex items-center justify-between font-mono text-xs font-bold uppercase">
+            <span className="flex items-center gap-1.5">
+              <Globe className="w-4 h-4 text-red-600" />
+              {t('header.lang.label')}:
+            </span>
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={() => setLang('tr')}
+                className={`px-3 py-1 text-[11px] font-black border-2 border-black dark:border-white transition-all cursor-pointer ${
+                  lang === 'tr'
+                    ? 'bg-red-600 text-white shadow-brutal-sm'
+                    : 'bg-white text-black dark:bg-zinc-800 dark:text-zinc-300'
+                }`}
+              >
+                TR
+              </button>
+              <button
+                type="button"
+                onClick={() => setLang('en')}
+                className={`px-3 py-1 text-[11px] font-black border-2 border-black dark:border-white transition-all cursor-pointer ${
+                  lang === 'en'
+                    ? 'bg-red-600 text-white shadow-brutal-sm'
+                    : 'bg-white text-black dark:bg-zinc-800 dark:text-zinc-300'
+                }`}
+              >
+                EN
+              </button>
+            </div>
+          </div>
 
           {/* Theme Selector for Mobile */}
           <div className="p-3 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-900 flex items-center justify-between font-mono text-xs font-bold uppercase">
             <span className="flex items-center gap-1.5">
               {isDark ? <Moon className="w-4 h-4 text-yellow-400" /> : <Sun className="w-4 h-4 text-red-600" />}
-              GÖRÜNÜM / TEMA:
+              {t('header.theme.label')}:
             </span>
             <div className="flex items-center gap-1">
               <button
@@ -244,7 +294,7 @@ export const SiteHeader: React.FC = () => {
                     : 'bg-white text-black dark:bg-zinc-800 dark:text-zinc-300'
                 }`}
               >
-                GÜNDÜZ
+                {t('header.theme.light')}
               </button>
               <button
                 type="button"
@@ -255,7 +305,7 @@ export const SiteHeader: React.FC = () => {
                     : 'bg-white text-black dark:bg-zinc-800 dark:text-zinc-300'
                 }`}
               >
-                GECE
+                {t('header.theme.dark')}
               </button>
             </div>
           </div>
