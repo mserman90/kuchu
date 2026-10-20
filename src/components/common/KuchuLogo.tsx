@@ -6,46 +6,76 @@ interface KuchuLogoProps {
   showSubtitle?: boolean;
 }
 
-export const KuchuLogoIcon: React.FC<{ size?: number; className?: string }> = ({ 
+/**
+ * KuchuLogoIcon — Swiss Modernism + Neo-Brutalism köpek kafası ikonu
+ *
+ * Konsept: Josef Müller-Brockmann grid disiplininde geometrik köpek profili.
+ *   - Siyah dolgu zemin (arka plan)
+ *   - Beyaz köpek baş silueti (frontview, simetrik, blok geometri)
+ *   - Dik, sivri kulaklar: Etolojik uyanıklık + analiz durumu
+ *   - Kırmızı (#DC2626) gözler: Vision AI odak noktaları
+ *   - Alt kırmızı bar: Merck klinik vurgusu / tehlike ölçeği
+ *   - 2px siyah dış çerçeve: Brutalist imza
+ */
+export const KuchuLogoIcon: React.FC<{ size?: number; className?: string }> = ({
   size = 40,
-  className = '' 
+  className = ''
 }) => {
   return (
-    <svg 
-      width={size} 
-      height={size} 
-      viewBox="0 0 48 48" 
-      fill="none" 
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={`shrink-0 ${className}`}
-      aria-label="Kuçu Logo"
+      aria-label="Kuçu — Köpek Davranış Analizi Logosu"
     >
-      {/* Brutalist Frame */}
-      <rect x="2" y="2" width="44" height="44" fill="currentColor" stroke="currentColor" strokeWidth="2" />
-      
-      {/* Inner Geometric Contrast Plate */}
-      <rect x="6" y="6" width="36" height="36" fill="#000000" />
-      
-      {/* Stylized Modernist Attentive Dog Head Profile (Pure Geometry) */}
-      {/* Muzzle and Jaw */}
-      <path 
-        d="M12 28H28L34 20V12L24 16L18 24H12V28Z" 
-        fill="#FFFFFF" 
-      />
-      {/* Upright Alert Ear */}
-      <polygon 
-        points="22,16 28,6 34,12 28,18" 
-        fill="#DC2626" 
-      />
-      {/* Keen Intelligent Eye */}
-      <rect x="24" y="20" width="3" height="3" fill="#000000" />
-      
-      {/* Canine Nose Tip */}
-      <rect x="12" y="24" width="4" height="4" fill="#DC2626" />
+      {/* ── Brutalist outer frame ── */}
+      <rect width="64" height="64" fill="currentColor" />
+      <rect x="3" y="3" width="58" height="58" fill="#0a0a0a" />
 
-      {/* Modernist Positive Wave Accent */}
-      <rect x="36" y="28" width="4" height="4" fill="#FFFFFF" />
-      <rect x="36" y="34" width="4" height="4" fill="#DC2626" />
+      {/* ── Köpek baş silueti (simetrik, frontview, saf geometri) ── */}
+
+      {/* Sol sivri kulak */}
+      <polygon points="11,28 18,8 26,22" fill="#FFFFFF" />
+      {/* Sağ sivri kulak */}
+      <polygon points="53,28 46,8 38,22" fill="#FFFFFF" />
+
+      {/* Kafa ana bloğu (trapezoid) */}
+      <path d="M18 28 H46 L42 46 H22 Z" fill="#FFFFFF" />
+
+      {/* Kafa üst bloğu (yuvarlak değil, düz keskin) */}
+      <rect x="18" y="22" width="28" height="10" fill="#FFFFFF" />
+
+      {/* Sol göz — kırmızı, kare, Vision AI noktası */}
+      <rect x="22" y="26" width="6" height="5" fill="#DC2626" />
+      {/* Sağ göz — kırmızı, kare */}
+      <rect x="36" y="26" width="6" height="5" fill="#DC2626" />
+
+      {/* Göz parlaklık noktaları (beyaz piksel) */}
+      <rect x="23" y="27" width="2" height="2" fill="#FFFFFF" />
+      <rect x="37" y="27" width="2" height="2" fill="#FFFFFF" />
+
+      {/* Burun bloğu — ortalanmış siyah dikdörtgen */}
+      <rect x="28" y="36" width="8" height="5" fill="#0a0a0a" />
+
+      {/* Ağız çizgisi — T şekli */}
+      <rect x="32" y="41" width="1" height="3" fill="#0a0a0a" />
+      <rect x="26" y="41" width="12" height="1" fill="#0a0a0a" />
+
+      {/* ── Alt Merck klinik vurgu barı ── */}
+      {/* Kırmızı bar: Risk göstergesi sembolü */}
+      <rect x="3" y="52" width="14" height="9" fill="#DC2626" />
+      {/* Sarı bar: Uyarı düzeyi */}
+      <rect x="19" y="52" width="10" height="9" fill="#FACC15" />
+      {/* Yeşil bar: Güvenli düzey */}
+      <rect x="31" y="52" width="10" height="9" fill="#16A34A" />
+      {/* Siyah dolgu (sağ kalan) */}
+      <rect x="43" y="52" width="18" height="9" fill="#0a0a0a" />
+
+      {/* Çerçeve çizgisi (üst beyaz ince çizgi - barı yukarıdan ayırır) */}
+      <rect x="3" y="51" width="58" height="1" fill="#FFFFFF" />
     </svg>
   );
 };
@@ -55,35 +85,50 @@ export const KuchuLogo: React.FC<KuchuLogoProps> = ({
   size = 'md',
   showSubtitle = true
 }) => {
-  const iconSize = size === 'sm' ? 32 : size === 'lg' ? 48 : 40;
+  const iconSize = size === 'sm' ? 32 : size === 'lg' ? 56 : 44;
 
   return (
-    <div className={`flex items-center gap-2.5 sm:gap-3 group select-none ${className}`}>
-      {/* Vector Icon Container with Brutalist Shadow */}
-      <div className="relative text-black dark:text-white group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform">
+    <div className={`flex items-center gap-3 group select-none ${className}`}>
+
+      {/* İkon + Brutalist offset gölge */}
+      <div className="relative text-black dark:text-white shrink-0">
         <KuchuLogoIcon size={iconSize} />
-        {/* Brutal shadow accent behind icon */}
-        <div className="absolute -bottom-1 -right-1 w-full h-full bg-red-600 -z-10 pointer-events-none" />
+        {/* Kırmızı sert offset gölge */}
+        <div
+          className="absolute inset-0 bg-red-600 -z-10 pointer-events-none"
+          style={{ transform: 'translate(3px, 3px)' }}
+        />
       </div>
 
-      <div className="flex flex-col">
-        <div className="flex items-center gap-1.5 leading-none">
-          <span className={`font-black uppercase tracking-tightest text-black dark:text-white ${
-            size === 'sm' ? 'text-lg' : size === 'lg' ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'
-          }`}>
+      {/* Metin grubu */}
+      <div className="flex flex-col leading-none gap-1">
+
+        {/* Ana marka adı satırı */}
+        <div className="flex items-center gap-2">
+          <span
+            className={`font-black uppercase tracking-tight text-black dark:text-white leading-none ${
+              size === 'sm' ? 'text-lg' : size === 'lg' ? 'text-3xl' : 'text-[22px]'
+            }`}
+          >
             KUÇU
           </span>
-          <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-red-600 inline-block shrink-0 shadow-xs" />
-          <span className="font-mono text-[9px] sm:text-[10px] font-black uppercase bg-black text-white dark:bg-white dark:text-black px-1.5 py-0.5 border border-black dark:border-white tracking-widest">
-            PRO
+
+          {/* Kırmızı ayırıcı kare */}
+          <span className="w-2.5 h-2.5 bg-red-600 inline-block shrink-0" />
+
+          {/* Sürüm etiketi */}
+          <span className="font-mono text-[9px] font-black uppercase bg-black text-white dark:bg-white dark:text-black px-1.5 py-[3px] tracking-widest border border-black dark:border-white">
+            AI
           </span>
         </div>
 
+        {/* Alt başlık */}
         {showSubtitle && (
-          <p className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mt-1 hidden sm:block">
-            BİLİMSEL KÖPEK DAVRANIŞ ENSTİTÜSÜ
+          <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-zinc-500 dark:text-zinc-400 hidden sm:block">
+            KÖPEK DAVRANIŞ&nbsp;•&nbsp;ETOLOJİ&nbsp;•&nbsp;POZİTİF R+
           </p>
         )}
+
       </div>
     </div>
   );
