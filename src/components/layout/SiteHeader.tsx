@@ -40,6 +40,7 @@ export const SiteHeader: React.FC = () => {
 
   const navLinks = [
     { to: '/hizli-cozum', label: 'HIZLI ÇÖZÜM', icon: Zap, badge: 'YENİ' },
+    { to: '/clicker', label: 'CLİCKER', icon: Zap, badge: 'SESLİ' },
     { to: '/analiz', label: 'ANALİZ', icon: Compass, badge: 'MOTOR' },
     { to: '/sorunlar', label: 'SORUNLAR', icon: HelpCircle },
     { to: '/egitim-planlari', label: 'PLANLAR', icon: CalendarCheck },
@@ -169,6 +170,16 @@ export const SiteHeader: React.FC = () => {
                 </>
               )}
             </button>
+
+            {/* Clicker Direct Access Button */}
+            <Link
+              to="/clicker"
+              className="hidden md:flex items-center gap-1.5 bg-red-600 text-white border-2 border-black dark:border-white px-2.5 py-1.5 font-mono text-xs font-black uppercase tracking-wider shadow-brutal-sm hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
+              title="Sesli Dijital Clicker & Seans Zamanlayıcı"
+            >
+              <Zap className="w-3.5 h-3.5 fill-yellow-300 text-yellow-300" />
+              <span>CLİCKER</span>
+            </Link>
 
             {/* Hızlı Analiz Button */}
             <Link

@@ -4,6 +4,7 @@ import { SiteHeader } from './SiteHeader';
 import { SiteFooter } from './SiteFooter';
 import { MobileBottomNav } from './MobileBottomNav';
 import { PwaInstallPrompt } from '@/components/common/PwaInstallPrompt';
+import { FloatingClickerButton } from '@/components/clicker/FloatingClickerButton';
 
 export const AppLayout: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ export const AppLayout: React.FC = () => {
       </main>
       <SiteFooter />
       <MobileBottomNav />
+      <FloatingClickerButton />
       <PwaInstallPrompt />
     </div>
   );

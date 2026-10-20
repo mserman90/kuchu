@@ -15,6 +15,7 @@ import { LibraryPage } from '@/pages/LibraryPage';
 import { PatiAsistanPage } from '@/pages/PatiAsistanPage';
 import { AccountPanelPage } from '@/pages/AccountPanelPage';
 import { QuickSolutionPage } from '@/pages/QuickSolutionPage';
+import { ClickerPage } from '@/pages/ClickerPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
 export function App() {
@@ -29,6 +30,7 @@ export function App() {
                 <Route path="analiz" element={<BehaviorAnalysisPage />} />
                 <Route path="hizli-cozum" element={<QuickSolutionPage />} />
                 <Route path="sorunlar" element={<ProblemCenterPage />} />
+                <Route path="clicker" element={<ClickerPage />} />
                 <Route path="egitim-planlari" element={<TrainingPlannerPage />} />
                 <Route path="kutuphane" element={<LibraryPage />} />
                 <Route path="patiasistan" element={<PatiAsistanPage />} />

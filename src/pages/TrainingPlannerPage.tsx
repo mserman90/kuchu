@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useDog } from '@/context/DogContext';
 import { generatePersonalizedPlan } from '@/lib/content/training';
 import { TrainingPlanEntity } from '@/lib/data/types';
@@ -10,7 +11,8 @@ import {
   ChevronDown, 
   ChevronUp,
   CheckSquare,
-  Square
+  Square,
+  Zap
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -273,6 +275,15 @@ export const TrainingPlannerPage: React.FC = () => {
                 Günde 8-15 dakikalık pozitif seanslar uygulayın; seansı köpek başarılıyken bitirin.
               </span>
               <div className="flex items-center gap-2">
+                <Link
+                  to="/clicker"
+                  className="h-[38px] px-3.5 border-2 border-black dark:border-white bg-yellow-400 text-black font-mono text-xs font-black uppercase flex items-center gap-1.5 shadow-brutal-sm hover:translate-x-0.5 hover:translate-y-0.5 transition-all cursor-pointer"
+                  title="Sesli Dijital Clicker ve Seans Kronometresi"
+                >
+                  <Zap className="w-3.5 h-3.5 fill-black text-black" />
+                  <span>CLİCKER'I AÇ</span>
+                </Link>
+
                 <button
                   type="button"
                   onClick={() => window.print()}
