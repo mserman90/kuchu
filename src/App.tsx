@@ -16,6 +16,7 @@ import { PatiAsistanPage } from '@/pages/PatiAsistanPage';
 import { AccountPanelPage } from '@/pages/AccountPanelPage';
 import { QuickSolutionPage } from '@/pages/QuickSolutionPage';
 import { ClickerPage } from '@/pages/ClickerPage';
+import { ToxicFoodsPage } from '@/pages/ToxicFoodsPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
 export function App() {
@@ -30,6 +31,7 @@ export function App() {
                 <Route path="analiz" element={<BehaviorAnalysisPage />} />
                 <Route path="hizli-cozum" element={<QuickSolutionPage />} />
                 <Route path="sorunlar" element={<ProblemCenterPage />} />
+                <Route path="zehirli-gidalar" element={<ToxicFoodsPage />} />
                 <Route path="clicker" element={<ClickerPage />} />
                 <Route path="egitim-planlari" element={<TrainingPlannerPage />} />
                 <Route path="kutuphane" element={<LibraryPage />} />

@@ -17,7 +17,8 @@ import {
   Sparkles,
   UserCheck,
   LogIn,
-  Zap
+  Zap,
+  ShieldAlert
 } from 'lucide-react';
 
 export const SiteHeader: React.FC = () => {
@@ -43,6 +44,7 @@ export const SiteHeader: React.FC = () => {
     { to: '/clicker', label: 'CLİCKER', icon: Zap, badge: 'SESLİ' },
     { to: '/analiz', label: 'ANALİZ', icon: Compass, badge: 'MOTOR' },
     { to: '/sorunlar', label: 'SORUNLAR', icon: HelpCircle },
+    { to: '/zehirli-gidalar', label: 'ZEHİRLİ GIDALAR', icon: ShieldAlert, badge: 'ACİL' },
     { to: '/egitim-planlari', label: 'PLANLAR', icon: CalendarCheck },
     { to: '/kutuphane', label: 'KÜTÜPHANE', icon: BookOpen },
     { to: '/patiasistan', label: 'PATİASİSTAN', icon: MessageSquareHeart, badge: 'AI' },

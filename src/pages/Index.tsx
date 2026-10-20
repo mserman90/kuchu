@@ -487,6 +487,12 @@ export const Index: React.FC = () => {
               >
                 📖 BİLGİ KÜTÜPHANESİ
               </Link>
+              <Link
+                to="/zehirli-gidalar"
+                className="px-5 py-2.5 bg-yellow-400 text-black font-mono text-xs font-black uppercase border-2 border-white shadow-brutal-white-sm hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
+              >
+                ☣ ZEHİRLİ GIDA REHBERİ
+              </Link>
             </div>
           </div>
         </div>
