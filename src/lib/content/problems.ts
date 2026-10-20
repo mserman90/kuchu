@@ -693,5 +693,164 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
     whenToCallProfessional: [
       'Tıbbi sorun olmadığı halde 1 aydan uzun süren inatçı tuvalet kaçırmalarda.'
     ]
+  },
+  {
+    id: 'pet-food-stealing',
+    slug: 'evcil-hayvan-mamasi-calma-ve-kaynaktan-uzaklastirma',
+    title: 'EVCİL HAYVAN MAMASI ÇALMA (KEDİ/TAVŞAN MAMASI & SU KABI GAZİLEME)',
+    category: 'habits',
+    severity: 'medium',
+    shortDescription: 'Köpeğin evdeki diğer evcil hayvanların (kedi, tavşan, muhabbet kuşu) mama kabını, su kaplarını veya ödüllerini sürekli çalması ve tüketmesi.',
+    rootCauses: [
+      'Kedi mamalarının yüksek protein ve yağ içeriğinin köpeklere son derece çekici gelmesi (Besin çekim etkisi)',
+      'Pekiştirilen kaynak koruma güdüsü: Bir kez mama çalıp yiyen köpek bunu tekrarlar',
+      'Yetersiz porsiyon veya sindirim enzimi sorunu nedeniyle süregelen açlık hissi',
+      'Evdeki diğer hayvanın beslenme saatiyle köpeğin beslenme saatinin örtüşmesi'
+    ],
+    positiveProtocol: {
+      protocolName: 'Çevre Yönetimi, "Terk Et" (Leave It) Protokolü ve Beslenme Ayrımı',
+      overview: 'Kedi mamasına erişimi fiziksel olarak engelleyin; aynı zamanda "Terk Et" komutunu güçlendirip köpeğin kendi mamasında tatminini artırın.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Beslenme Alanlarını Fiziksel Olarak Ayırın',
+          instruction: 'Kedi mamasını köpeğin ulaşamayacağı yüksek bir tezgah, raf veya kilitli bir odaya taşıyın. Kedi kapısı (cat door) kurarak köpeğin geçemeyeceği bir besleme bölgesi oluşturun.',
+          scientificTip: 'Davranışı deneme imkânı kalmadığında pekişme zinciri kendiliğinden söner. Çevre yönetimi her zaman ilk adımdır.'
+        },
+        {
+          stepNumber: 2,
+          title: '"Terk Et" (Leave It) Komutunu Düşük Değerli Nesnelerle İnşa Edin',
+          instruction: 'Yere bir bisküvi koyun, köpek koklarken elinizle kapatın. Geri çekildiği anda "Terk Et!" ile süper ödül (ciğer, peynir) verin. Günde 3 kez, 5 tekrar.',
+          scientificTip: 'Leave It hiçbir zaman birden kedi maması gibi yüksek değerli nesnelerle başlayamaz; köpek önce düşük değerli nesnelerle 95% güvenilirliğe ulaşmalıdır.'
+        },
+        {
+          stepNumber: 3,
+          title: 'Genelleme: Kedi Maması Kabına "Terk Et" Uygulayın',
+          instruction: 'Kedi mamasını kapalı bir kap içinde gözetim altında köpeğin önüne getirin. "Terk Et" ve başarıyla çekilirse coşkuyla ödüllendirin. Kademeli olarak gerçek beslenme ortamına taşıyın.',
+          scientificTip: 'Her uygarlık ortamında 10 tekrar başarıya ulaştıktan sonra bir sonraki zorluğa geçin.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Kedi/tavşan mama kabını köpeğin erişemeyeceği yüksek bir zemine kaldırın. Kedi kapısı veya kilitli kapı ile beslenme odası ayrımı yapın. Kedi maması tüketiminden şüpheleniliyorsa köpeğin günlük kalori alımını hesaba katın.',
+      modification: 'Leave It komutu kademeli genelleme: Önce düşük değerli yiyecek → Orta değer → Kedi maması. Her aşamada 95% güvenilirlik hedefleyin.',
+      responseSubstitution: 'Tepki İkamesi: Diğer hayvanın beslenmesi sırasında köpeğe eş zamanlı olarak kendi ödüllü doldurma oyuncağını (Kong veya Lickimat) verin.',
+      medicalRuleOut: 'Ekzokrin Pankreas Yetersizliği (EPI), hipotiroidizm veya bağırsak parazitleri nedeniyle doymayan köpekler yüksek açlık güdüsüyle başkalarının mamasını yer. Sindirim muayenesi önerilir.'
+    },
+    whatNotToDo: [
+      'Köpeğe mama çalarken bağırıp ceza vermeyin; sadece geri çekilmesini sağlar, dürtüyü ortadan kaldırmaz.',
+      'Kedi mamasını yere bırakıp köpeğin "Hayır!" öğrenmesini kendi kendine beklemek ciddi sağlık risklerine yol açar.',
+      'Köpeği kedi mamasına eriştikten sonra dövmek/sert vurmak kaynağa saldırganlık davranışını tetikleyebilir.'
+    ],
+    whenToCallProfessional: [
+      'Mama çalmayı engellemek istediğinizde köpek dişini gösteriyor veya ısırma girişiminde bulunuyorsa (Kaynak Koruma Agresyonu).',
+      'Kedi maması düzenli tüketimi sonucunda köpekte pankreatit belirtileri (kusma, halsizlik, karın ağrısı) görülüyorsa acilen veterinere başvurun.'
+    ]
+  },
+  {
+    id: 'garden-escape',
+    slug: 'bahce-ve-cit-kacisi',
+    title: 'BAHÇE VE ÇİT KAÇIŞI (KAÇMA \u0026 ÖZGÜRLÜK ARAYIŞI)',
+    category: 'predatory',
+    severity: 'high',
+    shortDescription: 'Köpeğin bahçe çitini aşarak, tünelerek veya kapıyı açarak sürekli kaçmaya çalışması; trafik ve kaybolma riski.',
+    rootCauses: [
+      'Boşaltılamamış av/keşif enerjisi ve kronik can sıkıntısı',
+      'Bahçenin köpek için yeterli zenginleştirme (enrichment) sunmaması',
+      'Dişilerde hormonal dürtü (kızgınlık) veya erkeklerde eşleşme güdüsü',
+      'Dışarıdaki sesler veya koku izlerinin yoğun merak çekmesi'
+    ],
+    positiveProtocol: {
+      protocolName: 'Bahçe Zenginleştirme ve "Sınır" (Boundary) Eğitimi',
+      overview: 'Kaçış motivasyonunu içeride karşılayarak çitin anlamsızlaşmasını sağlayın; ardından çit sınırını ödülle şartlandırın.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Günlük Enerji Bütçesini Bahçe İçinde Tüketin',
+          instruction: 'Her sabah en az 20 dakika flirt pole (kamçı oyuncak) veya frisbee ile yüksek tempolu oyun yapın. Koklama ödevleri: Bahçeye yiyecekler saklayın ve köpeğin burnuyla aramasını sağlayın.',
+          scientificTip: '10 dakikalık koklama egzersizi 30 dakika koşmaya eşdeğer zihinsel yorgunluk yaratır.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Çit Sınırını "Harika Şeyler Oluyor" Yeri Yapın',
+          instruction: 'Uzun takip tasmasıyla çit kenarına yaklaşmasına izin verin; çite değmeden geri döndüğünde yüksek değerli ödül. Çite ellemek = hiçbir şey olmuyor, geri dönmek = parti.',
+          scientificTip: 'Ceza yerine geri dönme davranışını seçmek için çitin anlamsız, sahibinin yanı ödüllü olmasını sağlayın.'
+        },
+        {
+          stepNumber: 3,
+          title: 'Altyapı İyileştirmesi: Kaçış Rotasını Fiziksel Kapatın',
+          instruction: 'Kazı yapıyorsa çitin dibine L şeklinde gömülü tel örgü döşeyin. Zıplayarak geçiyorsa çit yüksekliğini artırın veya köpeğe dönük eğimli çit ekleyin.',
+          scientificTip: 'Fiziksel engel her zaman eğitim tekniğiyle birlikte uygulanmalıdır; ikisi birbirinin tamamlayıcısıdır.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Köpeği bahçede gözetimsiz yalnız bırakmayın. Kaçış noktalarını (tünel başlangıçları, kopuk çit gözleri) tespit edip fiziksel olarak kapatın. Hormonal köpeklerde kısırlaştırma kaçış güdüsünü belirgin biçimde azaltır.',
+      modification: 'Sınır Eğitimi (Boundary Training): Uzun takip tasmasıyla çit kenarına kontrollü yaklaşma; geri dönüşleri yüksek değerli ödülle pekiştirme.',
+      responseSubstitution: 'Tepki İkamesi (DRI): Çite doğru yürümek yerine sahibe bakıp geri dönme davranışı pekiştirilir.',
+      medicalRuleOut: 'Kısırlaştırılmamış köpeklerde cinsel hormon düzeyleri (testosteron, östrojen) kaçış dürtüsünü dramatik biçimde artırır. Kısırlaştırma prosedürü uygulanması veteriner tarafından değerlendirilmelidir.'
+    },
+    whatNotToDo: [
+      'Yakaladıktan sonra ceza vermeyin; köpek eve dönmenin kötü sonuç doğurduğunu öğrenir ve bir daha gelmez.',
+      'Elektrikli şok (invisible fence) sistemleri köpeklerde ciddi korku ve agresyon yaratabilir.',
+      'Zincire bağlamak kaçış enerjisini çözmez; hayal kırıklığını ve reaktiviteyi artırır.'
+    ],
+    whenToCallProfessional: [
+      'Köpek trafiğe atlayıp kayboluyorsa ve temel sınır eğitimi işe yaramıyorsa profesyonel çalışma köpeği etoloğu gereklidir.',
+      'Kaçış davranışı ayrılık anksiyetesiyle (uluma, yıkım) birleşiyorsa çift tanılı tedavi planlanmalıdır.'
+    ]
+  },
+  {
+    id: 'nail-trimming-phobia',
+    slug: 'tirnak-kesim-fobisi-ve-vucut-bakim-direnci',
+    title: 'TIRNAK KESİM FOBİSİ \u0026 VÜCUT BAKIM DİRENCİ (FIRÇA, KULAK, DİŞ)',
+    category: 'fear',
+    severity: 'medium',
+    shortDescription: 'Tırnak kesimi, fırçalama, kulak temizliği veya diş fırçalama sırasında donma, ısırma girişimi ve şiddetli direnç.',
+    rootCauses: [
+      'Geçmişte hızlı ve zorla uygulanan tırnak kesiminin acı kaydı bırakması (Quick – damarın kesilmesi)',
+      'Tutulma ve hareket kısıtlanmasının köpekte "kaçış mümkün değil" panik tepkisi yaratması',
+      'Bakım aletlerinin (makasın tıklaması, fırça dokunuşu) koşullu korku uyarıcısına dönüşmesi',
+      'Daha önce veteriner veya groomerde uygulanan kaba müdahale travması'
+    ],
+    positiveProtocol: {
+      protocolName: 'Kooperatif Bakım (Cooperative Care) - Alet Desensitizasyonu ve Yalama Tahtası',
+      overview: 'Köpeğin bakım sürecini kendisi "seçmesini" sağlayan gönüllü katılım modeli; tırnak makasını önce görüp koklayan, sonra dokunulan, sonra kullanan şeklinde kademeli alıştırma.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Tırnak Makasını Nötr Bir Nesneye Dönüştürün',
+          instruction: 'Makası yere bırakın ve köpeğin özgürce koklamasına izin verin. Her koklama anında "Evet!" ve ödül. 3-5 günü bu adıma ayırın. Makası henüz tutmayın.',
+          scientificTip: 'Alet günlük hayatın bir parçasına dönüşmeli; "makasın görünmesi = kötü şey geliyor" çağrışımını kırmak önce gelir.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Yalama Tahtası veya Dondurulmuş Kong ile Dikkat Bölme',
+          instruction: 'Fıstık ezmesi veya haşlanmış tatlı patates ezilmiş bir Lickimat\'ı duvara veya buzdolabına yapıştırın. Köpek yaslarken patilerini sırayla hızla tutup bırakın; yalarken ödülü tüketiyor olması koşullu güvenlik sağlar.',
+          scientificTip: 'Yalama eylemi endorfin ve serotonin salgılar; stres tepkisiyle doğrudan antagonistir.'
+        },
+        {
+          stepNumber: 3,
+          title: 'Pati Manipülasyonu Önce Oyun, Sonra Makas',
+          instruction: 'Önce patiyi tutun, tırnak makasıyla sadece dokunun (kesmeden), hemen ödül. 5 seans sonra yalnızca 1 tırnağı kesin ve büyük kutlama yapın. Bir seansta tüm tırnakları kesmeye çalışmayın.',
+          scientificTip: '"Bir ve Bitti" kuralı: Her seans tek bir tırnak veya tek bir bakım adımıyla bitmeli; bütün bir oturumu bitirmeye zorlamak en büyük hatadır.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Tırnak kesimleri arasındaki süreyi kısaltarak tırnakların çok uzamamasını sağlayın; kısa tırnak daha az hassas dokuda çalışılması anlamına gelir. İlk seansları evinizde, tanıdık bir alanda gerçekleştirin.',
+      modification: 'Kooperatif Bakım Protokolü: Alet duyarsızlaştırması → Pati dokunuş duyarsızlaştırması → Tek tırnak kesimi → Tüm tırnaklar. Her adım 95% sakinlikle tamamlanmadan bir sonrakine geçilmez.',
+      responseSubstitution: 'Tepki İkamesi: Makasın görünmesi = Yalama tahtasına koşarak başını oraya koyma davranışı (köpek kendi isteğiyle bakım istasyonuna gelir).',
+      medicalRuleOut: 'Tırnak yatağı enfeksiyonu, parmak arası fungal oluşum veya artrit nedeniyle dokunan tırnak gerçekten acıtıyor olabilir. Tüm pati ve tırnak yataklarını veteriner gözlemlemeden önce zorlama eğitim yapılmamalıdır.'
+    },
+    whatNotToDo: [
+      'Köpeği iki kişi tutarken zorla devirmek ve hızla tırnakları kesmek en büyük travma kaynağıdır; fobiye dönüşür.',
+      '"Alışır" diye birden tüm tırnakları kesmek için ısrar etmeyin; bir "quick" (damar) kesilmesi aylarca kazanılan güveni yok eder.',
+      'Direniş anında ödül vermeyin; hareketsiz ve sakin olduğu tek anda ödüllendirin.'
+    ],
+    whenToCallProfessional: [
+      'Tırnak kesimi sırasında köpek ısırma girişiminde bulunuyorsa sertifikalı köpek eğiticisi ve mümkünse sertifikalı groomer birlikte çalışmalıdır.',
+      'Vejetatif semptomlar (aşırı salya, titriye titriye donma) görülüyorsa veteriner kanalıyla hafif sedatif destekli bakım seansları değerlendirilebilir.'
+    ]
   }
 ];
