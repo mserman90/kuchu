@@ -16,7 +16,7 @@ export interface BehaviorProblem {
   id: string;
   slug: string;
   title: string;
-  category: 'reactivity' | 'anxiety' | 'puppy' | 'habits' | 'fear';
+  category: 'reactivity' | 'anxiety' | 'puppy' | 'habits' | 'fear' | 'predatory' | 'compulsive';
   severity: 'low' | 'medium' | 'high';
   shortDescription: string;
   rootCauses: string[];
@@ -83,6 +83,57 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
     ]
   },
   {
+    id: 'livestock-predation',
+    slug: 'ciftlik-ve-kumes-hayvanlarini-avlama',
+    title: 'ÇİFTLİK & EV HAYVANLARINI AVLAMA (TAVUK, KOYUN, KEDİ - PREDATORY DRIFT)',
+    category: 'predatory',
+    severity: 'high',
+    shortDescription: 'Çiftlikte veya kırsalda tavuk, koyun, kuzu, kedi veya ördekleri kovalama, yakalama ve öldürme/yeme refleksi.',
+    rootCauses: [
+      'Evrimsel Avlanma Motor Sekansı (Gözlem -> Takip -> Kovalama -> Yakalama -> Öldürme Isırığı -> Tüketme)',
+      'Predatory Drift (Oyun olarak başlayan kovalamanın aniden gerçek öldürücü av refleksine dönüşmesi)',
+      'Bir kez dahi tavuk veya küçük hayvan yakalayıp yemiş olmanın beyinde yarattığı devasa dopamin patlaması',
+      'Çiftlikte can sıkıntısı, yalnızlık ve genetik av/çoban enerjisinin boşaltılamaması'
+    ],
+    positiveProtocol: {
+      protocolName: 'Güdü Deşarjı, Premack İlkesi ve Eşik Altı Koşullandırma',
+      overview: 'Avlanma enerjisini flört sopası (kamçı oyuncak) ile tatmin edip, çiftlik hayvanlarının varlığını "sahibe dönüp yere yatma" kuralına bağlayın.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Flirt Pole (Kamçı Oyuncak) ile Av Güdüsünü Deşarj Edin',
+          instruction: 'Ucunda pelüş veya deri bağlı uzun bir eğitim kamçısını yerde hızla hareket ettirerek kovalamasına izin verin. Köpek yakalamak üzereyken "Bırak!" ve "Bekle!" diyerek dürtü kontrolü inşa edin.',
+          scientificTip: 'Genetik av enerjisi bir baraj gibi birikir; bu enerjiyi oyuncakla boşaltmazsanız canlı hayvana patlar.'
+        },
+        {
+          stepNumber: 2,
+          title: '15 Metrelik Uzun Takip Tasması ile Eşik Altı Çalışma',
+          instruction: 'Kümesin veya koyun ağılının 30 metre uzağında durun. Köpek tavuklara baktığı salisede adını söyleyin; başını size çevirdiği an süper ödül (ciğer/kaşar) verin.',
+          scientificTip: 'Köpek hedefe kilitlenip kaskatı kesilmeden (Eye-Stalk evresi) araya girmelisiniz.'
+        },
+        {
+          stepNumber: 3,
+          title: 'Premack İlkesi (Büyükanne Kuralı): Sakin Kalırsan Keşfedersin',
+          instruction: 'Köpek tasmada gerilmeden, sakin ve başı yerde yürüdükçe çiftlik arazisinde serbest koklama molası kazanmasını sağlayın.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Kümes ve ağıl etrafını çift katmanlı sağlam tel örgüyle izole edin. Köpeğin hayvanları tek başına gözetimsiz kovalamasına ASLA izin vermeyin; çiftlikte serbestken 15 metrelik uzun takip tasması (long line) takılı olmalıdır. Bir tek başarılı av, aylar süren eğitimi sıfırlar.',
+      modification: 'Karşıt Koşullanma: Canlı hayvanın hareketi = Yüksek değerli yiyeceğin sahibin elinden gelmesi eşleştirmesi.',
+      responseSubstitution: 'Tepki İkamesi (DRI): Tavuk, kedi veya koyun gördüğü anda öne fırlamak yerine, derhal yere yatıp çenesini yere koyma ("Down / Yat") davranışı.',
+      medicalRuleOut: 'Protein/mineral yetersizliği, bağırsak parazitleri veya B12 vitamini emilim bozukluğu nedeniyle oluşan kemirgen ve hayvan yeme açlığı hekimce elenmelidir.'
+    },
+    whatNotToDo: [
+      'Öldürdüğü tavukla köpeğe vurmayın veya boynuna ölü hayvan bağlamayın (İlkel, zalim ve sonuç vermeyen bir hurafedir; köpekte korku agresyonu yaratır).',
+      'Elektrikli şok tasması kullanmayın (Şok acısını hayvanla bağdaştırıp hayvana daha büyük bir öfkeyle saldırabilir).',
+      'Köpeği 24 saat zincire bağlamayın (Zincir hüsranı ve saldırganlığı katlar).'
+    ],
+    whenToCallProfessional: [
+      'Köpek komşu çiftliklerin koyun veya büyükbaş hayvanlarını telef etme aşamasına geldiyse profesyonel çalışma köpeği etoloğu zorunludur.'
+    ]
+  },
+  {
     id: 'separation-anxiety',
     slug: 'ayrilik-anksiyetesi-yalnizlik-korkusu',
     title: 'AYRILIK ANKSİYETESİ VE YALNIZ KALAMAMA',
@@ -130,6 +181,99 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
     whenToCallProfessional: [
       'Köpek kapıları veya camları kırarak kendine fiziksel zarar veriyorsa',
       'Ayrılık anında kalp çarpıntısı, hiperventilasyon ve kusma görülüyorsa (Merck farmakoterapi protokolü gerekebilir).'
+    ]
+  },
+  {
+    id: 'coprophagia',
+    slug: 'diski-yeme-koprofaji-aliskanligi',
+    title: 'DIŞKI YEME (KOPROFAJİ - KENDİ VE DİĞER CANLILARIN DIŞKISI)',
+    category: 'habits',
+    severity: 'medium',
+    shortDescription: 'Kendi dışkısını, diğer köpeklerin veya kedi/çiftlik hayvanlarının dışkısını arayıp tüketme davranışı.',
+    rootCauses: [
+      'Sindirim enzimi yetersizliği (Ekzokrin Pankreas Yetersizliği - EPI) veya bağırsak emilim bozukluğu',
+      'Yavrulukta eve pislediğinde burnu pisliğe sürtülmüş köpeklerde "cezadan kaçmak için kanıtı yok etme" refleksi',
+      'Kedi mamalarının yüksek proteinli olması nedeniyle kedi dışkısının lezzetli bir besin olarak algılanması',
+      'Yetersiz zihinsel uyarılma, can sıkıntısı ve dikkat çekme isteği'
+    ],
+    positiveProtocol: {
+      protocolName: 'Dışkı Yönetimi, Ananas/Enzim Desteği ve "Bırak" (Leave It) Protokolü',
+      overview: 'Dışkıya ulaşımı sıfırlayıp, bağırsak florasını güçlendirin ve dışkıyı gördüğü an sahibine koşmasını ödüllendirin.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Dışkı Düştüğü Saniyede Alanı Temizleyin',
+          instruction: 'Köpek tuvaletini bitirir bitirmez henüz dönüp koklayamadan önüne ödül maması atın ve dışkıyı derhal poşetleyin.',
+          scientificTip: 'Alışkanlığın kırılmasındaki ilk kural, köpeğin bu davranışı pratik etme fırsatını sıfıra indirmektir.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Mamasına Taze Ananas veya Kabak Püresi Ekleyin',
+          instruction: 'Veteriner hekim onayıyla mamasına günde 1 tatlı kaşığı taze ananas ekleyin. Ananastaki bromelain enzimi dışkının kokusunu köpek için son derece itici hale getirir.',
+        },
+        {
+          stepNumber: 3,
+          title: 'Otomatik "Bırak ve Bana Dön" Eğitimi',
+          instruction: 'Yürüyüşte yerdeki bir pisliğe yaklaştığında "Bırak!" deyin; burnunu çektiği anda yere en sevdiği et parçasını atın.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Bahçeyi her gün pisliklerden arındırın; evdeki kedi kumunu köpeğin giremeyeceği kapaklı/yüksek alanlara taşıyın. Yürüyüşlerde sepet burunluk (basket muzzle) ile dışkı kapmasını engelleyin.',
+      modification: 'Yerdeki dışkı = Sahibin gözünün içine bakma (Look at that / Check-in) işaretine dönüştürülür.',
+      responseSubstitution: 'Tepki İkamesi (DRI): Yerde yabancı bir dışkı kokladığı an derhal durup sahibinin önünde oturma davranışı.',
+      medicalRuleOut: 'Ekzokrin Pankreas Yetersizliği (EPI), bağırsak parazitleri, B-kompleks vitamin eksiklikleri hekimce tam dışkı ve kan tahliliyle elenmelidir.'
+    },
+    whatNotToDo: [
+      'Dışkı yerken bağıra çağıra köpeğin üzerine koşmayın (Köpek dışkıyı sizden kaçırmak için daha hızlı yutacaktır).',
+      'Burnunu dışkıya sürtmeyin (Dışkı yeme hastalığını tetikleyen birincil travmadır).'
+    ],
+    whenToCallProfessional: [
+      'Beslenme ve enzim takviyelerine rağmen günde birden fazla kez yabancı dışkı yiyip parazit veya zehirlenme riski oluşuyorsa.'
+    ]
+  },
+  {
+    id: 'compulsive-licking-tail-chasing',
+    slug: 'kompulsif-pati-yalama-kuyruk-kovalama',
+    title: 'KOMPULSİF BOZUKLUKLAR (AŞIRI PATİ YALAMA & KUYRUK KOVALAMA - OKB)',
+    category: 'compulsive',
+    severity: 'high',
+    shortDescription: 'Patilerini kanatana kadar aralıksız yalama (Yalama Granülomu), kendi kuyruğunu saatlerce dönerek kovalama veya boşluğa diş geçirme.',
+    rootCauses: [
+      'Kronik stres, kaygı ve hüsranın kompulsif stereotipiye (Köpek OKB\'si) evrilmesi',
+      'Sürekli yalama eyleminin beyinde endorfin salgılatması ve köpeğin bu uyuşturucu etkiye bağımlı hale gelmesi',
+      'Atopik dermatit, pati arası alerji veya omurga/eklem ağrıları',
+      'Genetik yatkınlık (Bull Terrier gibi ırklarda kuyruk kovalama genetik nörolojik temellidir)'
+    ],
+    positiveProtocol: {
+      protocolName: 'Duyusal Zenginleştirme, Stres Azaltma ve Davranış Kırma',
+      overview: 'Yalama transına girmesine izin vermeden dikkatini koklama ve zihinsel bulmacalara yönlendirin.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Yalama Başladığı An Bağırmadan Dikkatini Dağıtın',
+          instruction: 'Patisini yalamaya başladığı ilk 5 saniyede sakin bir sesle adını söyleyin ve yere koklama matı veya çiğneme boynuzu uzatın.',
+          scientificTip: 'Davranış trans haline geçtikten sonra müdahale etmek imkansızlaşır; erken kesmek şarttır.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Günlük Zihinsel Enerjiyi İkiye Katlayın',
+          instruction: 'Günde 2 kez 15 dakikalık koku arama oyunları (burun işi) yaptırın. Burun çalışması beyindeki dopamin ve serotonin dengesini düzenler.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Yaralı patileri korumak için yumuşak medikal koruyucu çorap veya şişme boyunluk kullanın. Köpeğin stresini artıran tetikleyicileri evden uzaklaştırın.',
+      modification: 'Yalamaya yöneldiği anda alternatif bir zihinsel görev verme; sakin yatış anlarını ödüllendirme.',
+      responseSubstitution: 'Tepki İkamesi: Patisini yalama dürtüsü geldiğinde, dondurulmuş Lickimat veya KONG oyuncağını yalamaya yönlendirme.',
+      medicalRuleOut: 'Merck Veterinary Manual uyarınca alerjik dermatit, gıda intoleransı veya nöropatik ağrı dışlanmalıdır. İleri vakalarda veteriner hekim reçeteli Fluoxetine (SSRI) farmakoterapisi beyin nörokimyasını dengelemek için gereklidir.'
+    },
+    whatNotToDo: [
+      'Yalarken köpeğe bağırmayın veya eline vurmayın (Stresini artırıp yalamayı daha da şiddetlendirir).',
+      'Yarayı sadece bandajla kapatıp psikolojik kök nedeni görmezden gelmeyin.'
+    ],
+    whenToCallProfessional: [
+      'Pati derisi açılıp kemik enfeksiyonu (osteomiyelit) riski doğduysa derhal veteriner klinik tedavisi başlatılmalıdır.'
     ]
   },
   {
@@ -272,6 +416,151 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
     ],
     whenToCallProfessional: [
       'Köpek aile üyelerinden birine veya çocuklara kaynak koruma amaçlı saldırdıysa derhal profesyonel etolog çağrılmalıdır.'
+    ]
+  },
+  {
+    id: 'car-travel-anxiety',
+    slug: 'araba-yolculugu-ve-arac-tutmasi',
+    title: 'ARABA YOLCULUĞU ANKSİYETESİ VE ARAÇ TUTMASI (MOTION SICKNESS)',
+    category: 'anxiety',
+    severity: 'medium',
+    shortDescription: 'Arabayı gördüğü an titreme, araca binmeyi reddetme, yolculuk boyunca salya akıtma veya kusma.',
+    rootCauses: [
+      'Yavrulukta iç kulak vestibüler dengesinin henüz tam gelişmemesi nedeniyle yaşanan mide bulantısının koşullanması',
+      'Arabanın yalnızca veteriner kliniği veya aşı gibi stresli deneyimlerle eşleşmiş olması',
+      'Aracın motor sesi, titreşimi ve camdan hızla akan nesnelerin yarattığı duyusal aşırı yükleme'
+    ],
+    positiveProtocol: {
+      protocolName: 'Duran Araçta Kademeli Desensitizasyon ve Güven İnşası',
+      overview: 'Motor çalışmazken arabada lezzetli ödüller yiyerek başlayıp, 100 metrelik keyifli park sürüşlerine geçin.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Park Halindeki Arabada Piknik Yapın',
+          instruction: 'Motoru çalıştırmayın, kapıları açık tutun. Arabanın bagajında veya arka koltuğunda oturup köpeğinize en sevdiği ödül mamasını verin ve inin.',
+          scientificTip: 'Araba binilen ve hemen kapatılan bir tuzak olmaktan çıkıp pozitif bir mekana dönüşmelidir.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Motor Sesine Alıştırma',
+          instruction: 'Araba hareket etmeden sadece motoru çalıştırın, 1 dakika sakin bekleyince ödüllendirip arabadan indirin.',
+        },
+        {
+          stepNumber: 3,
+          title: 'Çok Kısa Mesafe ve Eğlenceli Varış Noktası',
+          instruction: 'Mahalle etrafında 2 dakikalık bir tur atıp doğrudan köpeğin çok sevdiği bir yeşil alana varın.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Yolculuktan en az 3 saat önce mama vermeyi kesin. Güvenlik kemerli oto göğüs tasması ile köpeği sabitleyin; camı 2 parmak aralayarak temiz hava ve koku akışı sağlayın.',
+      modification: 'Araca yaklaşım ve biniş hareketini yüksek değerli ciğer ödülleriyle klasik koşullama.',
+      responseSubstitution: 'Tepki İkamesi: Koltuğa oturduğunda yatarak güvenli emniyet kemeri pozisyonunda bekleme.',
+      medicalRuleOut: 'Vestibüler iç kulak hassasiyeti (Motion Sickness) için veteriner hekim reçeteli Maropitant (Cerenia) bulantı önleyici ilaç kullanımı anksiyete döngüsünü kırar.'
+    },
+    whatNotToDo: [
+      'Arabada kustuğu veya salya akıttığı için köpeğe kızmayın (Fizyolojik bir bulantı refleksidir).',
+      'Köpeği zorla kucaklayıp arabanın içine fırlatmayın.'
+    ],
+    whenToCallProfessional: [
+      'Araba hareket ettiği anda kendini camdan atmaya çalışacak veya sahibine saldıracak düzeyde panik krizleri varsa.'
+    ]
+  },
+  {
+    id: 'handling-vet-grooming-fear',
+    slug: 'veteriner-tirnak-ve-bakim-korkusu',
+    title: 'VETERİNER MUAYENESİ, TIRNAK KESİMİ VE BAKIM FOBİSİ',
+    category: 'fear',
+    severity: 'medium',
+    shortDescription: 'Tırnak makası, fırça veya kulak damlası gördüğünde kaçma, masaya konulduğunda hırlama veya panik krizine girme.',
+    rootCauses: [
+      'Geçmişte tırnağın canlı pembe dokusuna (quick) basılıp derin acı yaşatılmış olması',
+      'Fiziksel kısıtlanma (restraint) paniği ve hareket edememe çaresizliği',
+      'Kooperatif bakım (rıza temelli yaklaşım) yerine zorla tutularak işlem yapılması travması'
+    ],
+    positiveProtocol: {
+      protocolName: 'Kooperatif Bakım ve Çene Hedefleme Protokolü (Cooperative Care)',
+      overview: 'Köpeğe "Dur" deme yetkisi vererek güven inşa edin; rıza gösterdikçe milim milim bakım uygulayın.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Tırnak Makası Yerdeyken Ödül Saçın',
+          instruction: 'Makası elinize almayın; yere koyun ve etrafına ödül maması saçın. Aletin görüntüsünü pozitifleştirin.',
+          scientificTip: 'Aletin kendisi nötrleşmeden patiye dokundurulamaz.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Çenesini Elinize Koyma Rızası (Chin Rest)',
+          instruction: 'Köpek çenesini avucunuza koyduğunda tırnağına dokunun; çenesini çekerse bakımı derhal durdurun.',
+          scientificTip: 'Kontrolün kendisinde olduğunu bilen köpeklerin stres seviyesi %80 oranında düşer.'
+        },
+        {
+          stepNumber: 3,
+          title: 'Günde Yalnızca 1 Tırnak Kuralı',
+          instruction: 'Tek bir seansta tüm patileri bitirmeye çalışmayın. Günde 1 tırnak kesip dev bir ödülle günü bitirin.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Köpeğin üzerine 3 kişinin çullanarak zorla işlem yapmasını durdurun. Fıstık ezmeli Lickimat\'ı duvara yapıştırarak dikkatini odağa toplayın.',
+      modification: 'Dokunma desensitizasyonu: Patiye 1 saniye dokunma = Lezzetli ödül döngüsü.',
+      responseSubstitution: 'Tepki İkamesi: Çenesini mindere veya ele yaslayarak sakin durma davranışı.',
+      medicalRuleOut: 'Kulak enfeksiyonu (otit), tırnak batığı veya pati yastığı apsesi gibi acı veren lezyonlar hekimce tedavi edilmelidir.'
+    },
+    whatNotToDo: [
+      'Köpeği kündeye getirip hareketsiz kılarak zorla tırnak kesmeyin (Veteriner fobisinin ana sebebidir).',
+      'Tırnak makasıyla köpeği kovalamayın.'
+    ],
+    whenToCallProfessional: [
+      'Rutin muayenede veya tırnak bakımında veteriner hekimi ısıracak seviyede savunma agresyonu varsa hekim kontrollü hafif sedasyon gereklidir.'
+    ]
+  },
+  {
+    id: 'door-dashing-escape',
+    slug: 'kapi-acildiginda-evden-bahceden-kacma',
+    title: 'KAPI AÇILDIĞINDA EVDEN / BAHÇEDEN KAÇMA (DOOR DASHING)',
+    category: 'habits',
+    severity: 'medium',
+    shortDescription: 'Sokak kapısı veya bahçe kapısı açıldığı an fırlayıp kaçma, çağrıldığında dönmeme ve yakalamaca oynama.',
+    rootCauses: [
+      'Dış dünyadaki uyarım ve kokuların ev ortamından katbekat cazip olması',
+      'Kapı aralığının doğrudan "özgürlük ve koşma oyunu" ile koşullanmış olması',
+      'Sahibin arkasından koşarak köpeğe kovalama oyunu oynattığı yanılgısı yaratması'
+    ],
+    positiveProtocol: {
+      protocolName: 'Görünmez Kapı Bariyeri ve "Otur-Bekle" Protokolü',
+      overview: 'Kapı tamamen açıkken bile sahibinden izin komutu gelmeden eşikten tek adım atılmayacağını öğretin.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Kapı Koluna El Değdiğinde Oturma',
+          instruction: 'Kapı koluna dokunun; köpek oturana kadar kapıyı açmayın. Oturduğu an kapıyı 5 cm aralayın.',
+          scientificTip: 'Köpek fırlamaya yeltenir yeltenmez kapıyı hemen geri kapatarak "acele edersen kapı kapanır" kuralını öğretin.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Kapı Tam Açıkken Bekleme Egzersizi',
+          instruction: 'Tasmayı tutarak kapıyı sonuna kadar açın. Köpek kapı eşiğinde beklerken içeriye doğru ödül atın.',
+        },
+        {
+          stepNumber: 3,
+          title: 'İzin Kelimesi ile Geçiş: "Hadi / Serbest"',
+          instruction: 'Dışarı çıkış ödülünü yalnızca sizin verdiğiniz izin kelimesine bağlayın.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Dış kapının önüne bebek güvenlik bariyeri (baby gate) takın; bahçe kapısını daima kilitli tutun. Kapı açılırken köpeği tasmayla kontrol altında tutun.',
+      modification: 'Kapı açılması = Sahibin gözünün içine bakıp oturma koşullanması.',
+      responseSubstitution: 'Tepki İkamesi (DRI): Kapı zili çaldığında veya kapı açıldığında kapıdan 2 metre uzaktaki matında oturup bekleme.',
+      medicalRuleOut: 'Kısırlaştırılmamış erkek köpeklerde kilometrelerce öteden dişi kokusu alarak kaçma hormonal dürtüsü hekimle değerlendirilmelidir.'
+    },
+    whatNotToDo: [
+      'Kaçtığında arkasından bağırarak koşmayın (Köpek bunu harika bir kovalamaca oyunu sanıp daha da hızlanır).',
+      'Geri geldiğinde kaçtığı için köpeğe kızmayın (Geri gelmeyi cezalandırmış olursunuz).'
+    ],
+    whenToCallProfessional: [
+      'Köpek ana caddelere fırlayıp araba çarpması hayati tehlikesi yaratıyorsa acil etolojik müdahale şarttır.'
     ]
   },
   {

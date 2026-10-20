@@ -7,7 +7,8 @@ export type ProblemCategory =
   | 'fear_phobia'
   | 'jumping_hyperactivity'
   | 'senior_dishaa'
-  | 'pain_medical';
+  | 'pain_medical'
+  | 'predatory_drift';
 
 export interface TriageOption {
   id: string;

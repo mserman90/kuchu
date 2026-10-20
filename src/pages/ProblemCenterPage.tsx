@@ -19,11 +19,13 @@ export const ProblemCenterPage: React.FC = () => {
   const [activeProblem, setActiveProblem] = useState<BehaviorProblem | null>(null);
 
   const categories = [
-    { id: 'all', label: 'TÜMÜ (8 SORUN)' },
+    { id: 'all', label: `TÜMÜ (${BEHAVIOR_PROBLEMS.length})` },
+    { id: 'predatory', label: '🌾 ÇİFTLİK & AV DÜRTÜSÜ' },
     { id: 'reactivity', label: 'HAVLAMA & REAKTİVİTE' },
     { id: 'anxiety', label: 'AYRILIK & YALNIZLIK' },
+    { id: 'compulsive', label: 'KOMPULSİF & ALIŞKANLIK' },
     { id: 'puppy', label: 'YAVRU & ISIRMA' },
-    { id: 'habits', label: 'TASMA, TUVALET & ZIPLAMA' },
+    { id: 'habits', label: 'TASMA, TUVALET & KAPI' },
     { id: 'fear', label: 'KORKU & FOBİLER' }
   ];
 

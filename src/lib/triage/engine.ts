@@ -54,6 +54,12 @@ export const TRIAGE_QUESTIONS: TriageQuestion[] = [
         label: 'Yaşlılık, Yön Kaybı & Gece Turlaması',
         description: 'Odada sıkışıp kalma, kapıyı şaşırma, gece uyumayıp volta atma ve boşluğa bakma.',
         icon: '⏳'
+      },
+      {
+        id: 'symptom_predatory',
+        label: '🌾 Çiftlik / Ev Hayvanı Avlama & Kovalama',
+        description: 'Tavuk, koyun, kedi, kuş kovalama, kapıp ısırma veya öldürme (Av dürtüsü / Predatory Drift).',
+        icon: '🌾'
       }
     ]
   },
@@ -530,6 +536,43 @@ export function resolveTriageSolution(answers: TriageAnswers, dogName: string = 
       recommendedProblemSlug: 'gok-gurultusu-ve-havai-fisek-korkusu',
       recommendedArticleSlug: 'merck-3m-davranis-modifikasyon-modeli',
       recommendedPlanType: 'mental_enrichment'
+    };
+  }
+
+  // RULE 9: Predatory Drift / Livestock / Small Animal Predation
+  if (primarySymptom === 'symptom_predatory') {
+    return {
+      diagnosisTitle: 'Av Dürtüsü ve Predatory Drift (Çiftlik Hayvanı / Kedi Avlama)',
+      category: 'predatory_drift',
+      urgencyLevel: 'high',
+      confidencePercentage: 94,
+      clinicalSummary: `Bu davranış bir itaatsizlik veya agresyon değil; kanidlerin etolojik avlanma sekansının (Gözle -> Sessiz Takip -> Kovalama -> Yakalama -> Öldürücü Isırık) kontrolsüz tetiklenmesidir. Tavuk, kedi veya koyunun kaçışı av motor paternini otonomik olarak başlatır.`,
+      rootCause: 'Güçlü genetik avlanma motor paterni ve güdünün kontrollü bir kanalda deşarj edilmemesi.',
+      redFlags: [
+        'Kovalama anında sahibinin sesini kesinlikle duymama (Av tüneli vizyonu)',
+        'Tavuk, koyun veya kediyi yakalayıp sallama/boğma geçmişi',
+        'Çitleri veya kapıları aşarak kümes/ağıl alanına sızma'
+      ],
+      merck3MPlan: {
+        management: 'Köpeği çiftlik ve evcil hayvanların olduğu alanda ASLA serbest bırakmayın; çift kademeli tel çit ve 15 metrelik biyotan uzun takip tasması (long line) kullanın.',
+        modification: 'Premack İlkesi ve Flirt Pole: Av dürtüsünü kontrollü pelüş yapay avla deşarj edin. Sakin bakış ve temas kurma anında güvenli av oyununu ödül olarak sunun.',
+        responseSubstitution: 'Tepki İkamesi (DRI): Hareket eden hayvan gördüğünde atılmak yerine yere göğsünü yapıştırıp yatma ("YAT/DOWN") veya sahibine dönüp göz teması kurma.',
+        medicalThreshold: 'Ani başlayan koku/doku/dışkı veya hayvan tüketiminde B12/folat emilim bozukluğu, ekzokrin pankreas yetersizliği (EPI) ve paraziter enfeksiyon dışlanmalıdır.'
+      },
+      immediateActionSteps: [
+        'Kümes veya ağıl çevresinde köpeği daima 15 metrelik uzun takip tasmasında tutun; tek başına serbest bırakmayın.',
+        'Her gün 15 dakika Flirt Pole (av oltası) ile av güdüsünü kontrollü şekilde boşaltın.',
+        'Tavuk/kedi gördüğünde kovalamadan size baktığı ilk milisaniyede yüksek değerli ciğer/kaşar ödülü verin.'
+      ],
+      ownerMistakesToStop: [
+        ...customMistakes,
+        'Ölü tavuğu köpeğin boynuna bağlamak veya köpeği dövmek (Halk efsanesidir; köpekte derin travma yaratır, av dürtüsünü yok etmez).',
+        'Elektroşok tasması kullanmak (Tavuk/koyun ile elektrik çarpması arasında yanlış eşleşme kurup kaçak saldırganlığı artırır).',
+        'Bir kez yakaladıktan sonra "bir şey yapmaz" diyerek gözetimsiz serbest bırakmak.'
+      ],
+      recommendedProblemSlug: 'ciftlik-ve-kucuk-hayvan-avlama-predatory-drift',
+      recommendedArticleSlug: 'merck-kopeklerde-agresyon-taksonomisi',
+      recommendedPlanType: 'loose_leash'
     };
   }
 
