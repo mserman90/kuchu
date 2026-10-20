@@ -2,15 +2,43 @@
 <html lang="tr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
     <title>Kuchu — Köpek Psikolojisi ve Pozitif Eğitim Platformu</title>
     <meta name="description" content="Bilimsel temelli, pozitif pekiştirme odaklı köpek psikolojisi, vücut dili ve davranış analizi web uygulaması." />
+    
+    <!-- PWA & Mobile Web App Meta -->
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Kuchu" />
+    <meta name="application-name" content="Kuchu" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Icons & Manifest -->
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+
+    <!-- Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
   </head>
-  <body class="bg-white dark:bg-black text-black dark:text-white font-sans antialiased">
+  <body class="bg-white dark:bg-black text-black dark:text-white font-sans antialiased selection:bg-red-600 selection:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js')
+            .then((reg) => console.log('[PWA] ServiceWorker registered with scope:', reg.scope))
+            .catch((err) => console.warn('[PWA] ServiceWorker registration failed:', err));
+        });
+      }
+    </script>
   </body>
 </html>

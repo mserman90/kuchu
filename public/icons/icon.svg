@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" fill="#000000" />
+  <rect x="16" y="16" width="480" height="480" fill="none" stroke="#ffffff" stroke-width="8" />
+  <!-- Center Red Square Accent (Swiss Modernism Josef Müller-Brockmann signature) -->
+  <rect x="400" y="48" width="48" height="48" fill="#dc2626" stroke="#ffffff" stroke-width="4" />
+  <!-- Dog Paw Silhouette -->
+  <g fill="#ffffff" transform="translate(106, 120) scale(0.6)">
+    <!-- Main Pad -->
+    <path d="M 250 360 C 180 360 140 430 150 490 C 160 540 210 560 250 560 C 290 560 340 540 350 490 C 360 430 320 360 250 360 Z" />
+    <!-- Toe 1 -->
+    <ellipse cx="140" cy="270" rx="42" ry="60" transform="rotate(-20 140 270)" />
+    <!-- Toe 2 -->
+    <ellipse cx="215" cy="210" rx="42" ry="68" transform="rotate(-6 215 210)" />
+    <!-- Toe 3 -->
+    <ellipse cx="285" cy="210" rx="42" ry="68" transform="rotate(6 285 210)" />
+    <!-- Toe 4 -->
+    <ellipse cx="360" cy="270" rx="42" ry="60" transform="rotate(20 360 270)" />
+  </g>
+  <!-- Text Label KUCHU -->
+  <text x="256" y="460" font-family="'Inter', -apple-system, sans-serif" font-weight="900" font-size="52" fill="#ffffff" text-anchor="middle" letter-spacing="8">KUCHU</text>
+</svg>

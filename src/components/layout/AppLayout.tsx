@@ -2,15 +2,20 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { SiteHeader } from './SiteHeader';
 import { SiteFooter } from './SiteFooter';
+import { MobileBottomNav } from './MobileBottomNav';
+import { PwaInstallPrompt } from '@/components/common/PwaInstallPrompt';
 
 export const AppLayout: React.FC = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-black text-black dark:text-white">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-black text-black dark:text-white relative">
       <SiteHeader />
-      <main className="flex-1">
+      {/* Mobile bottom padding to accommodate bottom navigation bar */}
+      <main className="flex-1 pb-20 sm:pb-0">
         <Outlet />
       </main>
       <SiteFooter />
+      <MobileBottomNav />
+      <PwaInstallPrompt />
     </div>
   );
 };

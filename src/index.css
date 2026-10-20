@@ -57,6 +57,20 @@ body {
   font-family: var(--font-sans);
   letter-spacing: -0.02em;
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Mobile PWA & Touch Optimizations */
+@supports (padding-top: env(safe-area-inset-top)) {
+  body {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Swiss Modernism Sharp Reset & Rules */
