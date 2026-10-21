@@ -318,3 +318,239 @@ export const ARTICLES: LibraryArticle[] = [
     ]
   }
 ];
+
+export const ARTICLES_EN_MAP: Record<string, Partial<LibraryArticle>> = {
+  'merck-agresyon-taksonomisi': {
+    title: 'MERCK VET MANUAL: AGGRESSION TAXONOMY & DIFFERENTIAL DIAGNOSIS',
+    summary: 'Clinical ethological differentiation of fear aggression, resource guarding, conflict-related, and redirected aggression with safe intervention standards.',
+    author: 'Merck Veterinary Manual Clinical Behavior Summary',
+    tags: ['Merck Vet Manual', 'Aggression Taxonomy', 'Fear Aggression', 'Conflict Aggression', 'Clinical Ethology'],
+    content: [
+      {
+        heading: 'Aggression is an Adaptive Defense Mechanism, Not a Character Flaw',
+        paragraphs: [
+          'According to the Merck Veterinary Manual, aggressive canine behaviors do not signify a "bad temperament". Aggression is an evolutionary, adaptive defense reaction initiated when facing perceived danger, fear, or loss of vital resources.',
+          'Fear-related aggression accounts for the vast majority of clinical cases. When a dog feels cornered and flight distance is depleted, defensive snaps occur as a last resort.'
+        ],
+        callout: 'Punishing a dog with fear aggression reinforces the belief that the stimulus is indeed life-threatening, escalating bite severity.'
+      },
+      {
+        heading: 'Conflict-Related Aggression and the Dominance Fallacy',
+        paragraphs: [
+          'Conflict-related aggression is commonly triggered when handlers misread subtle body language and use physical coercion (dragging from beds, hugging, looming over, or alpha rolling).',
+          'Faced with this pressure, the dog first sets boundaries via yawning, lip licking, and low growls. When these warnings are punished as "dominance", the dog ceases warning and bites directly.'
+        ]
+      },
+      {
+        heading: 'Resource Guarding and Redirected Aggression',
+        paragraphs: [
+          'Resource guarding (food, bones, high-value toys) is an evolutionary survival inheritance. Merck protocols mandate the "Trade-up" technique rather than forceful confiscation.',
+          'Redirected aggression occurs when an aroused dog behind a fence cannot reach the trigger and redirects built-up adrenaline onto the nearest human or companion dog.'
+        ],
+        callout: 'Merck Rule: Never punish a growl. A growl is the safety catch before a bite. Disarming the warning creates a dog that bites without signal.'
+      }
+    ]
+  },
+  'merck-dishaa-demans': {
+    title: 'MERCK VET MANUAL: DISHAA MODEL & CANINE COGNITIVE DYSFUNCTION (CDS)',
+    summary: 'Recognizing canine dementia in dogs over age 8: Clinical screening using DISHAA framework and neuroprotective management.',
+    author: 'Merck Veterinary Manual Geriatric Behavior',
+    tags: ['Merck Vet Manual', 'Canine Dementia', 'DISHAA Model', 'Geriatric Care', 'CDS'],
+    content: [
+      {
+        heading: 'Canine Cognitive Dysfunction Syndrome (CDS)',
+        paragraphs: [
+          'In dogs over 8 years of age, progressive cognitive decline similar to Alzheimer’s in humans can develop due to beta-amyloid plaque accumulation and oxidative stress.',
+          'The Merck Veterinary Manual standardizes clinical evaluation with the DISHAA screening tool.'
+        ]
+      },
+      {
+        heading: 'The 6 Pillars of the DISHAA Assessment',
+        paragraphs: [
+          'D (Disorientation): Getting stuck behind doors or in room corners, unable to back up.',
+          'I (Interactions): Social changes — excessive clinginess or aloof withdrawal from family members.',
+          'S (Sleep-wake cycles): Restless night pacing and vocalizing, combined with deep daytime sleeping.',
+          'H (House soiling): Urinating or defecating indoors despite decades of reliable housetraining.',
+          'A (Anxiety): New sudden phobias, separation panic, or fear of shadows/darkness.',
+          'A (Activity): Purposeless wandering, repetitive licking, or loss of interest in toys and walks.'
+        ],
+        callout: 'Early veterinary intervention with antioxidant diets, omega-3 DHA, and neuroprotective supplements significantly slows progression.'
+      }
+    ]
+  },
+  'merck-tepki-ikamesi-dri': {
+    title: 'MERCK VET MANUAL: RESPONSE SUBSTITUTION (DRI / DRA) PROTOCOLS',
+    summary: 'Differential Reinforcement of Incompatible Behavior (DRI): Replacing jumping and lunging with incompatible calm behaviors.',
+    author: 'Merck Veterinary Manual Learning Principles',
+    tags: ['Merck Vet Manual', 'DRI Protocol', 'Response Substitution', 'Positive Reinforcement'],
+    content: [
+      {
+        heading: 'The Science of Incompatible Behaviors',
+        paragraphs: [
+          'In operant ethology, telling a dog "No!" or "Don\'t jump!" is ineffective because it fails to communicate what the dog SHOULD do.',
+          'Differential Reinforcement of Incompatible Behavior (DRI) focuses on rewarding a physically impossible alternative: a dog cannot jump on a guest while its buttocks remain planted firmly on a training mat.'
+        ],
+        callout: 'Never punish an unwanted behavior without first teaching and heavily rewarding an incompatible alternative.'
+      }
+    ]
+  },
+  'merck-sosyal-davranis-suru-miti': {
+    title: 'MERCK VET MANUAL: SOCIAL DYNAMICS & DEBUNKING THE PACK HIERARCHY MYTH',
+    summary: 'Scientific ethology proves domestic dogs do not form rigid linear dominance hierarchies with human families.',
+    author: 'Merck Veterinary Manual Social Behavior',
+    tags: ['Merck Vet Manual', 'Pack Myth', 'Alpha Myth', 'Ethology', 'Dog Psychology'],
+    content: [
+      {
+        heading: 'The Fallacy of the Human Alpha',
+        paragraphs: [
+          'Modern peer-reviewed behavioral veterinary medicine emphasizes that domestic dogs are an altricial companion species that view human caretakers as parental attachment figures rather than rival pack competitors.',
+          'Forced submission and coercive dominance exercises are the primary risk factor for fear-induced defensive bite injuries.'
+        ]
+      }
+    ]
+  },
+  'merck-3m-protokolu': {
+    title: 'MERCK VET MANUAL: THE 3M TREATMENT MODEL (MANAGEMENT, MODIFICATION, MEDICATION)',
+    summary: 'The gold standard of veterinary behavioral medicine: 1. Environmental Management, 2. Positive Modification, and 3. Medical Threshold.',
+    author: 'Merck Veterinary Manual Behavior Therapy',
+    tags: ['Merck Vet Manual', '3M Model', 'Desensitization', 'Counter-Conditioning', 'Pharmacotherapy'],
+    content: [
+      {
+        heading: 'Pillar 1: Environmental Management',
+        paragraphs: [
+          'Every time a dog repeats an unwanted reactive behavior, that neural pathway is reinforced.',
+          'Management prevents failure while training progresses: window films for barking, baby gates at doorways, or walking during low-traffic quiet hours.'
+        ]
+      },
+      {
+        heading: 'Pillar 2: Positive Modification',
+        paragraphs: [
+          'Systematic Desensitization: Presenting the trigger strictly below the reactive threshold.',
+          'Counter-Conditioning: Pairing the trigger with high-value rewards (liver, chicken, peanut butter) to transform emotional response from fear to eager anticipation.'
+        ]
+      },
+      {
+        heading: 'Pillar 3: Medical Support and Pain Exclusion',
+        paragraphs: [
+          'When cortisol and adrenaline surge during panic states, hippocampal learning is blocked.',
+          'Veterinary-prescribed anxiolytics or supplements lower arousal into a receptive learning state. Hidden physical pain (arthritis, dental disease) must be ruled out first.'
+        ],
+        callout: '3M Law: Modification fails without management; modification alone cannot overcome severe neurochemical panic.'
+      }
+    ]
+  },
+  'art-calming': {
+    title: 'TURID RUGAAS CALMING SIGNALS PROTOCOL',
+    summary: 'Over 30 diplomatic body language signals dogs use to prevent conflict and regulate internal stress.',
+    author: 'Kuchu Ethology Lab',
+    tags: ['Calming Signals', 'Turid Rugaas', 'Body Language', 'Stress'],
+    content: [
+      {
+        heading: 'What Are Calming Signals?',
+        paragraphs: [
+          'Renowned Norwegian ethologist Turid Rugaas discovered that dogs utilize a complex repertoire of calming signals to defuse social tension and self-soothe.',
+          'Humans often notice only extreme reactions like lunging or growling, unaware that the dog offered dozens of subtle calming signals prior to escalation.'
+        ],
+        callout: 'Recognizing calming signals and creating distance prevents over 90% of defensive bites.'
+      },
+      {
+        heading: '5 Most Common Primary Calming Signals',
+        paragraphs: [
+          '1. Lip Licking: Rapid flick of the tongue over the nose in non-food situations indicates micro-stress.',
+          '2. Turning Away / Head Turn: Direct frontal eye contact is perceived as confrontation; looking away signals peaceful intent.',
+          '3. Stress Yawning: Yawning in stimulating or tense settings to release internal pressure.',
+          '4. Ground Sniffing: Suddenly sniffing the ground when an approaching dog passes by acts as a polite disengagement buffer.',
+          '5. Slowing Down: Consciously slowing pace and approaching in a soft curve.'
+        ]
+      }
+    ]
+  },
+  'art-tail': {
+    title: 'LEFT-RIGHT TAIL ASYMMETRY: VALLORTIGARA & QUARANTA FINDINGS',
+    summary: 'Tail wagging does not automatically equal happiness. The vital connection between wag direction and the brain hemispheres.',
+    author: 'Prof. G. Vallortigara Study Review',
+    tags: ['Neurology', 'Tail Asymmetry', 'Brain Hemispheres', 'Current Biology'],
+    content: [
+      {
+        heading: 'The Wagging Tail Myth',
+        paragraphs: [
+          'One of the most dangerous myths is "a wagging tail means a happy dog." A wagging tail merely indicates arousal. A stiff, rapid, high wag can be an assertive threat display.'
+        ]
+      },
+      {
+        heading: 'Right vs. Left Brain Hemispheres',
+        paragraphs: [
+          'Published in Current Biology, research shows dogs wag predominantly to their RIGHT side when viewing positive, familiar individuals (controlled by the left hemisphere: approach and calm).',
+          'Conversely, when encountering intimidating or unfamiliar threats, tail wagging shifts distinctly to their LEFT side (controlled by the right hemisphere: withdrawal and alarm).'
+        ],
+        callout: 'Observe your dog from behind: is the tail arc biased to the right (positive) or left (caution)?'
+      }
+    ]
+  },
+  'art-dominance': {
+    title: 'THE FALL OF THE ALPHA WOLF & DOMINANCE MYTH: DR. L. DAVID MECH',
+    summary: 'Why "showing your dog who is boss" is scientifically debunked. Captive wolf studies versus natural family dynamics.',
+    author: 'History of Ethology Review',
+    tags: ['Alpha Myth', 'David Mech', 'Wolf Dynamics', 'Force-Free'],
+    content: [
+      {
+        heading: 'Where Did the Alpha Concept Originate?',
+        paragraphs: [
+          'In the 1970s, studies of unrelated captive wolves forced into small enclosures showed violent territorial fighting.',
+          'However, wildlife biologist Dr. L. David Mech subsequently studied wild packs in natural habitats and proved that wild wolf packs are cooperative families headed by parents, not warlords. Dr. Mech has spent decades urging publishers to stop printing the outdated alpha thesis.'
+        ]
+      },
+      {
+        heading: 'Never Alpha Roll Your Dog',
+        paragraphs: [
+          'Forcibly pinning a dog to the ground (alpha roll) or rushing through doors ahead does not build respect; it inflicts terror and destroys attachment. More than 70% of dog bites occur in self-defense during physical dominance attempts.'
+        ],
+        callout: 'Your dog does not view you as a pack rival — they look to you as a protective, benevolent guide.'
+      }
+    ]
+  },
+  'art-positive': {
+    title: 'OPERANT CONDITIONING & POSITIVE REINFORCEMENT (+R) DIALECTIC',
+    summary: "B.F. Skinner's 4 quadrants: Why positive punishment (+P) only suppresses behavior instead of extinguishing it.",
+    author: 'Modern Behavioral Sciences',
+    tags: ['Skinner', 'Positive Reinforcement', 'Reward Marker', 'Clicker Training'],
+    content: [
+      {
+        heading: "Skinner's 4 Quadrants in Dog Training",
+        paragraphs: [
+          '+R (Positive Reinforcement): Adding a desired reward immediately after behavior to increase its frequency.',
+          '-P (Negative Punishment): Removing access to rewards/attention when unwanted behavior happens (e.g. turning back when jumping).',
+          '+P (Positive Punishment): Applying physical force, yelling, shock, or choke collars. Scientifically associated with chronic anxiety and fallout.'
+        ],
+        callout: 'Behaviors learned through fear collapse under high stress; behaviors built through reinforcement endure for a lifetime.'
+      }
+    ]
+  },
+  'art-fear-periods': {
+    title: 'CRITICAL FEAR PERIODS IN PUPPY DEVELOPMENT',
+    summary: 'Sensitive neurological windows at 8-11 weeks and 6-14 months. Why developmental trauma during these phases can leave lifelong scars.',
+    author: 'Developmental Ethology',
+    tags: ['Puppy', 'Fear Periods', 'Socialization', 'Neurology'],
+    content: [
+      {
+        heading: 'Two Critical Fear Windows',
+        paragraphs: [
+          '1. First Fear Period (8-11 Weeks): Coincides with weaning and rehoming. Harsh handling or traumatic vet visits during this window must be carefully prevented.',
+          '2. Second Fear Period (6-14 Months - Adolescence): Dogs may suddenly spook or bark at everyday objects (like trash cans or umbrellas) they were previously comfortable around.'
+        ],
+        callout: 'Forcing a dog toward fear triggers creates lifelong phobias; maintaining safe distance and rewarding curiosity builds resilience.'
+      }
+    ]
+  }
+};
+
+export function getLocalizedArticle(art: LibraryArticle, lang: 'tr' | 'en'): LibraryArticle {
+  if (lang !== 'en') return art;
+  const enData = ARTICLES_EN_MAP[art.id];
+  if (!enData) return art;
+  return {
+    ...art,
+    ...enData,
+    content: enData.content || art.content
+  };
+}

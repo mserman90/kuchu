@@ -5,11 +5,10 @@ import {
   Minus, 
   ShieldCheck, 
   Zap, 
-  BookOpen, 
-  HeartHandshake, 
   Lock,
   Award
 } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface BenchmarkRow {
   category: string;
@@ -23,8 +22,10 @@ interface BenchmarkRow {
 
 export const BenchmarkComparison: React.FC<{ className?: string }> = ({ className = '' }) => {
   const [filter, setFilter] = useState<'all' | 'science' | 'privacy' | 'cost'>('all');
+  const { lang } = useLanguage();
+  const isEn = lang === 'en';
 
-  const benchmarkData: BenchmarkRow[] = [
+  const benchmarkDataTR: BenchmarkRow[] = [
     {
       category: 'science',
       feature: 'Bilimsel Etolojik Metodoloji',
@@ -108,6 +109,92 @@ export const BenchmarkComparison: React.FC<{ className?: string }> = ({ classNam
     }
   ];
 
+  const benchmarkDataEN: BenchmarkRow[] = [
+    {
+      category: 'science',
+      feature: 'Scientific Ethological Methodology',
+      kuchu: { value: 'Merck Vet Manual 3M Model + Positive Counter-Conditioning', positive: true },
+      dogo: { value: 'Basic Clicker Lessons', positive: 'partial' },
+      puppr: { value: 'Tricks & Showmanship Focus', positive: 'partial' },
+      goodpup: { value: 'Trainer-dependent Variations', positive: 'partial' },
+      traditional: { value: 'Alpha / Dominance & Hierarchy (Outdated)', positive: false }
+    },
+    {
+      category: 'science',
+      feature: 'Clinical Triage & Urgency Diagnosis',
+      kuchu: { value: '5-Stage Ethological Triage + Red Flags', positive: true },
+      dogo: { value: 'None (Generic Lesson Catalog Only)', positive: false },
+      puppr: { value: 'None', positive: false },
+      goodpup: { value: 'Manual via 1-on-1 Consultation', positive: 'partial' },
+      traditional: { value: 'None / Subjective Guesswork', positive: false }
+    },
+    {
+      category: 'science',
+      feature: 'Working & Rural Dog Challenges (Predatory Drift / Livestock)',
+      kuchu: { value: 'Dedicated Premack & Flirt Pole & Double-Fence Protocol', positive: true },
+      dogo: { value: 'None (Apartment Fitting Only)', positive: false },
+      puppr: { value: 'None', positive: false },
+      goodpup: { value: 'Very Limited', positive: false },
+      traditional: { value: 'Chicken Tying / Shock Collars (Aversive)', positive: false }
+    },
+    {
+      category: 'science',
+      feature: 'Medical Rule-Out Mandate',
+      kuchu: { value: 'Mandatory Clinical Threshold (Cystitis, Arthritis, Otitis, etc.)', positive: true },
+      dogo: { value: 'Superficial Disclaimer', positive: 'partial' },
+      puppr: { value: 'None', positive: false },
+      goodpup: { value: 'Vet Referral Guidance Included', positive: true },
+      traditional: { value: 'Ignored / Misattributed to "Stubbornness"', positive: false }
+    },
+    {
+      category: 'cost',
+      feature: 'Cost of Use / Subscriptions',
+      kuchu: { value: '100% FREE & OPEN SCIENCE ($0 / £0 / ₺0)', positive: true },
+      dogo: { value: '$70 - $120 / Year (Subscription Paywalls)', positive: false },
+      puppr: { value: '~$50 / Year (Locked Premium Content)', positive: false },
+      goodpup: { value: '~$34 / Week (~$136 / Month)', positive: false },
+      traditional: { value: '$500 - $2,500 / Training Package', positive: false }
+    },
+    {
+      category: 'privacy',
+      feature: 'Privacy, Data Ownership & Mandatory Accounts',
+      kuchu: { value: 'Local-First (Data Stays on Device, Full Access without Sign-up)', positive: true },
+      dogo: { value: 'Mandatory Account + Telemetry Tracking', positive: false },
+      puppr: { value: 'Mandatory Registration', positive: 'partial' },
+      goodpup: { value: 'Cloud Storage + Credit Card Required', positive: false },
+      traditional: { value: 'No Contract / Untracked', positive: false }
+    },
+    {
+      category: 'privacy',
+      feature: 'Offline Operation (Full PWA Support)',
+      kuchu: { value: 'Full PWA (Operates in Forests/Mountains Without Internet)', positive: true },
+      dogo: { value: 'Requires Continuous Internet', positive: false },
+      puppr: { value: 'Partial Content Download', positive: 'partial' },
+      goodpup: { value: 'Requires High-Speed Video Stream', positive: false },
+      traditional: { value: 'N/A', positive: false }
+    },
+    {
+      category: 'science',
+      feature: 'Real-World Behavioral Adaptability',
+      kuchu: { value: '100% Adapted for Street Rescues, Farms & High-Stimulus Environments', positive: true },
+      dogo: { value: 'Automated Translation Errors', positive: 'partial' },
+      puppr: { value: 'English Only', positive: false },
+      goodpup: { value: 'US Suburban Focus Only', positive: false },
+      traditional: { value: 'Subject to Individual Trainer', positive: 'partial' }
+    },
+    {
+      category: 'privacy',
+      feature: 'Design Aesthetics & Accessibility (Day/Night Theme)',
+      kuchu: { value: 'Swiss Modernism, High-Contrast Neo-Brutalism, Day/Night Theme', positive: true },
+      dogo: { value: 'Childish Gamification, Upsell Banners', positive: 'partial' },
+      puppr: { value: 'Standard Commercial Mobile App', positive: 'partial' },
+      goodpup: { value: 'Corporate Call Interface', positive: 'partial' },
+      traditional: { value: 'N/A', positive: false }
+    }
+  ];
+
+  const benchmarkData = isEn ? benchmarkDataEN : benchmarkDataTR;
+
   const filteredData = benchmarkData.filter(item => {
     if (filter === 'all') return true;
     return item.category === filter;
@@ -145,53 +232,87 @@ export const BenchmarkComparison: React.FC<{ className?: string }> = ({ classNam
       <div className="border-2 border-black dark:border-white p-6 sm:p-8 bg-white dark:bg-zinc-900 shadow-brutal space-y-4">
         <div className="flex items-center gap-2">
           <span className="px-2.5 py-1 bg-red-600 text-white font-mono font-black text-xs border border-black dark:border-white">
-            BENCHMARK & KARŞILAŞTIRMA
+            {isEn ? 'BENCHMARK & COMPARISON' : 'BENCHMARK & KARŞILAŞTIRMA'}
           </span>
           <span className="font-mono text-xs font-bold uppercase tracking-wider text-black dark:text-white">
-            SEKTÖREL PERFORMANS VE BİLİMSEL FARKLAR
+            {isEn ? 'INDUSTRY BENCHMARKS & SCIENTIFIC DISTINCTIONS' : 'SEKTÖREL PERFORMANS VE BİLİMSEL FARKLAR'}
           </span>
         </div>
 
         <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-black dark:text-white">
-          KUÇU VS. KÜRESEL UYGULAMALAR VE GELENEKSEL EĞİTİM
+          {isEn
+            ? 'KUÇU VS. GLOBAL APPS AND TRADITIONAL TRAINING'
+            : 'KUÇU VS. KÜRESEL UYGULAMALAR VE GELENEKSEL EĞİTİM'}
         </h2>
 
         <p className="text-xs sm:text-sm font-medium text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-4xl">
-          Piyasadaki uygulamaların çoğu köpekleri <em>"numara yapan birer oyuncak"</em> gibi ele alırken; Kuçu, <strong>Merck Veterinary Manual Klinik Davranış Tıbbı</strong> standartlarını ve <strong>LIMA (En Az İnvaziv, Etkili Yaklaşım)</strong> prensiplerini tabana yayar. İşte tarafsız sektörel kıyaslamamız:
+          {isEn ? (
+            <>
+              While most commercial apps treat dogs as <em>"trick-performing novelty toys"</em>, Kuçu democratizes{' '}
+              <strong>Merck Veterinary Manual Clinical Behavioral Medicine</strong> standards and{' '}
+              <strong>LIMA (Least Intrusive, Minimally Aversive)</strong> protocols for everyone. Here is our objective comparison:
+            </>
+          ) : (
+            <>
+              Piyasadaki uygulamaların çoğu köpekleri <em>"numara yapan birer oyuncak"</em> gibi ele alırken; Kuçu,{' '}
+              <strong>Merck Veterinary Manual Klinik Davranış Tıbbı</strong> standartlarını ve{' '}
+              <strong>LIMA (En Az İnvaziv, Etkili Yaklaşım)</strong> prensiplerini tabana yayar. İşte tarafsız sektörel kıyaslamamız:
+            </>
+          )}
         </p>
 
         {/* Highlight Scorecards */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
           <div className="p-3 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950">
-            <div className="font-mono text-[10px] text-zinc-500 uppercase font-black">FİYAT POLİTİKASI</div>
-            <div className="text-lg font-black text-green-600">%100 ÜCRETSİZ</div>
-            <div className="text-[10px] text-zinc-600 dark:text-zinc-400">Gizli abonelik yok</div>
+            <div className="font-mono text-[10px] text-zinc-500 uppercase font-black">
+              {isEn ? 'PRICING POLICY' : 'FİYAT POLİTİKASI'}
+            </div>
+            <div className="text-lg font-black text-green-600">
+              {isEn ? '100% FREE' : '%100 ÜCRETSİZ'}
+            </div>
+            <div className="text-[10px] text-zinc-600 dark:text-zinc-400">
+              {isEn ? 'No hidden subscriptions' : 'Gizli abonelik yok'}
+            </div>
           </div>
           <div className="p-3 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950">
-            <div className="font-mono text-[10px] text-zinc-500 uppercase font-black">KLİNİK ETOLOJİ</div>
+            <div className="font-mono text-[10px] text-zinc-500 uppercase font-black">
+              {isEn ? 'CLINICAL ETHOLOGY' : 'KLİNİK ETOLOJİ'}
+            </div>
             <div className="text-lg font-black text-red-600">MERCK 3M</div>
-            <div className="text-[10px] text-zinc-600 dark:text-zinc-400">Tıbbi kural dışlama</div>
+            <div className="text-[10px] text-zinc-600 dark:text-zinc-400">
+              {isEn ? 'Medical rule-out mandate' : 'Tıbbi kural dışlama'}
+            </div>
           </div>
           <div className="p-3 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950">
-            <div className="font-mono text-[10px] text-zinc-500 uppercase font-black">GİZLİLİK & VERİ</div>
+            <div className="font-mono text-[10px] text-zinc-500 uppercase font-black">
+              {isEn ? 'PRIVACY & DATA' : 'GİZLİLİK & VERİ'}
+            </div>
             <div className="text-lg font-black text-black dark:text-white">LOCAL-FIRST</div>
-            <div className="text-[10px] text-zinc-600 dark:text-zinc-400">Cihazda saklanır</div>
+            <div className="text-[10px] text-zinc-600 dark:text-zinc-400">
+              {isEn ? 'Stored on your device' : 'Cihazda saklanır'}
+            </div>
           </div>
           <div className="p-3 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950">
-            <div className="font-mono text-[10px] text-zinc-500 uppercase font-black">MOBİL MİMARİ</div>
+            <div className="font-mono text-[10px] text-zinc-500 uppercase font-black">
+              {isEn ? 'MOBILE ARCHITECTURE' : 'MOBİL MİMARİ'}
+            </div>
             <div className="text-lg font-black text-blue-600">OFFLINE PWA</div>
-            <div className="text-[10px] text-zinc-600 dark:text-zinc-400">İnternetsiz erişim</div>
+            <div className="text-[10px] text-zinc-600 dark:text-zinc-400">
+              {isEn ? 'No internet needed' : 'İnternetsiz erişim'}
+            </div>
           </div>
         </div>
 
         {/* Filter Buttons */}
         <div className="flex flex-wrap items-center gap-2 pt-2 border-t-2 border-black dark:border-white">
-          <span className="font-mono text-xs font-black uppercase text-zinc-500 mr-1">FİLTRELE:</span>
+          <span className="font-mono text-xs font-black uppercase text-zinc-500 mr-1">
+            {isEn ? 'FILTER:' : 'FİLTRELE:'}
+          </span>
           {[
-            { id: 'all', label: 'TÜM KRİTERLER' },
-            { id: 'science', label: 'BİLİMSEL METODOLOJİ' },
-            { id: 'cost', label: 'MALİYET & ERİŞİM' },
-            { id: 'privacy', label: 'GİZLİLİK & PWA' }
+            { id: 'all', label: isEn ? 'ALL CRITERIA' : 'TÜM KRİTERLER' },
+            { id: 'science', label: isEn ? 'SCIENTIFIC METHODOLOGY' : 'BİLİMSEL METODOLOJİ' },
+            { id: 'cost', label: isEn ? 'COST & ACCESS' : 'MALİYET & ERİŞİM' },
+            { id: 'privacy', label: isEn ? 'PRIVACY & PWA' : 'GİZLİLİK & PWA' }
           ].map((tab) => (
             <button
               key={tab.id}
@@ -213,16 +334,20 @@ export const BenchmarkComparison: React.FC<{ className?: string }> = ({ classNam
         <table className="w-full text-left border-collapse min-w-[760px]">
           <thead>
             <tr className="border-b-2 border-black dark:border-white bg-black text-white dark:bg-zinc-950 font-mono text-xs font-black uppercase">
-              <th className="p-3.5 w-1/4 border-r border-zinc-700">KRİTER / ÖZELLİK</th>
+              <th className="p-3.5 w-1/4 border-r border-zinc-700">
+                {isEn ? 'CRITERION / FEATURE' : 'KRİTER / ÖZELLİK'}
+              </th>
               <th className="p-3.5 w-1/4 bg-red-700 text-white border-r border-red-800">
                 <div className="flex items-center gap-1.5">
                   <Award className="w-4 h-4 text-yellow-300" />
-                  <span>KUÇU (BİZ)</span>
+                  <span>{isEn ? 'KUÇU (US)' : 'KUÇU (BİZ)'}</span>
                 </div>
               </th>
               <th className="p-3.5 w-1/6 border-r border-zinc-700">DOGO APP</th>
               <th className="p-3.5 w-1/6 border-r border-zinc-700">PUPPR</th>
-              <th className="p-3.5 w-1/6">GELENEKSEL EĞİTİM</th>
+              <th className="p-3.5 w-1/6">
+                {isEn ? 'TRADITIONAL TRAINING' : 'GELENEKSEL EĞİTİM'}
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y-2 divide-black dark:divide-white font-mono text-xs">
@@ -259,11 +384,13 @@ export const BenchmarkComparison: React.FC<{ className?: string }> = ({ classNam
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-red-600" />
             <h4 className="font-mono text-xs font-black uppercase text-black dark:text-white">
-              1. ŞİDDETSİZ ETİK VE TIBBİ BİLİNÇ
+              {isEn ? '1. AVERSIVE-FREE ETHICS & MEDICAL AWARENESS' : '1. ŞİDDETSİZ ETİK VE TIBBİ BİLİNÇ'}
             </h4>
           </div>
           <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-            Dikenli/şok tasmaları, alfa yuvarlama (alpha roll) veya köpeğin ağzını kapatma gibi yöntemler köpekte korku agresyonunu tetikler. Kuçu, Merck kılavuzundaki DRI (Tepki İkamesi) ile davranışı temelden dönüştürür.
+            {isEn
+              ? 'Prong/shock collars, alpha rolls, or muzzle pinning provoke acute defensive aggression. Kuçu reconditions behaviors at the root using clinical DRI (Differential Reinforcement of Incompatible behavior).'
+              : 'Dikenli/şok tasmaları, alfa yuvarlama (alpha roll) veya köpeğin ağzını kapatma gibi yöntemler köpekte korku agresyonunu tetikler. Kuçu, Merck kılavuzundaki DRI (Tepki İkamesi) ile davranışı temelden dönüştürür.'}
           </p>
         </div>
 
@@ -271,11 +398,13 @@ export const BenchmarkComparison: React.FC<{ className?: string }> = ({ classNam
           <div className="flex items-center gap-2">
             <Zap className="w-5 h-5 text-yellow-500" />
             <h4 className="font-mono text-xs font-black uppercase text-black dark:text-white">
-              2. ANINDA KLİNİK TRİYAJ MOTORU
+              {isEn ? '2. INSTANT CLINICAL TRIAGE ENGINE' : '2. ANINDA KLİNİK TRİYAJ MOTORU'}
             </h4>
           </div>
           <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-            Rakipler gibi ezbere video izletmek yerine; köpeğin semptomunu, yaşını ve tetikleyicisini analiz ederek aciliyet derecesi, kırmızı bayraklar ve veteriner hekim dışlama önerisi sunar.
+            {isEn
+              ? 'Instead of rote video catalogs, it analyzes symptoms, age, and triggers to provide urgency classification, red flags, and veterinary exclusion recommendations.'
+              : 'Rakipler gibi ezbere video izletmek yerine; köpeğin semptomunu, yaşını ve tetikleyicisini analiz ederek aciliyet derecesi, kırmızı bayraklar ve veteriner hekim dışlama önerisi sunar.'}
           </p>
         </div>
 
@@ -283,11 +412,13 @@ export const BenchmarkComparison: React.FC<{ className?: string }> = ({ classNam
           <div className="flex items-center gap-2">
             <Lock className="w-5 h-5 text-green-600" />
             <h4 className="font-mono text-xs font-black uppercase text-black dark:text-white">
-              3. BAĞIMSIZ, ÜCRETSİZ & GİZLİ
+              {isEn ? '3. INDEPENDENT, FREE & PRIVATE' : '3. BAĞIMSIZ, ÜCRETSİZ & GİZLİ'}
             </h4>
           </div>
           <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-            Kullanıcıyı ödeme duvarlarına (paywall) sıkıştırmaz. Verileriniz doğrudan tarayıcınızda (IndexedDB) barınır, reklam içermez ve PWA desteğiyle internet olmadan da her yerde çalışır.
+            {isEn
+              ? 'No paywalls. Your data resides directly in your browser (IndexedDB), zero commercial advertisements, and full PWA offline support works seamlessly anywhere.'
+              : 'Kullanıcıyı ödeme duvarlarına (paywall) sıkıştırmaz. Verileriniz doğrudan tarayıcınızda (IndexedDB) barınır, reklam içermez ve PWA desteğiyle internet olmadan da her yerde çalışır.'}
           </p>
         </div>
 
@@ -296,3 +427,4 @@ export const BenchmarkComparison: React.FC<{ className?: string }> = ({ classNam
     </div>
   );
 };
+

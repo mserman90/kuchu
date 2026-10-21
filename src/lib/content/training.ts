@@ -188,8 +188,119 @@ const TEMPLATES: Record<string, { title: string; baseExercises: Omit<TrainingExe
   }
 };
 
-export function generatePersonalizedPlan(params: PlanGenerationParams): TrainingPlanEntity {
-  const template = TEMPLATES[params.category] || TEMPLATES.basic_obedience;
+const TEMPLATES_EN: Record<string, { title: string; baseExercises: Omit<TrainingExerciseItem, 'day' | 'completed'>[] }> = {
+  basic_obedience: {
+    title: 'POSITIVE BASIC OBEDIENCE & FOCUS CURRICULUM',
+    baseExercises: [
+      {
+        title: 'Eye Contact & Name Conditioning',
+        durationMinutes: 8,
+        goal: 'Condition the dog to disengage from distractions and make direct eye contact upon hearing their name.',
+        steps: [
+          'Sit with your dog in a quiet room.',
+          'Say their name once. The millisecond they look into your eyes, say "Yes!" and deliver a treat.',
+          'Repeat 10 times and end the game on a high note.'
+        ],
+        rewardTip: 'Use high-value rewards like boiled chicken breast or freeze-dried liver.',
+        calmingSignalWatch: 'If the dog averts eye contact, soften your posture by turning slightly sideways.'
+      },
+      {
+        title: 'Positive Sit (Luring Method)',
+        durationMinutes: 10,
+        goal: 'Guide a natural sit by leading the nose upward without physically forcing the hips down.',
+        steps: [
+          'Hold a treat at their nose and slowly move it backward over the forehead.',
+          'As the head tilts up, the rear naturally lowers to the floor. Reward the moment hips touch.',
+          'Never push down on their hips.'
+        ],
+        rewardTip: 'Use pea-sized soft treats to keep repetitions rapid.',
+        calmingSignalWatch: 'If you observe lip licking, hold the lure slightly further away.'
+      },
+      {
+        title: 'Stay - Splitting Duration and Distance',
+        durationMinutes: 10,
+        goal: 'Hold a sit-stay position for 5 seconds without moving.',
+        steps: [
+          'Ask for a sit. Show a flat palm and say "Stay".',
+          'Take half a step backward, pause for 2 seconds, step back to their side, and reward.',
+          'Never increase distance and duration simultaneously.'
+        ],
+        rewardTip: 'Deliver the treat directly to their mouth so they do not break position.',
+        calmingSignalWatch: 'If fidgeting begins, reduce duration to 1 second.'
+      },
+      {
+        title: '"Drop It" & Trade-Up Reflex',
+        durationMinutes: 12,
+        goal: 'Voluntarily and eagerly release held items from the mouth.',
+        steps: [
+          'Offer a low-value toy for the dog to hold.',
+          'Present an irresistible piece of cheese directly in front of their nose.',
+          'The moment the toy drops from their mouth, say "Drop" and feed the cheese.',
+          'Return the toy immediately so they learn dropping does not equal losing possessions.'
+        ],
+        rewardTip: 'Always offer a trade higher in value than the held item.',
+        calmingSignalWatch: 'If you notice a stiff unblinking stare or low growl, never force retrieval.'
+      },
+      {
+        title: 'Reliable Recall ("Come!")',
+        durationMinutes: 10,
+        goal: 'Build an enthusiastic sprint toward you when called inside the home.',
+        steps: [
+          'Have a partner gently hold the dog while you take 5 steps away with excitement.',
+          'Call their name + "Come!" in a cheerful tone. When released, throw a celebration jackpot.',
+          'Never call your dog to punish them or give medication.'
+        ],
+        rewardTip: 'Deliver 3 treats in rapid succession (Jackpot effect).',
+        calmingSignalWatch: 'If the dog approaches in a wide arc, they are politely self-calming; praise softly.'
+      }
+    ]
+  },
+  loose_leash: {
+    title: 'LOOSE LEASH WALKING & CHECK-IN CURRICULUM',
+    baseExercises: [
+      {
+        title: 'Handler Proximity Zone in Living Room',
+        durationMinutes: 8,
+        goal: 'Condition walking beside your hip indoors before adding outdoor distractions.',
+        steps: [
+          'Walk around the living room off-leash with treats in hand.',
+          'Praise and reward every time the dog voluntarily walks alongside your knee.',
+          'Keep sessions short and fun.'
+        ],
+        rewardTip: 'Deliver treats precisely at your seam-line so the dog stays parallel.',
+        calmingSignalWatch: 'Ensure head and tail remain loose and fluid.'
+      },
+      {
+        title: 'Red-Light Green-Light Leash Game',
+        durationMinutes: 12,
+        goal: 'Teach that leash tension causes movement to freeze instantly.',
+        steps: [
+          'Attach the leash in a quiet hallway.',
+          'The moment the leash tightens, freeze like a tree. Walk forward only when the line is slack.',
+          'Never yank the leash back; let environmental feedback do the teaching.'
+        ],
+        rewardTip: 'Forward motion is the primary reward.',
+        calmingSignalWatch: 'Watch for a full-body shake-off after pressure releases.'
+      },
+      {
+        title: '180-Degree Direction Changes',
+        durationMinutes: 10,
+        goal: 'Encourage constant check-ins by changing direction whenever the dog pulls ahead.',
+        steps: [
+          'Walk in your driveway or quiet sidewalk.',
+          'When the dog pulls forward, say a cheerful "This way!" and turn 180 degrees.',
+          'Reward the instant they catch up and match your pace.'
+        ],
+        rewardTip: 'Use high-value smelly treats for outdoor distraction environments.',
+        calmingSignalWatch: 'If the dog pants rapidly, step into a quiet driveway to decompress.'
+      }
+    ]
+  }
+};
+
+export function generatePersonalizedPlan(params: PlanGenerationParams, lang: 'tr' | 'en' = 'tr'): TrainingPlanEntity {
+  const templateSource = lang === 'en' ? TEMPLATES_EN : TEMPLATES;
+  const template = templateSource[params.category] || templateSource.basic_obedience || TEMPLATES.basic_obedience;
   const exercises: TrainingExerciseItem[] = [];
 
   for (let day = 1; day <= params.durationDays; day++) {
@@ -201,7 +312,9 @@ export function generatePersonalizedPlan(params: PlanGenerationParams): Training
     let duration = base.durationMinutes;
 
     if (cycle > 1) {
-      dayTitle = `${base.title} (Aşama ${cycle} - Dikkat Dağıtıcı Eklenmiş)`;
+      dayTitle = lang === 'en'
+        ? `${base.title} (Phase ${cycle} - Distractions Added)`
+        : `${base.title} (Aşama ${cycle} - Dikkat Dağıtıcı Eklenmiş)`;
       duration = Math.min(20, duration + 2);
     }
 
@@ -217,12 +330,16 @@ export function generatePersonalizedPlan(params: PlanGenerationParams): Training
     });
   }
 
+  const titlePrefix = lang === 'en'
+    ? `${params.dogName.toUpperCase()} — ${template.title}`
+    : `${params.dogName.toUpperCase()} İÇİN ${template.title}`;
+
   return {
     id: 'plan_' + Date.now().toString(),
     dogId: params.dogId,
     dogName: params.dogName,
     category: params.category,
-    planTitle: `${params.dogName.toUpperCase()} İÇİN ${template.title}`,
+    planTitle: titlePrefix,
     durationDays: params.durationDays,
     level: params.level,
     createdAt: new Date().toISOString(),

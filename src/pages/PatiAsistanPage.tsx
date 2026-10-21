@@ -9,15 +9,23 @@ import {
   RotateCcw, 
   AlertTriangle
 } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export const PatiAsistanPage: React.FC = () => {
   const { activeDog } = useDog();
-  const dogName = activeDog?.name || 'Kuçu';
+  const { lang } = useLanguage();
+  const dogName = activeDog?.name || (lang === 'en' ? 'Kuçu' : 'Kuçu');
 
   const [messages, setMessages] = useState<AssistantMessageEntity[]>([]);
   const [input, setInput] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
+
+  const getWelcomeText = () => {
+    return lang === 'en'
+      ? `Hello! I am PawAssistant 🐾. I am here to provide science-based guidance on ${dogName}'s psychology, body language, calming signals, and positive reinforcement training.\n\nWhat behavior did you observe today?`
+      : `Merhaba! Ben PatiAsistan 🐾. ${dogName}'in psikolojisi, beden dili, sakinleşme sinyalleri ve pozitif pekiştirme eğitimi konularında bilimsel rehberlik etmek için buradayım.\n\nBugün nasıl bir davranış gözlemlediniz?`;
+  };
 
   useEffect(() => {
     const loadMessages = async () => {
@@ -28,21 +36,27 @@ export const PatiAsistanPage: React.FC = () => {
         const welcome: AssistantMessageEntity = {
           id: 'msg_welcome',
           sender: 'assistant',
-          text: `Merhaba! Ben PatiAsistan 🐾. ${dogName}'in psikolojisi, beden dili, sakinleşme sinyalleri ve pozitif pekiştirme eğitimi konularında bilimsel rehberlik etmek için buradayım.\n\nBugün nasıl bir davranış gözlemlediniz?`,
-          timestamp: 'BAŞLANGIÇ'
+          text: getWelcomeText(),
+          timestamp: lang === 'en' ? 'START' : 'BAŞLANGIÇ'
         };
         setMessages([welcome]);
         dataEntities.messages.save([welcome]);
       }
     };
     loadMessages();
-  }, [dogName]);
+  }, [dogName, lang]);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isStreaming]);
 
-  const quickPrompts = [
+  const quickPrompts = lang === 'en' ? [
+    'Wags tail mostly to the left, what does it mean?',
+    'Cannot stay home alone, cries and howls. What to do?',
+    'My puppy bites hands and pants very hard.',
+    'Freezes like a statue when seeing other dogs outside.',
+    'Growls slightly when approaching the food bowl.'
+  ] : [
     'Kuyruğunu daha çok sola sallıyor, ne anlama gelir?',
     'Evde yalnız kalamıyor, ağlıyor. Ne yapmalıyım?',
     'Yavrum ellerimi ve paçalarımı çok sert ısırıyor.',
@@ -54,11 +68,13 @@ export const PatiAsistanPage: React.FC = () => {
     const textToSend = queryText || input;
     if (!textToSend.trim() || isStreaming) return;
 
+    const timeLocale = lang === 'en' ? 'en-US' : 'tr-TR';
+
     const userMsg: AssistantMessageEntity = {
       id: 'usr_' + Date.now().toString(),
       sender: 'user',
       text: textToSend,
-      timestamp: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })
+      timestamp: new Date().toLocaleTimeString(timeLocale, { hour: '2-digit', minute: '2-digit' })
     };
 
     const updatedWithUser = [...messages, userMsg];
@@ -71,7 +87,7 @@ export const PatiAsistanPage: React.FC = () => {
       id: assistantMsgId,
       sender: 'assistant',
       text: '',
-      timestamp: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }),
+      timestamp: new Date().toLocaleTimeString(timeLocale, { hour: '2-digit', minute: '2-digit' }),
       isStreaming: true
     };
 
@@ -92,13 +108,14 @@ export const PatiAsistanPage: React.FC = () => {
           id: assistantMsgId,
           sender: 'assistant',
           text: fullText,
-          timestamp: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }),
+          timestamp: new Date().toLocaleTimeString(timeLocale, { hour: '2-digit', minute: '2-digit' }),
           isStreaming: false
         });
         setMessages(finalMessages);
         dataEntities.messages.save(finalMessages);
         setIsStreaming(false);
-      }
+      },
+      lang
     );
   };
 
@@ -107,8 +124,10 @@ export const PatiAsistanPage: React.FC = () => {
     const welcome: AssistantMessageEntity = {
       id: 'msg_welcome_' + Date.now().toString(),
       sender: 'assistant',
-      text: `Sohbet geçmişi sıfırlandı. ${dogName} hakkında sormak istediğiniz yeni bir konuyu yazabilirsiniz. 🐾`,
-      timestamp: 'BAŞLANGIÇ'
+      text: lang === 'en'
+        ? `Chat history has been reset. You can ask anything new regarding ${dogName}. 🐾`
+        : `Sohbet geçmişi sıfırlandı. ${dogName} hakkında sormak istediğiniz yeni bir konuyu yazabilirsiniz. 🐾`,
+      timestamp: lang === 'en' ? 'START' : 'BAŞLANGIÇ'
     };
     setMessages([welcome]);
   };
@@ -125,14 +144,16 @@ export const PatiAsistanPage: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-xl font-black uppercase text-black dark:text-white">
-                PATİASİSTAN AI DANIŞMANI
+                {lang === 'en' ? 'PAWASSISTANT AI CONSULTANT' : 'PATİASİSTAN AI DANIŞMANI'}
               </h1>
               <span className="font-mono text-[10px] font-bold uppercase bg-green-600 text-white px-2 py-0.5 border border-black">
-                STREAMING AKTİF
+                {lang === 'en' ? 'STREAMING ACTIVE' : 'STREAMING AKTİF'}
               </span>
             </div>
             <p className="text-xs font-medium text-zinc-600 dark:text-zinc-400">
-              {dogName} için 7/24 bilimsel etoloji ve pozitif pekiştirme yapay zeka rehberi
+              {lang === 'en'
+                ? `24/7 scientific ethology and positive reinforcement AI guide for ${dogName}`
+                : `${dogName} için 7/24 bilimsel etoloji ve pozitif pekiştirme yapay zeka rehberi`}
             </p>
           </div>
         </div>
@@ -142,7 +163,7 @@ export const PatiAsistanPage: React.FC = () => {
           className="flex items-center gap-1.5 px-3 py-1.5 border-2 border-black dark:border-white bg-zinc-100 dark:bg-zinc-800 font-mono text-xs font-black uppercase shadow-brutal-sm hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer"
         >
           <RotateCcw className="w-3.5 h-3.5" />
-          <span>GEÇMİŞİ SIFIRLA</span>
+          <span>{lang === 'en' ? 'RESET HISTORY' : 'GEÇMİŞİ SIFIRLA'}</span>
         </button>
       </div>
 
@@ -163,7 +184,7 @@ export const PatiAsistanPage: React.FC = () => {
                 <div className={`w-8 h-8 border-2 border-black dark:border-white flex items-center justify-center font-mono text-xs font-black shrink-0 ${
                   isUser ? 'bg-black text-white dark:bg-white dark:text-black' : 'bg-red-600 text-white'
                 }`}>
-                  {isUser ? 'SEN' : '🐾'}
+                  {isUser ? (lang === 'en' ? 'YOU' : 'SEN') : '🐾'}
                 </div>
 
                 <div className={`max-w-[85%] sm:max-w-[75%] p-4 border-2 border-black dark:border-white text-xs sm:text-sm font-bold leading-relaxed space-y-2 ${
@@ -180,7 +201,11 @@ export const PatiAsistanPage: React.FC = () => {
                   {!isUser && (
                     <div className="pt-2 border-t border-black/20 dark:border-white/20 text-[10px] text-zinc-600 dark:text-zinc-400 font-bold flex items-center gap-1.5">
                       <AlertTriangle className="w-3.5 h-3.5 text-yellow-500 shrink-0" />
-                      <span>Genel etolojik rehberdir. Isırma ve şiddetli korkuda profesyonel destek alınız.</span>
+                      <span>
+                        {lang === 'en'
+                          ? 'General ethological guidance. Seek certified professional consultation for biting and severe anxiety.'
+                          : 'Genel etolojik rehberdir. Isırma ve şiddetli korkuda profesyonel destek alınız.'}
+                      </span>
                     </div>
                   )}
 
@@ -221,7 +246,9 @@ export const PatiAsistanPage: React.FC = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={isStreaming}
-            placeholder={`${dogName} ile ilgili bir soru sorun veya gözlemlediğiniz durumu anlatın...`}
+            placeholder={lang === 'en'
+              ? `Ask a question about ${dogName} or describe what you observed...`
+              : `${dogName} ile ilgili bir soru sorun veya gözlemlediğiniz durumu anlatın...`}
             className="flex-1 h-[44px] px-3 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950 font-mono text-xs sm:text-sm font-bold uppercase focus:outline-hidden disabled:opacity-50"
           />
           <button

@@ -2,6 +2,7 @@ import React from 'react';
 import { AlertTriangle, ShieldAlert, AlertCircle, RefreshCw, LogIn } from 'lucide-react';
 import { RiskLevel } from '@/lib/data/types';
 import { useAppAuth } from '@/contexts/AppAuthContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 // 1. Risk Badge
 export const RiskBadge: React.FC<{ level: RiskLevel; text?: string; className?: string }> = ({
@@ -9,7 +10,13 @@ export const RiskBadge: React.FC<{ level: RiskLevel; text?: string; className?: 
   text,
   className = ''
 }) => {
-  const defaultText = level === 'green' ? 'GÜVENLİ (YEŞİL)' : level === 'yellow' ? 'TEMKİNLİ (SARI)' : 'YÜKSEK RİSK (KIRMIZI)';
+  const { lang } = useLanguage();
+  const defaultText = level === 'green'
+    ? (lang === 'en' ? 'SAFE (GREEN)' : 'GÜVENLİ (YEŞİL)')
+    : level === 'yellow'
+    ? (lang === 'en' ? 'CAUTION (YELLOW)' : 'TEMKİNLİ (SARI)')
+    : (lang === 'en' ? 'HIGH RISK (RED)' : 'YÜKSEK RİSK (KIRMIZI)');
+
   const colorClass =
     level === 'green'
       ? 'bg-green-600 text-white'
@@ -31,6 +38,8 @@ export const DisclaimerBar: React.FC<{ variant?: 'compact' | 'standard'; classNa
   variant = 'standard',
   className = ''
 }) => {
+  const { lang } = useLanguage();
+
   if (variant === 'compact') {
     return (
       <div
@@ -38,7 +47,12 @@ export const DisclaimerBar: React.FC<{ variant?: 'compact' | 'standard'; classNa
       >
         <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-black" />
         <p>
-          <strong className="font-mono font-black uppercase">YASAL & ETOLOJİK BİLDİRİM:</strong> Bu analiz ve içerikler genel bilimsel rehberlik amaçlıdır; veteriner hekim teşhisi niteliği taşımaz. Ciddi agresyon vakalarında profesyonel veteriner davranış uzmanına danışınız.
+          <strong className="font-mono font-black uppercase">
+            {lang === 'en' ? 'LEGAL & ETHOLOGICAL NOTICE:' : 'YASAL & ETOLOJİK BİLDİRİM:'}
+          </strong>{' '}
+          {lang === 'en'
+            ? 'This analysis and content are for scientific educational guidance only and do not constitute a veterinary diagnosis. For severe aggression or clinical symptoms, consult a certified veterinary behavior specialist.'
+            : 'Bu analiz ve içerikler genel bilimsel rehberlik amaçlıdır; veteriner hekim teşhisi niteliği taşımaz. Ciddi agresyon vakalarında profesyonel veteriner davranış uzmanına danışınız.'}
         </p>
       </div>
     );
@@ -55,16 +69,20 @@ export const DisclaimerBar: React.FC<{ variant?: 'compact' | 'standard'; classNa
         <div className="space-y-1">
           <div className="flex flex-wrap items-center gap-2">
             <h4 className="text-xs sm:text-sm font-black uppercase tracking-wider text-black dark:text-white">
-              BİLİMSEL STANDART & SORUMLULUK REDDİ BİLDİRİMİ
+              {lang === 'en' ? 'SCIENTIFIC STANDARD & LIABILITY DISCLAIMER' : 'BİLİMSEL STANDART & SORUMLULUK REDDİ BİLDİRİMİ'}
             </h4>
             <span className="font-mono text-[10px] font-bold uppercase bg-red-600 text-white px-2 py-0.5 border border-black dark:border-white">
-              %100 Force-Free Standart
+              {lang === 'en' ? '100% Force-Free Standard' : '%100 Force-Free Standart'}
             </span>
           </div>
           <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed font-medium">
-            Kuchu platformundaki algoritmalar; Turid Rugaas sakinleşme sinyalleri, Vallortigara & Quaranta nöro-etoloji bulguları ve AVSAB pozitif pekiştirme prensiplerine göre çalışır. 
+            {lang === 'en'
+              ? 'Algorithms on the Kuçu platform operate in accordance with Turid Rugaas calming signals, Vallortigara & Quaranta neuro-ethological findings, and AVSAB positive reinforcement standards.'
+              : 'Kuchu platformundaki algoritmalar; Turid Rugaas sakinleşme sinyalleri, Vallortigara & Quaranta nöro-etoloji bulguları ve AVSAB pozitif pekiştirme prensiplerine göre çalışır.'}
             <strong className="block mt-1 text-black dark:text-white font-black">
-              Bu araç tıbbi veya bireysel klinik tedavi hizmeti sunmaz. Kendine veya çevreye zarar verme riski taşıyan acil durumlarda mutlaka sertifikalı veteriner davranış uzmanına başvurunuz.
+              {lang === 'en'
+                ? 'This tool does not provide medical or individualized veterinary treatment. In emergencies involving imminent harm to self or others, immediately seek care from a certified veterinary behaviorist or 24/7 clinic.'
+                : 'Bu araç tıbbi veya bireysel klinik tedavi hizmeti sunmaz. Kendine veya çevreye zarar verme riski taşıyan acil durumlarda mutlaka sertifikalı veteriner davranış uzmanına başvurunuz.'}
             </strong>
           </p>
         </div>
@@ -74,14 +92,19 @@ export const DisclaimerBar: React.FC<{ variant?: 'compact' | 'standard'; classNa
 };
 
 // 3. Loading State
-export const LoadingState: React.FC<{ message?: string }> = ({ message = 'Yükleniyor...' }) => (
-  <div className="p-8 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-brutal text-center space-y-3">
-    <div className="inline-block animate-spin text-red-600 font-mono text-xl">■</div>
-    <div className="font-mono text-xs font-bold uppercase tracking-wider text-black dark:text-white">
-      {message}
+export const LoadingState: React.FC<{ message?: string }> = ({ message }) => {
+  const { lang } = useLanguage();
+  const defaultMsg = lang === 'en' ? 'Loading...' : 'Yükleniyor...';
+
+  return (
+    <div className="p-8 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-brutal text-center space-y-3">
+      <div className="inline-block animate-spin text-red-600 font-mono text-xl">■</div>
+      <div className="font-mono text-xs font-bold uppercase tracking-wider text-black dark:text-white">
+        {message || defaultMsg}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 // 4. Empty State
 export const EmptyState: React.FC<{

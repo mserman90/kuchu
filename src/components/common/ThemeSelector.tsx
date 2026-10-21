@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { Sun, Moon, Laptop } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ThemeSelectorProps {
   className?: string;
@@ -12,6 +13,8 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   variant = 'compact'
 }) => {
   const { theme, setTheme, resolvedTheme } = useTheme();
+  const { lang } = useLanguage();
+  const isEn = lang === 'en';
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -21,7 +24,7 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   if (!mounted) {
     return (
       <div className={`p-1 bg-zinc-100 dark:bg-zinc-900 border-2 border-black dark:border-white font-mono text-xs ${className}`}>
-        Yükleniyor...
+        {isEn ? 'Loading...' : 'Yükleniyor...'}
       </div>
     );
   }
@@ -39,10 +42,10 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
               ? 'bg-red-600 text-white shadow-brutal-sm'
               : 'text-black dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800'
           }`}
-          title="Gündüz Modu"
+          title={isEn ? 'Day Mode' : 'Gündüz Modu'}
         >
           <Sun className="w-3.5 h-3.5 text-yellow-400" />
-          <span>GÜNDÜZ</span>
+          <span>{isEn ? 'DAY' : 'GÜNDÜZ'}</span>
         </button>
         <button
           type="button"
@@ -52,10 +55,10 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
               ? 'bg-red-600 text-white shadow-brutal-sm'
               : 'text-black dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800'
           }`}
-          title="Gece Modu"
+          title={isEn ? 'Night Mode' : 'Gece Modu'}
         >
           <Moon className="w-3.5 h-3.5" />
-          <span>GECE</span>
+          <span>{isEn ? 'NIGHT' : 'GECE'}</span>
         </button>
       </div>
     );
@@ -66,19 +69,23 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
       <div className="flex items-center justify-between">
         <div>
           <span className="font-mono text-[10px] font-black uppercase text-red-600">
-            ARAYÜZ KONTRASTI VE ERİŞİLEBİLİRLİK
+            {isEn ? 'INTERFACE CONTRAST & ACCESSIBILITY' : 'ARAYÜZ KONTRASTI VE ERİŞİLEBİLİRLİK'}
           </span>
           <h4 className="text-base font-black uppercase text-black dark:text-white">
-            GÖRÜNÜM TEMASI (GECE / GÜNDÜZ)
+            {isEn ? 'APPEARANCE THEME (DAY / NIGHT)' : 'GÖRÜNÜM TEMASI (GECE / GÜNDÜZ)'}
           </h4>
         </div>
         <div className="font-mono text-xs font-black uppercase px-2 py-0.5 border border-black dark:border-white bg-zinc-100 dark:bg-zinc-800">
-          AKTİF: {isDark ? '🌙 GECE MODU' : '☀️ GÜNDÜZ MODU'}
+          {isEn
+            ? `ACTIVE: ${isDark ? '🌙 NIGHT MODE' : '☀️ DAY MODE'}`
+            : `AKTİF: ${isDark ? '🌙 GECE MODU' : '☀️ GÜNDÜZ MODU'}`}
         </div>
       </div>
 
       <p className="text-xs font-medium text-zinc-600 dark:text-zinc-400">
-        Swiss Modernist yüksek kontrastlı tasarımımız, gece geç saatlerde yürüyüş yaparken veya loş ışıkta göz yorgunluğunu önlemek için özel olarak optimize edilmiştir.
+        {isEn
+          ? 'Our Swiss Modernist high-contrast design is specifically optimized to prevent eye fatigue during late-night walks or low-light situations.'
+          : 'Swiss Modernist yüksek kontrastlı tasarımımız, gece geç saatlerde yürüyüş yaparken veya loş ışıkta göz yorgunluğunu önlemek için özel olarak optimize edilmiştir.'}
       </p>
 
       <div className="grid grid-cols-3 gap-2 pt-1">
@@ -92,8 +99,8 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
           }`}
         >
           <Sun className="w-5 h-5 text-yellow-400" />
-          <span>GÜNDÜZ</span>
-          <span className="text-[10px] font-normal opacity-80">Açık Tema</span>
+          <span>{isEn ? 'DAY' : 'GÜNDÜZ'}</span>
+          <span className="text-[10px] font-normal opacity-80">{isEn ? 'Light Theme' : 'Açık Tema'}</span>
         </button>
 
         <button
@@ -106,8 +113,8 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
           }`}
         >
           <Moon className="w-5 h-5 text-zinc-300" />
-          <span>GECE</span>
-          <span className="text-[10px] font-normal opacity-80">Koyu Tema</span>
+          <span>{isEn ? 'NIGHT' : 'GECE'}</span>
+          <span className="text-[10px] font-normal opacity-80">{isEn ? 'Dark Theme' : 'Koyu Tema'}</span>
         </button>
 
         <button
@@ -120,10 +127,11 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
           }`}
         >
           <Laptop className="w-5 h-5 text-blue-400" />
-          <span>SİSTEM</span>
-          <span className="text-[10px] font-normal opacity-80">Otomatik</span>
+          <span>{isEn ? 'SYSTEM' : 'SİSTEM'}</span>
+          <span className="text-[10px] font-normal opacity-80">{isEn ? 'Automatic' : 'Otomatik'}</span>
         </button>
       </div>
     </div>
   );
 };
+

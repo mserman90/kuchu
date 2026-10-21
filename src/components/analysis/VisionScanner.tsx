@@ -1,26 +1,21 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   Camera, 
-  Upload, 
   Sparkles, 
-  AlertTriangle, 
-  CheckCircle2, 
   Scan, 
   Key, 
   ArrowRight,
-  Info,
-  RefreshCw,
-  Eye,
-  SlidersHorizontal
+  Eye
 } from 'lucide-react';
 import { 
-  SAMPLE_CANINE_PHOTOS, 
+  getLocalizedSampleCaninePhotos,
   SampleCaninePhoto, 
   VisionAnalysisResult,
   analyzeUploadedImageHeuristic,
   analyzeWithGeminiVision
 } from '@/lib/vision/canineVisionEngine';
 import { BehaviorInputState } from '@/lib/analysis/types';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { toast } from 'sonner';
 
 interface VisionScannerProps {
@@ -32,10 +27,22 @@ export const VisionScanner: React.FC<VisionScannerProps> = ({
   className = '',
   onApplyToAnalysis
 }) => {
-  const [selectedImage, setSelectedImage] = useState<string>(SAMPLE_CANINE_PHOTOS[0].imageUrl);
-  const [analysisResult, setAnalysisResult] = useState<VisionAnalysisResult>(SAMPLE_CANINE_PHOTOS[0].preset);
+  const { lang } = useLanguage();
+  const isEn = lang === 'en';
+  const samplePhotos = getLocalizedSampleCaninePhotos(lang);
+
+  const [selectedImage, setSelectedImage] = useState<string>(samplePhotos[0].imageUrl);
+  const [analysisResult, setAnalysisResult] = useState<VisionAnalysisResult>(samplePhotos[0].preset);
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
   const [activeLandmarkId, setActiveLandmarkId] = useState<string | null>(null);
+
+  // Update preset when language changes if currently showing a default sample
+  useEffect(() => {
+    const currentSample = samplePhotos.find(s => s.imageUrl === selectedImage);
+    if (currentSample) {
+      setAnalysisResult(currentSample.preset);
+    }
+  }, [lang]);
 
   // Optional Gemini API Key
   const [apiKey, setApiKey] = useState<string>(() => localStorage.getItem('kuchu_gemini_api_key') || '');
@@ -65,10 +72,10 @@ export const VisionScanner: React.FC<VisionScannerProps> = ({
 
       try {
         if (apiKey.trim()) {
-          toast.info('Google Gemini Vision AI modeli ile analiz ediliyor...');
+          toast.info(isEn ? 'Analyzing with Google Gemini Vision AI model...' : 'Google Gemini Vision AI modeli ile analiz ediliyor...');
           const geminiResult = await analyzeWithGeminiVision(dataUrl, apiKey.trim());
           setAnalysisResult(geminiResult);
-          toast.success('Yapay zeka analizi başarıyla tamamlandı!');
+          toast.success(isEn ? 'AI vision analysis completed successfully!' : 'Yapay zeka analizi başarıyla tamamlandı!');
         } else {
           // Heuristic Client-side inference
           setTimeout(async () => {
@@ -77,12 +84,12 @@ export const VisionScanner: React.FC<VisionScannerProps> = ({
               setAnalysisResult(res);
             }
             setIsAnalyzing(false);
-            toast.success('Görsel etolojik tarayıcı başarıyla çalıştı!');
+            toast.success(isEn ? 'Ethological vision scanner completed inference!' : 'Görsel etolojik tarayıcı başarıyla çalıştı!');
           }, 800);
           return;
         }
       } catch (err: any) {
-        toast.error(err.message || 'Görsel analiz edilirken bir sorun oluştu; yerel model devreye alındı.');
+        toast.error(err.message || (isEn ? 'Image analysis encountered an error; local heuristic engaged.' : 'Görsel analiz edilirken bir sorun oluştu; yerel model devreye alındı.'));
         if (imageElementRef.current) {
           const fallback = await analyzeUploadedImageHeuristic(imageElementRef.current);
           setAnalysisResult(fallback);
@@ -116,11 +123,11 @@ export const VisionScanner: React.FC<VisionScannerProps> = ({
               AI
             </span>
             <span className="font-mono text-xs font-black uppercase tracking-wider text-red-600">
-              GÖRSEL VÜCUT DİLİ TANIMA (CANINE VISION ENGINE)
+              {isEn ? 'CANINE VISION ENGINE // VISUAL BODY LANGUAGE RECOGNITION' : 'GÖRSEL VÜCUT DİLİ TANIMA (CANINE VISION ENGINE)'}
             </span>
           </div>
           <h3 className="text-xl sm:text-2xl font-black uppercase text-black dark:text-white mt-1">
-            FOTOĞRAFLA ETOLOJİK TARAMA VE POSTÜR ANALİZİ
+            {isEn ? 'ETHOLOGICAL SCAN & POSTURE CLASSIFICATION FROM PHOTO' : 'FOTOĞRAFLA ETOLOJİK TARAMA VE POSTÜR ANALİZİ'}
           </h3>
         </div>
 
@@ -132,7 +139,7 @@ export const VisionScanner: React.FC<VisionScannerProps> = ({
             className="h-[38px] px-3.5 bg-black text-white dark:bg-white dark:text-black font-mono text-xs font-black uppercase flex items-center gap-1.5 border-2 border-black dark:border-white shadow-brutal-sm hover:translate-x-0.5 hover:translate-y-0.5 transition-all cursor-pointer"
           >
             <Camera className="w-4 h-4 text-red-600" />
-            <span>FOTOĞRAF YÜKLE / ÇEK</span>
+            <span>{isEn ? 'UPLOAD / SNAP PHOTO' : 'FOTOĞRAF YÜKLE / ÇEK'}</span>
           </button>
           
           <input
@@ -147,7 +154,7 @@ export const VisionScanner: React.FC<VisionScannerProps> = ({
             type="button"
             onClick={() => setShowKeyModal(true)}
             className="h-[38px] p-2 border-2 border-black dark:border-white bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white cursor-pointer"
-            title="Google Gemini Vision API Ayarı (Opsiyonel)"
+            title={isEn ? 'Google Gemini Vision API Settings (Optional)' : 'Google Gemini Vision API Ayarı (Opsiyonel)'}
           >
             <Key className="w-4 h-4" />
           </button>
@@ -157,10 +164,10 @@ export const VisionScanner: React.FC<VisionScannerProps> = ({
       {/* Preset Reference Scenarios Bar */}
       <div className="space-y-2">
         <span className="font-mono text-[10px] font-black uppercase text-zinc-500">
-          VEYA HAZIR ETOLOJİK VAKA ÖRNEĞİ SEÇİN:
+          {isEn ? 'OR SELECT A PRESET CLINICAL CASE SAMPLE:' : 'VEYA HAZIR ETOLOJİK VAKA ÖRNEĞİ SEÇİN:'}
         </span>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          {SAMPLE_CANINE_PHOTOS.map((sample) => (
+          {samplePhotos.map((sample) => (
             <button
               key={sample.id}
               onClick={() => handleSelectSample(sample)}
@@ -187,7 +194,7 @@ export const VisionScanner: React.FC<VisionScannerProps> = ({
             <img
               ref={imageElementRef}
               src={selectedImage}
-              alt="Köpek Vücut Dili Analizi"
+              alt={isEn ? 'Canine Body Language Analysis' : 'Köpek Vücut Dili Analizi'}
               className={`w-full h-full object-cover transition-opacity duration-300 ${isAnalyzing ? 'opacity-40 blur-xs' : 'opacity-100'}`}
               crossOrigin="anonymous"
             />
@@ -197,7 +204,7 @@ export const VisionScanner: React.FC<VisionScannerProps> = ({
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 z-20 space-y-3">
                 <Scan className="w-12 h-12 text-red-500 animate-spin" />
                 <span className="font-mono text-xs font-black uppercase text-white tracking-widest animate-pulse">
-                  NÖRONAL ETOLOJİK TARAMA YAPILIYOR...
+                  {isEn ? 'NEURAL ETHOLOGICAL SCANNING IN PROGRESS...' : 'NÖRONAL ETOLOJİK TARAMA YAPILIYOR...'}
                 </span>
               </div>
             )}
@@ -239,12 +246,14 @@ export const VisionScanner: React.FC<VisionScannerProps> = ({
               HUD // CANINE_VISION_V2
             </div>
             <div className="absolute bottom-2 right-2 font-mono text-[10px] bg-black text-white px-2 py-0.5 border border-white">
-              GÜVEN: %{analysisResult.confidenceScore}
+              {isEn ? 'CONFIDENCE:' : 'GÜVEN:'} %{analysisResult.confidenceScore}
             </div>
           </div>
 
           <span className="font-mono text-[10px] text-zinc-500 block">
-            💡 Fotoğraftaki tespit etiketlerine (KULAK, GÖZ, vb.) tıklayarak etolojik ayrıntıyı inceleyin.
+            {isEn
+              ? '💡 Click detection tags on the photo (EARS, EYES, etc.) to examine clinical ethological details.'
+              : '💡 Fotoğraftaki tespit etiketlerine (KULAK, GÖZ, vb.) tıklayarak etolojik ayrıntıyı inceleyin.'}
           </span>
         </div>
 
@@ -255,14 +264,18 @@ export const VisionScanner: React.FC<VisionScannerProps> = ({
           <div className="border-b-2 border-black dark:border-white pb-3 space-y-1.5">
             <div className="flex items-center justify-between">
               <span className="font-mono text-[10px] font-black uppercase text-zinc-500">
-                TESPİT EDİLEN RUH HALİ:
+                {isEn ? 'DETECTED EMOTIONAL STATE:' : 'TESPİT EDİLEN RUH HALİ:'}
               </span>
               <span className={`px-2 py-0.5 font-mono text-[10px] font-black uppercase border border-black ${
                 analysisResult.stressLevel === 'critical' || analysisResult.stressLevel === 'high'
                   ? 'bg-red-600 text-white animate-pulse'
                   : 'bg-green-600 text-white'
               }`}>
-                {analysisResult.stressLevel === 'critical' ? '🚨 KRİTİK ALARM' : analysisResult.stressLevel === 'high' ? '⚠️ YÜKSEK STRES' : '🟢 DÜŞÜK RİSK'}
+                {analysisResult.stressLevel === 'critical'
+                  ? (isEn ? '🚨 CRITICAL ALARM' : '🚨 KRİTİK ALARM')
+                  : analysisResult.stressLevel === 'high'
+                  ? (isEn ? '⚠️ HIGH STRESS' : '⚠️ YÜKSEK STRES')
+                  : (isEn ? '🟢 LOW RISK' : '🟢 DÜŞÜK RİSK')}
               </span>
             </div>
 
@@ -275,7 +288,7 @@ export const VisionScanner: React.FC<VisionScannerProps> = ({
           <div className="space-y-1.5">
             <span className="font-mono text-xs font-black uppercase text-red-600 flex items-center gap-1">
               <Sparkles className="w-3.5 h-3.5" />
-              NÖRONAL GÖRSEL GÖZLEMLER:
+              {isEn ? 'NEURAL VISUAL OBSERVATIONS:' : 'NÖRONAL GÖRSEL GÖZLEMLER:'}
             </span>
             <ul className="space-y-1 font-mono text-xs text-zinc-700 dark:text-zinc-300">
               {analysisResult.rawObservations.map((obs, idx) => (
@@ -289,7 +302,7 @@ export const VisionScanner: React.FC<VisionScannerProps> = ({
 
           {/* Etological Commentary */}
           <div className="p-3 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 font-mono text-xs text-black dark:text-white leading-relaxed">
-            <strong>MERCK KLİNİK ANALİZİ:</strong> {analysisResult.etologicalInsight}
+            <strong>{isEn ? 'MERCK CLINICAL ANALYSIS:' : 'MERCK KLİNİK ANALİZİ:'}</strong> {analysisResult.etologicalInsight}
           </div>
 
           {/* Transfer to Main Analysis Engine CTA */}
@@ -297,11 +310,11 @@ export const VisionScanner: React.FC<VisionScannerProps> = ({
             type="button"
             onClick={() => {
               onApplyToAnalysis(analysisResult.suggestedState);
-              toast.success('Parametreler Davranış Analiz Motoruna aktarıldı!');
+              toast.success(isEn ? 'Parameters transferred to Behavior Analysis Engine!' : 'Parametreler Davranış Analiz Motoruna aktarıldı!');
             }}
             className="w-full py-3 bg-red-600 text-white font-mono text-xs font-black uppercase border-2 border-black dark:border-white shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer"
           >
-            <span>BU BULGULARI ANALİZ MOTORUNA AKTAR</span>
+            <span>{isEn ? 'TRANSFER THESE FINDINGS TO ANALYSIS ENGINE' : 'BU BULGULARI ANALİZ MOTORUNA AKTAR'}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
 
@@ -316,19 +329,20 @@ export const VisionScanner: React.FC<VisionScannerProps> = ({
             <div className="flex items-center justify-between border-b-2 border-black dark:border-white pb-2">
               <h4 className="font-mono text-sm font-black uppercase text-black dark:text-white flex items-center gap-1.5">
                 <Key className="w-4 h-4 text-red-600" />
-                GOOGLE GEMINI VISION API AYARI
+                {isEn ? 'GOOGLE GEMINI VISION API CONFIG' : 'GOOGLE GEMINI VISION API AYARI'}
               </h4>
               <button 
                 onClick={() => setShowKeyModal(false)}
                 className="font-mono text-xs font-bold p-1 cursor-pointer"
               >
-                KAPAT
+                {isEn ? 'CLOSE' : 'KAPAT'}
               </button>
             </div>
 
             <p className="text-xs font-medium text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              Kuçu, fotoğraf analizlerini varsayılan olarak cihazınızda sıfır maliyetli yerel görsel etoloji algoritması ile gerçekleştirir.
-              İsterseniz Google Gemini 1.5 Flash Vision API anahtarınızı girerek bulut tabanlı multimodal yapay zeka modelini de aktifleştirebilirsiniz (Anahtarınız sadece tarayıcınızın `localStorage` alanında saklanır).
+              {isEn
+                ? 'Kuçu performs photo inference locally on your device by default with zero cost. You can optionally supply your Google Gemini 1.5 Flash Vision API key to engage multimodal cloud intelligence (Your key remains safely in your browser\'s localStorage).'
+                : 'Kuçu, fotoğraf analizlerini varsayılan olarak cihazınızda sıfır maliyetli yerel görsel etoloji algoritması ile gerçekleştirir. İsterseniz Google Gemini 1.5 Flash Vision API anahtarınızı girerek bulut tabanlı multimodal yapay zeka modelini de aktifleştirebilirsiniz (Anahtarınız sadece tarayıcınızın localStorage alanında saklanır).'}
             </p>
 
             <div>
@@ -349,22 +363,22 @@ export const VisionScanner: React.FC<VisionScannerProps> = ({
                   localStorage.removeItem('kuchu_gemini_api_key');
                   setApiKey('');
                   setShowKeyModal(false);
-                  toast.info('API anahtarı temizlendi; yerel model aktif.');
+                  toast.info(isEn ? 'API key cleared; local model active.' : 'API anahtarı temizlendi; yerel model aktif.');
                 }}
                 className="px-3 py-1.5 border border-zinc-400 text-xs font-mono font-bold"
               >
-                TEMİZLE
+                {isEn ? 'CLEAR' : 'TEMİZLE'}
               </button>
               <button
                 type="button"
                 onClick={() => {
                   localStorage.setItem('kuchu_gemini_api_key', apiKey.trim());
                   setShowKeyModal(false);
-                  toast.success('Gemini API anahtarı kaydedildi!');
+                  toast.success(isEn ? 'Gemini API key saved!' : 'Gemini API anahtarı kaydedildi!');
                 }}
                 className="px-4 py-1.5 bg-red-600 text-white font-mono text-xs font-black uppercase border border-black shadow-brutal-sm"
               >
-                KAYDET
+                {isEn ? 'SAVE' : 'KAYDET'}
               </button>
             </div>
           </div>
@@ -374,3 +388,4 @@ export const VisionScanner: React.FC<VisionScannerProps> = ({
     </div>
   );
 };
+

@@ -206,7 +206,7 @@ const translations = {
   }
 } as const;
 
-export type TranslationKey = keyof typeof translations['tr'];
+export type TranslationKey = keyof typeof translations['tr'] | (string & {});
 
 // ─── Context ─────────────────────────────────────────────────────────────────
 interface LanguageContextValue {

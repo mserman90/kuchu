@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { DisclaimerBar } from '@/components/common/Ui';
 import { 
   TOXIC_FOODS_DATABASE, 
-  ToxicFoodItem, 
-  ToxicityLevel 
+  ToxicityLevel,
+  getLocalizedToxicFood
 } from '@/lib/content/toxicFoods';
 import { ChocolateCalculator } from '@/components/toxic/ChocolateCalculator';
 import { 
@@ -12,20 +12,19 @@ import {
   ShieldAlert, 
   CheckCircle2, 
   XCircle, 
-  PhoneCall, 
-  Flame, 
   Info,
   ChevronDown,
-  ChevronUp,
-  Apple
+  ChevronUp
 } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export const ToxicFoodsPage: React.FC = () => {
+  const { lang } = useLanguage();
   const [search, setSearch] = useState<string>('');
   const [filterLevel, setFilterLevel] = useState<ToxicityLevel | 'all'>('all');
   const [expandedId, setExpandedId] = useState<string | null>('kuru-uzum-yas-uzum');
 
-  const filteredFoods = TOXIC_FOODS_DATABASE.filter((item) => {
+  const filteredFoods = TOXIC_FOODS_DATABASE.map((item) => getLocalizedToxicFood(item, lang)).filter((item) => {
     const matchesFilter = filterLevel === 'all' || item.level === filterLevel;
     const query = search.toLowerCase().trim();
     const matchesSearch = 
@@ -42,22 +41,22 @@ export const ToxicFoodsPage: React.FC = () => {
       case 'critical':
         return {
           bg: 'bg-red-600 text-white animate-pulse',
-          label: '🚨 ACİL HAYATİ TEHLİKE'
+          label: lang === 'en' ? '🚨 CRITICAL EMERGENCY' : '🚨 ACİL HAYATİ TEHLİKE'
         };
       case 'high':
         return {
           bg: 'bg-orange-600 text-white',
-          label: '⚠️ YÜKSEK TOKSİSİTE'
+          label: lang === 'en' ? '⚠️ HIGH TOXICITY' : '⚠️ YÜKSEK TOKSİSİTE'
         };
       case 'moderate':
         return {
           bg: 'bg-yellow-400 text-black',
-          label: '🟡 ORTA ZARARLI'
+          label: lang === 'en' ? '🟡 MODERATE RISK' : '🟡 ORTA ZARARLI'
         };
       case 'safe':
         return {
           bg: 'bg-green-600 text-white',
-          label: '🟢 GÜVENLİ GIDA'
+          label: lang === 'en' ? '🟢 SAFE FOOD' : '🟢 GÜVENLİ GIDA'
         };
     }
   };
@@ -72,15 +71,21 @@ export const ToxicFoodsPage: React.FC = () => {
             ☣
           </span>
           <span className="font-mono text-xs font-bold uppercase tracking-wider text-red-600">
-            MERCK VETERINARY MANUAL & ASPCA TOKSİKOLOJİ PROTOKOLLERİ
+            {lang === 'en'
+              ? 'MERCK VETERINARY MANUAL & ASPCA TOXICOLOGY PROTOCOLS'
+              : 'MERCK VETERINARY MANUAL & ASPCA TOKSİKOLOJİ PROTOKOLLERİ'}
           </span>
         </div>
 
         <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-black dark:text-white">
-          ZEHİRLİ GIDALAR & ACİL TOKSİKOLOJİ REHBERİ
+          {lang === 'en'
+            ? 'TOXIC FOODS & EMERGENCY TOXICOLOGY GUIDE'
+            : 'ZEHİRLİ GIDALAR & ACİL TOKSİKOLOJİ REHBERİ'}
         </h1>
         <p className="text-xs sm:text-sm font-medium text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-4xl">
-          Köpeğiniz yabancı bir gıda veya insan yemeği mi yedi? Panik yapmadan önce toksik maddeyi arayın, ölümcül eşiğini kontrol edin ve veteriner hekime ulaşana kadar doğru ilk yardım adımlarını uygulayın.
+          {lang === 'en'
+            ? 'Did your dog eat an unknown food or human meal? Search the toxic substance, check the lethal threshold, and follow vital first-aid steps until you reach a veterinarian.'
+            : 'Köpeğiniz yabancı bir gıda veya insan yemeği mi yedi? Panik yapmadan önce toksik maddeyi arayın, ölümcül eşiğini kontrol edin ve veteriner hekime ulaşana kadar doğru ilk yardım adımlarını uygulayın.'}
         </p>
       </div>
 
@@ -91,29 +96,43 @@ export const ToxicFoodsPage: React.FC = () => {
         <div className="flex items-center gap-2">
           <ShieldAlert className="w-6 h-6 text-red-500 animate-bounce" />
           <h2 className="text-xl font-black uppercase tracking-tight text-white">
-            ACİL ZEHİRLENMEDE 3 HAYATİ İLK YARDIM KURALI
+            {lang === 'en'
+              ? '3 VITAL FIRST-AID RULES IN ACUTE POISONING'
+              : 'ACİL ZEHİRLENMEDE 3 HAYATİ İLK YARDIM KURALI'}
           </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
           <div className="p-3 border border-zinc-700 bg-zinc-900/70 space-y-1">
-            <span className="text-red-400 font-bold">1. NE ZAMAN KUSTURULMAZ?</span>
+            <span className="text-red-400 font-bold">
+              {lang === 'en' ? '1. WHEN NEVER TO INDUCE EMESIS?' : '1. NE ZAMAN KUSTURULMAZ?'}
+            </span>
             <p className="text-zinc-300 text-[11px] leading-relaxed">
-              Köpek baygınsa, kasılıyorsa, pişen sivri kemik yutmuşsa veya çamaşır suyu/asit gibi yakıcı kimyasal içtiyse <strong>ASLA KUSTURMAYIN</strong>. Yemek borusu delinebilir veya akciğerine kaçarak boğulabilir.
+              {lang === 'en'
+                ? 'If the dog is unconscious, having seizures, swallowed sharp cooked bones, or caustic acid/bleach, NEVER INDUCE VOMITING. Esophagus can perforate or vomit can aspirate into lungs.'
+                : 'Köpek baygınsa, kasılıyorsa, pişen sivri kemik yutmuşsa veya çamaşır suyu/asit gibi yakıcı kimyasal içtiyse ASLA KUSTURMAYIN. Yemek borusu delinebilir veya akciğerine kaçarak boğulabilir.'}
             </p>
           </div>
 
           <div className="p-3 border border-zinc-700 bg-zinc-900/70 space-y-1">
-            <span className="text-yellow-400 font-bold">2. İLK 2 SAAT KURALI</span>
+            <span className="text-yellow-400 font-bold">
+              {lang === 'en' ? '2. THE FIRST 2 HOURS RULE' : '2. İLK 2 SAAT KURALI'}
+            </span>
             <p className="text-zinc-300 text-[11px] leading-relaxed">
-              Midedeki toksin henüz kana ve karaciğere karışmadan önce (ilk 1-2 saat) veteriner kliniğinde Apomorfin veya Hidrojen Peroksit ile kontrollü kusturulursa kurtulma şansı %95'tir.
+              {lang === 'en'
+                ? 'Before toxins enter the bloodstream and liver (first 1-2 hours), controlled emesis at a veterinary clinic with Apomorphine gives a 95% survival rate.'
+                : 'Midedeki toksin henüz kana ve karaciğere karışmadan önce (ilk 1-2 saat) veteriner kliniğinde Apomorfin veya Hidrojen Peroksit ile kontrollü kusturulursa kurtulma şansı %95\'tir.'}
             </p>
           </div>
 
           <div className="p-3 border border-zinc-700 bg-zinc-900/70 space-y-1">
-            <span className="text-green-400 font-bold">3. AMBALAJI YANINIZA ALIN</span>
+            <span className="text-green-400 font-bold">
+              {lang === 'en' ? '3. BRING THE PACKAGING WITH YOU' : '3. AMBALAJI YANINIZA ALIN'}
+            </span>
             <p className="text-zinc-300 text-[11px] leading-relaxed">
-              Yenen ilacın kutusunu, çikolatanın ambalajını veya bitkinin fotoğrafını mutlaka veteriner hekime gösterin. Spesifik panzehir (Antidot) bu bilgiye göre seçilir.
+              {lang === 'en'
+                ? 'Bring the medication package, chocolate wrapper, or plant photo to the clinic. Specific antidotes are chosen based on this exact information.'
+                : 'Yenen ilacın kutusunu, çikolatanın ambalajını veya bitkinin fotoğrafını mutlaka veteriner hekime gösterin. Spesifik panzehir (Antidot) bu bilgiye göre seçilir.'}
             </p>
           </div>
         </div>
@@ -134,7 +153,9 @@ export const ToxicFoodsPage: React.FC = () => {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Gıda adı yazın (Örn: üzüm, sakız, soğan, çikolata, havuç)..."
+              placeholder={lang === 'en'
+                ? 'Search food (e.g. grape, gum, onion, chocolate, carrot)...'
+                : 'Gıda adı yazın (Örn: üzüm, sakız, soğan, çikolata, havuç)...'}
               className="w-full pl-10 pr-4 py-2.5 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950 font-mono text-xs font-bold uppercase focus:outline-hidden"
             />
           </div>
@@ -142,11 +163,11 @@ export const ToxicFoodsPage: React.FC = () => {
           {/* Filter Pills */}
           <div className="flex flex-wrap items-center gap-1.5">
             {[
-              { id: 'all', label: 'TÜMÜ' },
-              { id: 'critical', label: '🚨 KRİTİK' },
-              { id: 'high', label: '⚠️ YÜKSEK' },
-              { id: 'moderate', label: '🟡 ORTA' },
-              { id: 'safe', label: '🟢 GÜVENLİ' }
+              { id: 'all', label: lang === 'en' ? 'ALL' : 'TÜMÜ' },
+              { id: 'critical', label: lang === 'en' ? '🚨 CRITICAL' : '🚨 KRİTİK' },
+              { id: 'high', label: lang === 'en' ? '⚠️ HIGH' : '⚠️ YÜKSEK' },
+              { id: 'moderate', label: lang === 'en' ? '🟡 MODERATE' : '🟡 ORTA' },
+              { id: 'safe', label: lang === 'en' ? '🟢 SAFE' : '🟢 GÜVENLİ' }
             ].map((f) => (
               <button
                 key={f.id}
@@ -166,13 +187,17 @@ export const ToxicFoodsPage: React.FC = () => {
         </div>
 
         <div className="font-mono text-xs text-zinc-500 flex items-center justify-between border-t border-zinc-200 dark:border-zinc-800 pt-2">
-          <span>Toplam {filteredFoods.length} gıda maddesi listeleniyor.</span>
+          <span>
+            {lang === 'en'
+              ? `Listing ${filteredFoods.length} food items.`
+              : `Toplam ${filteredFoods.length} gıda maddesi listeleniyor.`}
+          </span>
           {search && (
             <button 
               onClick={() => setSearch('')}
               className="text-red-600 underline font-bold cursor-pointer"
             >
-              Aramayı Temizle
+              {lang === 'en' ? 'Clear Search' : 'Aramayı Temizle'}
             </button>
           )}
         </div>
@@ -184,9 +209,13 @@ export const ToxicFoodsPage: React.FC = () => {
         {filteredFoods.length === 0 ? (
           <div className="p-8 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 text-center font-mono text-xs space-y-2">
             <div className="text-3xl">🔍</div>
-            <div className="font-black uppercase">ARADIĞINIZ GIDA VERİTABANINDA BULUNAMADI</div>
+            <div className="font-black uppercase">
+              {lang === 'en' ? 'FOOD ITEM NOT FOUND IN DATABASE' : 'ARADIĞINIZ GIDA VERİTABANINDA BULUNAMADI'}
+            </div>
             <p className="text-zinc-500">
-              Şüpheli bir madde tüketildiyse vakit kaybetmeden derhal en yakın veteriner kliniğine danışın.
+              {lang === 'en'
+                ? 'If a suspicious substance was ingested, consult the nearest veterinary clinic immediately without waiting.'
+                : 'Şüpheli bir madde tüketildiyse vakit kaybetmeden derhal en yakın veteriner kliniğine danışın.'}
             </p>
           </div>
         ) : (
@@ -210,7 +239,7 @@ export const ToxicFoodsPage: React.FC = () => {
                         {badge.label}
                       </span>
                       <span className="font-mono text-[11px] text-zinc-500 font-bold uppercase">
-                        Toksin: {item.toxicAgent}
+                        {lang === 'en' ? 'Toxin:' : 'Toksin:'} {item.toxicAgent}
                       </span>
                     </div>
 
@@ -221,9 +250,9 @@ export const ToxicFoodsPage: React.FC = () => {
 
                   <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
                     <span className="font-mono text-xs font-bold text-red-600">
-                      Başlangıç: {item.onsetHours}
+                      {lang === 'en' ? 'Onset:' : 'Başlangıç:'} {item.onsetHours}
                     </span>
-                    <button className="p-1 border border-black dark:border-white">
+                    <button className="p-1 border border-black dark:border-white" aria-label="Toggle details">
                       {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
                     </button>
                   </div>
@@ -237,7 +266,7 @@ export const ToxicFoodsPage: React.FC = () => {
                     <div className="p-4 border-2 border-black dark:border-white bg-red-600 text-white font-mono text-xs space-y-1">
                       <div className="font-black uppercase flex items-center gap-1.5">
                         <AlertTriangle className="w-4 h-4 text-yellow-300" />
-                        <span>TOKSİK EŞİK VE TEHLİKE DERECESİ:</span>
+                        <span>{lang === 'en' ? 'TOXIC THRESHOLD & RISK SEVERITY:' : 'TOKSİK EŞİK VE TEHLİKE DERECESİ:'}</span>
                       </div>
                       <p className="leading-relaxed opacity-95">
                         {item.lethalThreshold}
@@ -251,7 +280,7 @@ export const ToxicFoodsPage: React.FC = () => {
                       <div className="p-4 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 space-y-2">
                         <span className="font-mono text-xs font-black uppercase text-red-600 flex items-center gap-1">
                           <AlertTriangle className="w-4 h-4" />
-                          GÖRÜLEN KLİNİK BELİRTİLER
+                          {lang === 'en' ? 'CLINICAL SYMPTOMS OBSERVED' : 'GÖRÜLEN KLİNİK BELİRTİLER'}
                         </span>
                         <ul className="space-y-1.5 font-mono text-xs text-zinc-700 dark:text-zinc-300">
                           {item.symptoms.map((sym, sIdx) => (
@@ -267,7 +296,7 @@ export const ToxicFoodsPage: React.FC = () => {
                       <div className="p-4 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 space-y-2">
                         <span className="font-mono text-xs font-black uppercase text-green-600 flex items-center gap-1">
                           <CheckCircle2 className="w-4 h-4" />
-                          ACİL İLK YARDIM ADIMLARI
+                          {lang === 'en' ? 'EMERGENCY FIRST-AID STEPS' : 'ACİL İLK YARDIM ADIMLARI'}
                         </span>
                         <ul className="space-y-1.5 font-mono text-xs text-zinc-700 dark:text-zinc-300">
                           {item.emergencyFirstAid.map((aid, aIdx) => (
@@ -285,7 +314,9 @@ export const ToxicFoodsPage: React.FC = () => {
                     <div className="p-4 border-2 border-black dark:border-white bg-amber-500/10 dark:bg-amber-950/20 space-y-1 font-mono text-xs text-black dark:text-white">
                       <span className="font-black text-amber-700 dark:text-amber-400 uppercase flex items-center gap-1">
                         <XCircle className="w-4 h-4 text-amber-600" />
-                        KESİNLİKLE YAPILMAMASI GEREKENLER (KONTRAENDİKASYON):
+                        {lang === 'en'
+                          ? 'ABSOLUTE CONTRAINDICATIONS (WHAT NOT TO DO):'
+                          : 'KESİNLİKLE YAPILMAMASI GEREKENLER (KONTRAENDİKASYON):'}
                       </span>
                       <ul className="space-y-1 text-zinc-700 dark:text-zinc-300">
                         {item.contraindications.map((c, cIdx) => (
@@ -298,7 +329,9 @@ export const ToxicFoodsPage: React.FC = () => {
                     <div className="p-4 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 font-mono text-xs space-y-1">
                       <span className="font-black uppercase text-black dark:text-white flex items-center gap-1">
                         <Info className="w-4 h-4 text-blue-600" />
-                        VETERİNER KLİNİK MÜDAHALE VE YOĞUN BAKIM PROTOKOLÜ:
+                        {lang === 'en'
+                          ? 'VETERINARY CLINICAL PROTOCOL & ICU MANAGEMENT:'
+                          : 'VETERİNER KLİNİK MÜDAHALE VE YOĞUN BAKIM PROTOKOLÜ:'}
                       </span>
                       <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
                         {item.veterinaryTreatment}

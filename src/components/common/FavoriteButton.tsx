@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Star } from 'lucide-react';
 import { dataEntities } from '@/lib/data/entities';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { toast } from 'sonner';
 
 interface FavoriteButtonProps {
@@ -19,6 +20,8 @@ export const FavoriteButton: React.FC<FavoriteButtonProps> = ({
   className = ''
 }) => {
   const [isFav, setIsFav] = useState(false);
+  const { lang } = useLanguage();
+  const isEn = lang === 'en';
 
   useEffect(() => {
     let mounted = true;
@@ -42,9 +45,9 @@ export const FavoriteButton: React.FC<FavoriteButtonProps> = ({
     });
     setIsFav(result.added);
     if (result.added) {
-      toast.success(`"${title}" favorilere eklendi.`);
+      toast.success(isEn ? `"${title}" added to favorites.` : `"${title}" favorilere eklendi.`);
     } else {
-      toast.info(`"${title}" favorilerden çıkarıldı.`);
+      toast.info(isEn ? `"${title}" removed from favorites.` : `"${title}" favorilerden çıkarıldı.`);
     }
   };
 
@@ -57,10 +60,11 @@ export const FavoriteButton: React.FC<FavoriteButtonProps> = ({
           ? 'bg-yellow-400 text-black'
           : 'bg-white dark:bg-zinc-800 text-zinc-400 hover:text-black dark:hover:text-white'
       } ${className}`}
-      title={isFav ? 'Favorilerden Çıkar' : 'Favoriye Ekle'}
-      aria-label={isFav ? 'Favorilerden Çıkar' : 'Favoriye Ekle'}
+      title={isFav ? (isEn ? 'Remove from favorites' : 'Favorilerden Çıkar') : (isEn ? 'Add to favorites' : 'Favoriye Ekle')}
+      aria-label={isFav ? (isEn ? 'Remove from favorites' : 'Favorilerden Çıkar') : (isEn ? 'Add to favorites' : 'Favoriye Ekle')}
     >
       <Star className={`w-3.5 h-3.5 stroke-[2.5] ${isFav ? 'fill-black' : ''}`} />
     </button>
   );
 };
+

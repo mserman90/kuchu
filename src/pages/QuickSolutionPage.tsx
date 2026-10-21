@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDog } from '@/context/DogContext';
-import { TRIAGE_QUESTIONS, resolveTriageSolution } from '@/lib/triage/engine';
+import { getLocalizedTriageQuestions, resolveTriageSolution } from '@/lib/triage/engine';
 import { TriageAnswers, TriageSolution } from '@/lib/triage/types';
 import { DisclaimerBar } from '@/components/common/Ui';
 import { 
@@ -19,17 +19,20 @@ import {
   Share2
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export const QuickSolutionPage: React.FC = () => {
   const { activeDog } = useDog();
-  const dogName = activeDog?.name || 'Köpeğiniz';
+  const { lang } = useLanguage();
+  const dogName = activeDog?.name || (lang === 'en' ? 'Your Dog' : 'Köpeğiniz');
 
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [answers, setAnswers] = useState<TriageAnswers>({});
   const [solution, setSolution] = useState<TriageSolution | null>(null);
 
-  const currentQuestion = TRIAGE_QUESTIONS[currentStepIndex];
-  const totalQuestions = TRIAGE_QUESTIONS.length;
+  const questions = getLocalizedTriageQuestions(lang);
+  const currentQuestion = questions[currentStepIndex];
+  const totalQuestions = questions.length;
 
   const handleSelectOption = (questionId: string, optionId: string) => {
     const updated = { ...answers, [questionId]: optionId };
@@ -39,9 +42,9 @@ export const QuickSolutionPage: React.FC = () => {
       setCurrentStepIndex(currentStepIndex + 1);
     } else {
       // Final step reached, generate resolution
-      const resolved = resolveTriageSolution(updated, dogName);
+      const resolved = resolveTriageSolution(updated, dogName, lang);
       setSolution(resolved);
-      toast.success('Kişiselleştirilmiş Klinik Çözüm Reçeteniz Hazırlandı!');
+      toast.success(lang === 'en' ? 'Your Personalized Clinical Prescription is Ready!' : 'Kişiselleştirilmiş Klinik Çözüm Reçeteniz Hazırlandı!');
     }
   };
 
@@ -59,7 +62,33 @@ export const QuickSolutionPage: React.FC = () => {
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
-    toast.success('Çözüm bağlantısı panoya kopyalandı!');
+    toast.success(lang === 'en' ? 'Solution link copied to clipboard!' : 'Çözüm bağlantısı panoya kopyalandı!');
+  };
+
+  const getUrgencyBadge = (urgency: TriageSolution['urgencyLevel']) => {
+    switch (urgency) {
+      case 'critical':
+        return {
+          bg: 'bg-red-600',
+          text: lang === 'en' ? 'URGENCY: CRITICAL' : 'ACİLİYET: KRİTİK'
+        };
+      case 'high':
+        return {
+          bg: 'bg-orange-600',
+          text: lang === 'en' ? 'URGENCY: HIGH' : 'ACİLİYET: YÜKSEK'
+        };
+      case 'medium':
+        return {
+          bg: 'bg-yellow-600',
+          text: lang === 'en' ? 'URGENCY: MODERATE' : 'ACİLİYET: ORTA'
+        };
+      case 'low':
+      default:
+        return {
+          bg: 'bg-green-600',
+          text: lang === 'en' ? 'URGENCY: MILD / LOW' : 'ACİLİYET: HAFİF'
+        };
+    }
   };
 
   return (
@@ -72,18 +101,19 @@ export const QuickSolutionPage: React.FC = () => {
             <Zap className="w-5 h-5 text-yellow-400 fill-yellow-400" />
           </span>
           <span className="font-mono text-xs font-bold uppercase tracking-wider text-black dark:text-white">
-            KLİNİK KARAR AĞACI & ETOLOJİK TRİYAJ SİSTEMİ
+            {lang === 'en' ? 'CLINICAL DECISION TREE & ETHOLOGICAL TRIAGE SYSTEM' : 'KLİNİK KARAR AĞACI & ETOLOJİK TRİYAJ SİSTEMİ'}
           </span>
           <span className="font-mono text-[10px] font-black px-2 py-0.5 bg-red-600 text-white uppercase border border-black">
-            AKILLI HIZLI ÇÖZÜM
+            {lang === 'en' ? 'SMART QUICK FIX' : 'AKILLI HIZLI ÇÖZÜM'}
           </span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-black dark:text-white">
-          HIZLI DAVRANIŞ TEŞHİSİ VE ÇÖZÜM SİHİRBAZI
+          {lang === 'en' ? 'RAPID BEHAVIOR DIAGNOSIS & SOLUTION WIZARD' : 'HIZLI DAVRANIŞ TEŞHİSİ VE ÇÖZÜM SİHİRBAZI'}
         </h1>
         <p className="text-xs sm:text-sm font-medium text-zinc-600 dark:text-zinc-400 leading-relaxed">
-          Köpeğinizin yaşadığı sorunun kök nedenini, aciliyet seviyesini ve <strong>Merck Veterinary Manual 3M Modeli</strong> uyarınca 
-          hemen bugün uygulayabileceğiniz en doğru eylem adımlarını 5 basit soruyla belirleyin.
+          {lang === 'en'
+            ? 'Identify the root cause, urgency level, and immediate 3M action steps for your dog’s issue in 5 simple questions according to the Merck Veterinary Manual 3M Model.'
+            : 'Köpeğinizin yaşadığı sorunun kök nedenini, aciliyet seviyesini ve Merck Veterinary Manual 3M Modeli uyarınca hemen bugün uygulayabileceğiniz en doğru eylem adımlarını 5 basit soruyla belirleyin.'}
         </p>
       </div>
 
@@ -97,11 +127,11 @@ export const QuickSolutionPage: React.FC = () => {
           <div className="p-4 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-brutal-sm flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="font-mono text-xs font-black uppercase text-black dark:text-white">
-                ADIM {String(currentStepIndex + 1).padStart(2, '0')} / {String(totalQuestions).padStart(2, '0')}
+                {lang === 'en' ? 'STEP' : 'ADIM'} {String(currentStepIndex + 1).padStart(2, '0')} / {String(totalQuestions).padStart(2, '0')}
               </span>
               <span className="text-zinc-400">|</span>
               <span className="font-mono text-xs font-bold text-red-600">
-                {dogName} İçin Teşhis Ediliyor
+                {lang === 'en' ? `Diagnosing for ${dogName}` : `${dogName} İçin Teşhis Ediliyor`}
               </span>
             </div>
 
@@ -110,14 +140,14 @@ export const QuickSolutionPage: React.FC = () => {
                 onClick={handleBack}
                 className="inline-flex items-center gap-1 font-mono text-xs font-bold uppercase text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white cursor-pointer"
               >
-                <ArrowLeft className="w-4 h-4" /> Önceki Soru
+                <ArrowLeft className="w-4 h-4" /> {lang === 'en' ? 'Previous Question' : 'Önceki Soru'}
               </button>
             )}
           </div>
 
           {/* Progress Indicator Dots */}
           <div className="grid grid-cols-5 gap-2">
-            {TRIAGE_QUESTIONS.map((q, idx) => (
+            {questions.map((q, idx) => (
               <div 
                 key={q.id}
                 className={`h-2 border-2 border-black dark:border-white transition-all ${
@@ -135,7 +165,7 @@ export const QuickSolutionPage: React.FC = () => {
           <div className="border-2 border-black dark:border-white p-6 sm:p-8 bg-white dark:bg-zinc-900 shadow-brutal space-y-6">
             <div className="space-y-1">
               <span className="font-mono text-[11px] font-black uppercase text-red-600 tracking-wider">
-                SORU {currentStepIndex + 1}
+                {lang === 'en' ? 'QUESTION' : 'SORU'} {currentStepIndex + 1}
               </span>
               <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-black dark:text-white">
                 {currentQuestion.title}
@@ -191,19 +221,16 @@ export const QuickSolutionPage: React.FC = () => {
           <div className="border-2 border-black dark:border-white p-6 sm:p-8 bg-white dark:bg-zinc-900 shadow-brutal-xl space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-black dark:border-white pb-4">
               <div className="flex items-center gap-2">
-                <span className={`font-mono text-xs font-black uppercase px-3 py-1 border-2 border-black text-white ${
-                  solution.urgencyLevel === 'critical'
-                    ? 'bg-red-600'
-                    : solution.urgencyLevel === 'high'
-                    ? 'bg-orange-600'
-                    : solution.urgencyLevel === 'medium'
-                    ? 'bg-yellow-600'
-                    : 'bg-green-600'
-                }`}>
-                  ACİLİYET: {solution.urgencyLevel.toUpperCase()}
-                </span>
+                {(() => {
+                  const badge = getUrgencyBadge(solution.urgencyLevel);
+                  return (
+                    <span className={`font-mono text-xs font-black uppercase px-3 py-1 border-2 border-black text-white ${badge.bg}`}>
+                      {badge.text}
+                    </span>
+                  );
+                })()}
                 <span className="font-mono text-xs font-bold uppercase px-3 py-1 border-2 border-black bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white">
-                  %{solution.confidencePercentage} TEŞHİS GÜVENİ
+                  {lang === 'en' ? `${solution.confidencePercentage}% DIAGNOSIS CONFIDENCE` : `%{solution.confidencePercentage} TEŞHİS GÜVENİ`}
                 </span>
               </div>
 
@@ -212,20 +239,20 @@ export const QuickSolutionPage: React.FC = () => {
                   onClick={handleCopyLink}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 font-mono text-xs font-black uppercase border-2 border-black dark:border-white bg-white dark:bg-zinc-800 text-black dark:text-white shadow-brutal-sm hover:translate-x-0.5 cursor-pointer"
                 >
-                  <Share2 className="w-4 h-4" /> Paylaş
+                  <Share2 className="w-4 h-4" /> {lang === 'en' ? 'Share' : 'Paylaş'}
                 </button>
                 <button
                   onClick={handleReset}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 font-mono text-xs font-black uppercase border-2 border-black dark:border-white bg-black text-white dark:bg-white dark:text-black shadow-brutal-sm hover:translate-x-0.5 cursor-pointer"
                 >
-                  <RotateCcw className="w-4 h-4" /> Yeni Test
+                  <RotateCcw className="w-4 h-4" /> {lang === 'en' ? 'New Test' : 'Yeni Test'}
                 </button>
               </div>
             </div>
 
             <div className="space-y-2">
               <span className="font-mono text-xs font-bold uppercase text-red-600 tracking-wider">
-                🔬 KLİNİK TEŞHİS VE TANI:
+                {lang === 'en' ? '🔬 CLINICAL ASSESSMENT & DIAGNOSIS:' : '🔬 KLİNİK TEŞHİS VE TANI:'}
               </span>
               <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-black dark:text-white">
                 {solution.diagnosisTitle}
@@ -239,7 +266,7 @@ export const QuickSolutionPage: React.FC = () => {
             <div className="p-4 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950 space-y-1">
               <div className="font-mono text-xs font-black uppercase text-black dark:text-white flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-blue-600" />
-                DAVRANIŞIN ETOLOJİK KÖK NEDENİ:
+                {lang === 'en' ? 'ETHOLOGICAL ROOT CAUSE:' : 'DAVRANIŞIN ETOLOJİK KÖK NEDENİ:'}
               </div>
               <p className="text-xs font-medium text-zinc-700 dark:text-zinc-300">
                 {solution.rootCause}
@@ -251,7 +278,7 @@ export const QuickSolutionPage: React.FC = () => {
               <div className="p-4 border-2 border-black dark:border-white bg-red-50 dark:bg-zinc-950 space-y-2">
                 <div className="font-mono text-xs font-black uppercase text-red-600 flex items-center gap-1.5">
                   <AlertTriangle className="w-4 h-4 text-red-600" />
-                  🚨 DİKKAT EDİLMESİ GEREKEN KIRMIZI BAYRAKLAR:
+                  {lang === 'en' ? '🚨 CRITICAL RED FLAGS & WATCH-OUTS:' : '🚨 DİKKAT EDİLMESİ GEREKEN KIRMIZI BAYRAKLAR:'}
                 </div>
                 <ul className="space-y-1 text-xs font-medium text-zinc-800 dark:text-zinc-200">
                   {solution.redFlags.map((flag, idx) => (
@@ -271,18 +298,18 @@ export const QuickSolutionPage: React.FC = () => {
               <div className="flex items-center gap-2">
                 <span className="w-3 h-3 bg-blue-600 border border-black inline-block"></span>
                 <h3 className="font-mono text-sm sm:text-base font-black uppercase tracking-tight text-blue-950 dark:text-blue-300">
-                  MERCK VETERINARY MANUAL — 3M MÜDAHALE PLANI
+                  {lang === 'en' ? 'MERCK VETERINARY MANUAL — 3M ACTION PLAN' : 'MERCK VETERINARY MANUAL — 3M MÜDAHALE PLANI'}
                 </h3>
               </div>
               <span className="font-mono text-[10px] font-bold px-2 py-0.5 bg-white dark:bg-zinc-800 text-blue-900 dark:text-blue-300 border border-black uppercase">
-                Altın Standart
+                {lang === 'en' ? 'Gold Standard' : 'Altın Standart'}
               </span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 border-2 border-black dark:border-white bg-white dark:bg-zinc-950 shadow-brutal-sm space-y-2">
                 <div className="font-mono text-xs font-black uppercase text-black dark:text-white flex items-center gap-1.5">
-                  🛡️ 1. Çevresel Yönetim (Management)
+                  {lang === 'en' ? '🛡️ 1. Environmental Management' : '🛡️ 1. Çevresel Yönetim (Management)'}
                 </div>
                 <p className="text-xs font-medium text-zinc-700 dark:text-zinc-300 leading-relaxed">
                   {solution.merck3MPlan.management}
@@ -291,7 +318,7 @@ export const QuickSolutionPage: React.FC = () => {
 
               <div className="p-4 border-2 border-black dark:border-white bg-white dark:bg-zinc-950 shadow-brutal-sm space-y-2">
                 <div className="font-mono text-xs font-black uppercase text-black dark:text-white flex items-center gap-1.5">
-                  🧬 2. Pozitif Modifikasyon (Modification)
+                  {lang === 'en' ? '🧬 2. Positive Modification' : '🧬 2. Pozitif Modifikasyon (Modification)'}
                 </div>
                 <p className="text-xs font-medium text-zinc-700 dark:text-zinc-300 leading-relaxed">
                   {solution.merck3MPlan.modification}
@@ -300,7 +327,7 @@ export const QuickSolutionPage: React.FC = () => {
 
               <div className="p-4 border-2 border-black dark:border-white bg-white dark:bg-zinc-950 shadow-brutal-sm space-y-2">
                 <div className="font-mono text-xs font-black uppercase text-black dark:text-white flex items-center gap-1.5">
-                  🎯 3. Tepki İkamesi (Response Substitution / DRI)
+                  {lang === 'en' ? '🎯 3. Response Substitution (DRI)' : '🎯 3. Tepki İkamesi (Response Substitution / DRI)'}
                 </div>
                 <p className="text-xs font-medium text-zinc-700 dark:text-zinc-300 leading-relaxed">
                   {solution.merck3MPlan.responseSubstitution}
@@ -309,7 +336,7 @@ export const QuickSolutionPage: React.FC = () => {
 
               <div className="p-4 border-2 border-black dark:border-white bg-white dark:bg-zinc-950 shadow-brutal-sm space-y-2">
                 <div className="font-mono text-xs font-black uppercase text-red-600 dark:text-red-400 flex items-center gap-1.5">
-                  🩺 4. Medikal & Ağrı Eşiği (Medical / Pain Rule-Out)
+                  {lang === 'en' ? '🩺 4. Medical / Pain Rule-Out' : '🩺 4. Medikal & Ağrı Eşiği (Medical / Pain Rule-Out)'}
                 </div>
                 <p className="text-xs font-medium text-zinc-700 dark:text-zinc-300 leading-relaxed">
                   {solution.merck3MPlan.medicalThreshold}
@@ -326,7 +353,7 @@ export const QuickSolutionPage: React.FC = () => {
               <div className="flex items-center gap-2 border-b-2 border-black dark:border-white pb-3 text-green-600">
                 <CheckCircle2 className="w-6 h-6 stroke-[2.5]" />
                 <h3 className="text-base font-black uppercase text-black dark:text-white">
-                  BUGÜN UYGULAMANIZ GEREKEN 3 ACİL ADIM
+                  {lang === 'en' ? '3 IMMEDIATE STEPS TO APPLY TODAY' : 'BUGÜN UYGULAMANIZ GEREKEN 3 ACİL ADIM'}
                 </h3>
               </div>
               <ul className="space-y-3 text-xs sm:text-sm font-medium text-zinc-800 dark:text-zinc-200">
@@ -346,7 +373,7 @@ export const QuickSolutionPage: React.FC = () => {
               <div className="flex items-center gap-2 border-b-2 border-black dark:border-white pb-3 text-red-600">
                 <XCircle className="w-6 h-6 stroke-[2.5]" />
                 <h3 className="text-base font-black uppercase text-black dark:text-white">
-                  DERHAL DURDURMANIZ GEREKEN HATALI TEPKİLER
+                  {lang === 'en' ? 'OWNER REACTIONS TO STOP IMMEDIATELY' : 'DERHAL DURDURMANIZ GEREKEN HATALI TEPKİLER'}
                 </h3>
               </div>
               <ul className="space-y-3 text-xs sm:text-sm font-medium text-zinc-800 dark:text-zinc-200">
@@ -366,7 +393,7 @@ export const QuickSolutionPage: React.FC = () => {
           {/* Action CTAs: Direct Problem, Library, and Training Plan Links */}
           <div className="p-6 sm:p-8 border-2 border-black dark:border-white bg-zinc-100 dark:bg-zinc-950 shadow-brutal space-y-4">
             <h4 className="font-mono text-xs font-black uppercase text-black dark:text-white tracking-wider">
-              🔗 BU TEŞHİSE ÖZEL DETAYLI REHBER VE EĞİTİM BAĞLANTILARI
+              {lang === 'en' ? '🔗 TARGETED GUIDANCE & TRAINING LINKS FOR THIS DIAGNOSIS' : '🔗 BU TEŞHİSE ÖZEL DETAYLI REHBER VE EĞİTİM BAĞLANTILARI'}
             </h4>
             
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -376,13 +403,15 @@ export const QuickSolutionPage: React.FC = () => {
               >
                 <div className="flex items-center gap-2 text-black dark:text-white font-mono text-xs font-black uppercase">
                   <HelpCircle className="w-4 h-4 text-red-600" />
-                  SORUN ÇÖZÜM REHBERİ
+                  {lang === 'en' ? 'PROBLEM RESOLUTION GUIDE' : 'SORUN ÇÖZÜM REHBERİ'}
                 </div>
                 <p className="text-[11px] text-zinc-600 dark:text-zinc-400">
-                  Bu sorunun tüm aşamalarını, tetikleyicilerini ve egzersizlerini detaylı inceleyin.
+                  {lang === 'en'
+                    ? 'Explore in-depth trigger breakdowns, step-by-step counter-conditioning, and management protocols.'
+                    : 'Bu sorunun tüm aşamalarını, tetikleyicilerini ve egzersizlerini detaylı inceleyin.'}
                 </p>
                 <div className="font-mono text-xs font-bold text-red-600 flex items-center gap-1 group-hover:underline">
-                  Rehbere Git <ArrowRight className="w-3.5 h-3.5" />
+                  {lang === 'en' ? 'Go to Guide' : 'Rehbere Git'} <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </Link>
 
@@ -392,13 +421,15 @@ export const QuickSolutionPage: React.FC = () => {
               >
                 <div className="flex items-center gap-2 text-black dark:text-white font-mono text-xs font-black uppercase">
                   <BookOpen className="w-4 h-4 text-blue-600" />
-                  MERCK KLİNİK MAKALESİ
+                  {lang === 'en' ? 'MERCK CLINICAL ARTICLE' : 'MERCK KLİNİK MAKALESİ'}
                 </div>
                 <p className="text-[11px] text-zinc-600 dark:text-zinc-400">
-                  Veteriner etoloji literatüründeki akademik çalışmaları ve vaka prensiplerini okuyun.
+                  {lang === 'en'
+                    ? 'Read peer-reviewed ethological literature and case analysis methodologies.'
+                    : 'Veteriner etoloji literatüründeki akademik çalışmaları ve vaka prensiplerini okuyun.'}
                 </p>
                 <div className="font-mono text-xs font-bold text-blue-600 flex items-center gap-1 group-hover:underline">
-                  Makaleyi Oku <ArrowRight className="w-3.5 h-3.5" />
+                  {lang === 'en' ? 'Read Article' : 'Makaleyi Oku'} <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </Link>
 
@@ -408,13 +439,15 @@ export const QuickSolutionPage: React.FC = () => {
               >
                 <div className="flex items-center gap-2 text-black dark:text-white font-mono text-xs font-black uppercase">
                   <CalendarCheck className="w-4 h-4 text-green-600" />
-                  KİŞİYE ÖZEL EĞİTİM PLANI
+                  {lang === 'en' ? 'CUSTOM TRAINING PLAN' : 'KİŞİYE ÖZEL EĞİTİM PLANI'}
                 </div>
                 <p className="text-[11px] text-zinc-600 dark:text-zinc-400">
-                  {dogName} için gün gün işaretlenebilir 7 veya 14 günlük müfredatı başlatın.
+                  {lang === 'en'
+                    ? `Launch a 7 or 14-day step-by-step curriculum customized for ${dogName}.`
+                    : `${dogName} için gün gün işaretlenebilir 7 veya 14 günlük müfredatı başlatın.`}
                 </p>
                 <div className="font-mono text-xs font-bold text-green-600 flex items-center gap-1 group-hover:underline">
-                  Plan Oluştur <ArrowRight className="w-3.5 h-3.5" />
+                  {lang === 'en' ? 'Create Plan' : 'Plan Oluştur'} <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </Link>
             </div>

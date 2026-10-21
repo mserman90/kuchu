@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ARTICLES, LibraryArticle } from '@/lib/content/articles';
+import { ARTICLES, LibraryArticle, getLocalizedArticle } from '@/lib/content/articles';
 import { DisclaimerBar } from '@/components/common/Ui';
 import { FavoriteButton } from '@/components/common/FavoriteButton';
 import { 
@@ -8,22 +8,26 @@ import {
   ArrowRight, 
   X
 } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export const LibraryPage: React.FC = () => {
+  const { lang } = useLanguage();
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState<string>('all');
   const [activeArticle, setActiveArticle] = useState<LibraryArticle | null>(null);
 
   const categories = [
-    { id: 'all', label: 'TÜM MAKALELER' },
-    { id: 'clinical', label: 'MERCK VET KLİNİK REHBERİ' },
-    { id: 'calming_signals', label: 'SAKİNLEŞME SİNYALLERİ' },
-    { id: 'science', label: 'NÖRO-ETOLOJİ & BİLİM' },
-    { id: 'training_tips', label: 'POZİTİF PEKİŞTİRME' },
-    { id: 'puppy', label: 'YAŞ DÖNEMLERİ' }
+    { id: 'all', label: lang === 'en' ? 'ALL ARTICLES' : 'TÜM MAKALELER' },
+    { id: 'clinical', label: lang === 'en' ? 'MERCK VET CLINICAL GUIDE' : 'MERCK VET KLİNİK REHBERİ' },
+    { id: 'calming_signals', label: lang === 'en' ? 'CALMING SIGNALS' : 'SAKİNLEŞME SİNYALLERİ' },
+    { id: 'science', label: lang === 'en' ? 'NEURO-ETHOLOGY & SCIENCE' : 'NÖRO-ETOLOJİ & BİLİM' },
+    { id: 'training_tips', label: lang === 'en' ? 'POSITIVE REINFORCEMENT' : 'POZİTİF PEKİŞTİRME' },
+    { id: 'puppy', label: lang === 'en' ? 'LIFE STAGES & PUPPIES' : 'YAŞ DÖNEMLERİ' }
   ];
 
-  const filtered = ARTICLES.filter((art) => {
+  const localizedArticles = ARTICLES.map((art) => getLocalizedArticle(art, lang));
+
+  const filtered = localizedArticles.filter((art) => {
     const matchCat = category === 'all' || art.category === category;
     const matchSearch =
       art.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -42,14 +46,20 @@ export const LibraryPage: React.FC = () => {
             04
           </span>
           <span className="font-mono text-xs font-bold uppercase tracking-wider text-black dark:text-white">
-            HAKEMLİ AKADEMİK LİTERATÜR & ETOLOJİ KÜTÜPHANESİ
+            {lang === 'en'
+              ? 'PEER-REVIEWED ACADEMIC LITERATURE & ETHOLOGY LIBRARY'
+              : 'HAKEMLİ AKADEMİK LİTERATÜR & ETOLOJİ KÜTÜPHANESİ'}
           </span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-black dark:text-white">
-          KÖPEK PSİKOLOJİSİ BİLGİ KÜTÜPHANESİ
+          {lang === 'en'
+            ? 'CANINE PSYCHOLOGY KNOWLEDGE LIBRARY'
+            : 'KÖPEK PSİKOLOJİSİ BİLGİ KÜTÜPHANESİ'}
         </h1>
         <p className="text-xs sm:text-sm font-medium text-zinc-600 dark:text-zinc-400 leading-relaxed">
-          Turid Rugaas, Vallortigara ve AVSAB protokolleri ile köpek zihninin nörobiyolojik ve evrimsel haritası.
+          {lang === 'en'
+            ? 'Neurobiological and evolutionary roadmap of the canine mind through Turid Rugaas, Vallortigara, and AVSAB protocols.'
+            : 'Turid Rugaas, Vallortigara ve AVSAB protokolleri ile köpek zihninin nörobiyolojik ve evrimsel haritası.'}
         </p>
       </div>
 
@@ -82,7 +92,7 @@ export const LibraryPage: React.FC = () => {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Makale ara..."
+            placeholder={lang === 'en' ? 'Search articles...' : 'Makale ara...'}
             className="w-full pl-9 pr-3 py-2 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950 font-mono text-xs font-bold uppercase focus:outline-hidden"
           />
         </div>
@@ -122,13 +132,13 @@ export const LibraryPage: React.FC = () => {
               <div className="flex items-center justify-between font-mono text-[11px] text-zinc-500">
                 <span className="flex items-center gap-1">
                   <Clock className="w-3.5 h-3.5" />
-                  {art.readTimeMinutes} DK OKUMA
+                  {art.readTimeMinutes} {lang === 'en' ? 'MIN READ' : 'DK OKUMA'}
                 </span>
                 <span>{art.publishedDate}</span>
               </div>
 
               <div className="flex items-center justify-between font-mono text-xs font-black uppercase text-red-600">
-                <span>METNİ OKU</span>
+                <span>{lang === 'en' ? 'READ ARTICLE' : 'METNİ OKU'}</span>
                 <ArrowRight className="w-4 h-4" />
               </div>
             </div>
@@ -144,7 +154,7 @@ export const LibraryPage: React.FC = () => {
             <div className="flex items-start justify-between gap-4 border-b-2 border-black dark:border-white pb-4">
               <div className="space-y-1">
                 <span className="font-mono text-[10px] font-black uppercase bg-black text-white px-2 py-0.5 border border-white">
-                  {activeArticle.readTimeMinutes} DK OKUMA • {activeArticle.author}
+                  {activeArticle.readTimeMinutes} {lang === 'en' ? 'MIN READ' : 'DK OKUMA'} • {activeArticle.author}
                 </span>
                 <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-black dark:text-white mt-2">
                   {activeArticle.title}
@@ -152,6 +162,7 @@ export const LibraryPage: React.FC = () => {
               </div>
               <button
                 onClick={() => setActiveArticle(null)}
+                aria-label="Close modal"
                 className="p-2 border-2 border-black dark:border-white bg-white dark:bg-zinc-800 text-black dark:text-white hover:bg-zinc-200 cursor-pointer"
               >
                 <X className="w-6 h-6" />
@@ -195,7 +206,7 @@ export const LibraryPage: React.FC = () => {
                 onClick={() => setActiveArticle(null)}
                 className="h-[40px] px-6 bg-black text-white dark:bg-white dark:text-black font-mono text-xs font-black uppercase border-2 border-black dark:border-white shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 transition-all cursor-pointer"
               >
-                MAKALYİ KAPAT
+                {lang === 'en' ? 'CLOSE ARTICLE' : 'MAKALEYİ KAPAT'}
               </button>
             </div>
 

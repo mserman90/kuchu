@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { BehaviorAnalysisResult } from '@/lib/analysis/types';
 import { dataEntities } from '@/lib/data/entities';
 import { RiskBadge } from '@/components/common/Ui';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { 
   CheckCircle2, 
   XCircle, 
@@ -20,14 +21,16 @@ interface AnalysisResultViewProps {
 
 export const AnalysisResultView: React.FC<AnalysisResultViewProps> = ({ result, onReset }) => {
   const [saved, setSaved] = useState(false);
+  const { lang } = useLanguage();
+  const isEn = lang === 'en';
 
   const handleSave = async () => {
     try {
       await dataEntities.analyses.create(result);
       setSaved(true);
-      toast.success('Analiz sonucu profilinize kaydedildi.');
+      toast.success(isEn ? 'Analysis result saved to profile.' : 'Analiz sonucu profilinize kaydedildi.');
     } catch {
-      toast.error('Kayıt sırasında bir sorun oluştu.');
+      toast.error(isEn ? 'An error occurred while saving.' : 'Kayıt sırasında bir sorun oluştu.');
     }
   };
 
@@ -40,7 +43,7 @@ export const AnalysisResultView: React.FC<AnalysisResultViewProps> = ({ result, 
           <div className="space-y-2">
             <div className="flex flex-wrap items-center gap-2">
               <span className="font-mono text-xs font-bold uppercase bg-black text-white dark:bg-white dark:text-black px-2.5 py-1 border border-black dark:border-white">
-                {result.dogName} DAVRANIŞ DEĞERLENDİRMESİ
+                {result.dogName} {isEn ? 'BEHAVIOR EVALUATION' : 'DAVRANIŞ DEĞERLENDİRMESİ'}
               </span>
               <RiskBadge level={result.riskLevel} text={result.riskTitle} />
             </div>
@@ -55,13 +58,13 @@ export const AnalysisResultView: React.FC<AnalysisResultViewProps> = ({ result, 
           {/* Risk Level & Confidence Box */}
           <div className="p-4 bg-zinc-50 dark:bg-zinc-950 text-black dark:text-white border-2 border-black dark:border-white shadow-brutal space-y-1.5 shrink-0 min-w-[200px]">
             <div className="font-mono text-xs font-black uppercase tracking-wider text-red-600">
-              RİSK PUANI
+              {isEn ? 'RISK SCORE' : 'RİSK PUANI'}
             </div>
             <div className="font-mono text-3xl font-black">
               %{result.riskScore}
             </div>
             <div className="font-mono text-[11px] font-bold text-zinc-600 dark:text-zinc-400 border-t border-zinc-300 dark:border-zinc-700 pt-1.5">
-              GÜVEN DÜZEYİ: %{result.confidenceScore}
+              {isEn ? 'CONFIDENCE LEVEL:' : 'GÜVEN DÜZEYİ:'} %{result.confidenceScore}
             </div>
           </div>
         </div>
@@ -69,7 +72,7 @@ export const AnalysisResultView: React.FC<AnalysisResultViewProps> = ({ result, 
         {/* Ethology Summary */}
         <div className="space-y-2">
           <span className="font-mono text-xs font-black uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-            ETOLOJİK DAVRANIŞ VE DUYGU ANALİZİ:
+            {isEn ? 'ETHOLOGICAL BEHAVIOR & EMOTIONAL ASSESSMENT:' : 'ETOLOJİK DAVRANIŞ VE DUYGU ANALİZİ:'}
           </span>
           <p className="text-sm sm:text-base font-medium text-black dark:text-white leading-relaxed">
             {result.summary}
@@ -82,29 +85,39 @@ export const AnalysisResultView: React.FC<AnalysisResultViewProps> = ({ result, 
         <div className="flex items-center gap-2 border-b-2 border-black dark:border-white pb-3">
           <BarChart3 className="w-5 h-5 text-red-600 stroke-[2.5]" />
           <h3 className="font-mono text-sm font-black uppercase text-black dark:text-white">
-            BİLİMSEL PUAN DAĞILIMI (AĞIRLIKLI MOTOR)
+            {isEn ? 'SCIENTIFIC SCORE BREAKDOWN (WEIGHTED ENGINE)' : 'BİLİMSEL PUAN DAĞILIMI (AĞIRLIKLI MOTOR)'}
           </h3>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
           <div className="p-3 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950">
-            <span className="font-mono text-[10px] font-bold uppercase text-zinc-500 block">Kuyruk (%30)</span>
+            <span className="font-mono text-[10px] font-bold uppercase text-zinc-500 block">
+              {isEn ? 'Tail (30%)' : 'Kuyruk (%30)'}
+            </span>
             <strong className="font-mono text-lg font-black text-black dark:text-white">{result.scoreBreakdown.tailScore} / 30</strong>
           </div>
           <div className="p-3 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950">
-            <span className="font-mono text-[10px] font-bold uppercase text-zinc-500 block">Duruş (%25)</span>
+            <span className="font-mono text-[10px] font-bold uppercase text-zinc-500 block">
+              {isEn ? 'Posture (25%)' : 'Duruş (%25)'}
+            </span>
             <strong className="font-mono text-lg font-black text-black dark:text-white">{result.scoreBreakdown.postureScore} / 25</strong>
           </div>
           <div className="p-3 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950">
-            <span className="font-mono text-[10px] font-bold uppercase text-zinc-500 block">Göz+Ağız (%20)</span>
+            <span className="font-mono text-[10px] font-bold uppercase text-zinc-500 block">
+              {isEn ? 'Eyes+Mouth (20%)' : 'Göz+Ağız (%20)'}
+            </span>
             <strong className="font-mono text-lg font-black text-black dark:text-white">{result.scoreBreakdown.faceScore} / 20</strong>
           </div>
           <div className="p-3 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950">
-            <span className="font-mono text-[10px] font-bold uppercase text-zinc-500 block">Kulaklar (%15)</span>
+            <span className="font-mono text-[10px] font-bold uppercase text-zinc-500 block">
+              {isEn ? 'Ears (15%)' : 'Kulaklar (%15)'}
+            </span>
             <strong className="font-mono text-lg font-black text-black dark:text-white">{result.scoreBreakdown.earScore} / 15</strong>
           </div>
           <div className="p-3 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950 col-span-2 sm:col-span-1">
-            <span className="font-mono text-[10px] font-bold uppercase text-zinc-500 block">Enerji (%10)</span>
+            <span className="font-mono text-[10px] font-bold uppercase text-zinc-500 block">
+              {isEn ? 'Energy (10%)' : 'Enerji (%10)'}
+            </span>
             <strong className="font-mono text-lg font-black text-black dark:text-white">{result.scoreBreakdown.energyScore} / 10</strong>
           </div>
         </div>
@@ -115,7 +128,7 @@ export const AnalysisResultView: React.FC<AnalysisResultViewProps> = ({ result, 
         <div className="p-6 border-2 border-black dark:border-white bg-zinc-100 dark:bg-zinc-950 shadow-brutal space-y-3">
           <span className="font-mono text-xs font-black uppercase text-black dark:text-white flex items-center gap-1.5">
             <Sparkles className="w-4 h-4 text-red-600 stroke-[2.5]" />
-            TESPİT EDİLEN BİLİMSEL İŞARETLER:
+            {isEn ? 'DETECTED ETHOLOGICAL SIGNALS & INSIGHTS:' : 'TESPİT EDİLEN BİLİMSEL İŞARETLER:'}
           </span>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pt-1">
             {result.calmingSignalsDetected.map((sig, idx) => (
@@ -140,7 +153,7 @@ export const AnalysisResultView: React.FC<AnalysisResultViewProps> = ({ result, 
           <div className="flex items-center gap-2 border-b-2 border-black dark:border-white pb-3 text-green-600">
             <CheckCircle2 className="w-6 h-6 stroke-[2.5]" />
             <h3 className="text-base font-black uppercase text-black dark:text-white">
-              NE YAPMALISINIZ? (ADIM ADIM)
+              {isEn ? 'WHAT SHOULD YOU DO? (STEP-BY-STEP)' : 'NE YAPMALISINIZ? (ADIM ADIM)'}
             </h3>
           </div>
           <ul className="space-y-3 text-xs sm:text-sm font-medium text-zinc-800 dark:text-zinc-200">
@@ -160,7 +173,7 @@ export const AnalysisResultView: React.FC<AnalysisResultViewProps> = ({ result, 
           <div className="flex items-center gap-2 border-b-2 border-black dark:border-white pb-3 text-red-600">
             <XCircle className="w-6 h-6 stroke-[2.5]" />
             <h3 className="text-base font-black uppercase text-black dark:text-white">
-              ASLA NE YAPMAMALISINIZ?
+              {isEn ? 'WHAT MUST YOU NEVER DO?' : 'ASLA NE YAPMAMALISINIZ?'}
             </h3>
           </div>
           <ul className="space-y-3 text-xs sm:text-sm font-medium text-zinc-800 dark:text-zinc-200">
@@ -182,23 +195,35 @@ export const AnalysisResultView: React.FC<AnalysisResultViewProps> = ({ result, 
         <div className="flex items-center justify-between border-b-2 border-black dark:border-white pb-2">
           <span className="font-mono text-xs font-black uppercase tracking-wider text-black dark:text-white flex items-center gap-2">
             <span className="w-3 h-3 bg-red-600 inline-block border border-black"></span>
-            MERCK VETERINARY MANUAL — KLİNİK DEĞERLENDİRME & AĞRI UYARISI
+            {isEn
+              ? 'MERCK VETERINARY MANUAL — CLINICAL ASSESSMENT & PAIN ALERT'
+              : 'MERCK VETERINARY MANUAL — KLİNİK DEĞERLENDİRME & AĞRI UYARISI'}
           </span>
           <span className="font-mono text-[10px] font-bold px-2 py-0.5 border border-black bg-white dark:bg-zinc-800 text-black dark:text-white uppercase">
-            Veteriner Etoloji Kuralı
+            {isEn ? 'Veterinary Ethology Rule' : 'Veteriner Etoloji Kuralı'}
           </span>
         </div>
         <p className="text-xs font-medium text-zinc-700 dark:text-zinc-300 leading-relaxed">
-          Köpeğinizde son zamanlarda ani bir tepkisellik, dokunulmaya tahammülsüzlük veya agresyon artışı gözlemlediyseniz, 
-          <strong> Merck Kılavuzu uyarınca öncelikle gizli fiziksel ağrı (osteoartrit, diş çürüğü, kulak iltihabı) veteriner hekim tarafından dışlanmalıdır.</strong> 
-          Ağrı çeken bir köpeğe eğitim veya disiplin uygulamak korku agresyonunu kalıcı hale getirebilir.
+          {isEn ? (
+            <>
+              If you have recently observed sudden reactivity, touch intolerance, or increased aggression in your dog,{' '}
+              <strong>according to Merck Manual guidelines, covert physical pain (osteoarthritis, dental disease, otitis) must first be ruled out by a veterinarian.</strong>{' '}
+              Applying behavioral training or discipline to a dog in physical pain risks cementing permanent fear-aggression.
+            </>
+          ) : (
+            <>
+              Köpeğinizde son zamanlarda ani bir tepkisellik, dokunulmaya tahammülsüzlük veya agresyon artışı gözlemlediyseniz,{' '}
+              <strong>Merck Kılavuzu uyarınca öncelikle gizli fiziksel ağrı (osteoartrit, diş çürüğü, kulak iltihabı) veteriner hekim tarafından dışlanmalıdır.</strong>{' '}
+              Ağrı çeken bir köpeğe eğitim veya disiplin uygulamak korku agresyonunu kalıcı hale getirebilir.
+            </>
+          )}
         </p>
       </div>
 
       {/* Likely Causes */}
       <div className="p-6 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-brutal space-y-3">
         <h4 className="font-mono text-xs font-black uppercase tracking-wider text-black dark:text-white">
-          OLASI TETİKLEYİCİLER & NEDENLER
+          {isEn ? 'POTENTIAL TRIGGERS & ETIOLOGY' : 'OLASI TETİKLEYİCİLER & NEDENLER'}
         </h4>
         <div className="flex flex-wrap gap-2">
           {result.likelyCauses.map((c, idx) => (
@@ -216,7 +241,7 @@ export const AnalysisResultView: React.FC<AnalysisResultViewProps> = ({ result, 
           className="w-full sm:w-auto h-[44px] sm:h-[40px] flex items-center justify-center gap-2 px-6 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 text-black dark:text-white font-mono text-xs font-black uppercase shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 transition-all cursor-pointer"
         >
           <RotateCcw className="w-4 h-4" />
-          <span>YENİ ANALİZ YAP</span>
+          <span>{isEn ? 'START NEW ANALYSIS' : 'YENİ ANALİZ YAP'}</span>
         </button>
 
         <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
@@ -224,7 +249,7 @@ export const AnalysisResultView: React.FC<AnalysisResultViewProps> = ({ result, 
             to="/egitim-planlari"
             className="flex-1 sm:flex-initial h-[44px] sm:h-[40px] flex items-center justify-center gap-2 px-5 border-2 border-black dark:border-white bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white font-mono text-xs font-black uppercase shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
           >
-            <span>ÖNERİLEN EĞİTİM PLANI →</span>
+            <span>{isEn ? 'RECOMMENDED TRAINING PLAN →' : 'ÖNERİLEN EĞİTİM PLANI →'}</span>
           </Link>
 
           <button
@@ -237,7 +262,7 @@ export const AnalysisResultView: React.FC<AnalysisResultViewProps> = ({ result, 
             }`}
           >
             <Bookmark className="w-4 h-4" />
-            <span>{saved ? 'PANELİYE KAYDEDİLDİ ✓' : 'ANALİZİ KAYDET'}</span>
+            <span>{saved ? (isEn ? 'SAVED TO PROFILE ✓' : 'PANELİYE KAYDEDİLDİ ✓') : (isEn ? 'SAVE ANALYSIS' : 'ANALİZİ KAYDET')}</span>
           </button>
         </div>
       </div>
@@ -245,3 +270,4 @@ export const AnalysisResultView: React.FC<AnalysisResultViewProps> = ({ result, 
     </div>
   );
 };
+

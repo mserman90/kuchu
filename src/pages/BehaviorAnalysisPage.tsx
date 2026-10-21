@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDog } from '@/context/DogContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { 
   BehaviorInputState, 
   BehaviorAnalysisResult 
@@ -16,7 +17,8 @@ import {
   BODY_POSTURES,
   ENERGY_MOVEMENTS,
   ENVIRONMENTS,
-  TRIGGERS
+  TRIGGERS,
+  getLocalizedOptions
 } from '@/lib/analysis/options';
 import { analyzeDogBehavior } from '@/lib/analysis/engine';
 import { OptionGroup } from '@/components/analysis/OptionGroup';
@@ -27,6 +29,9 @@ import { ArrowRight, Camera, SlidersHorizontal } from 'lucide-react';
 
 export const BehaviorAnalysisPage: React.FC = () => {
   const { activeDog } = useDog();
+  const { lang } = useLanguage();
+  const isEn = lang === 'en';
+
   const [eduMode, setEduMode] = useState(true);
   const [analysisMode, setAnalysisMode] = useState<'vision' | 'manual'>('vision');
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -45,23 +50,30 @@ export const BehaviorAnalysisPage: React.FC = () => {
     energyMovement: 'calm',
     environment: 'home',
     trigger: 'none',
-    dogName: activeDog?.name || 'Kuçu'
+    dogName: activeDog?.name || (isEn ? 'Kuchu' : 'Kuçu')
   });
 
-  const steps = [
-    { id: 'tail', label: '1. KUYRUK DİLİ', desc: 'Pozisyon, hız, yön ve gerilim' },
-    { id: 'head', label: '2. KULAK & GÖZ', desc: 'Bakış ve kulak konumları' },
-    { id: 'face_posture', label: '3. AĞIZ & GÖVDE', desc: 'Dudak mimikleri ve beden ağırlığı' },
-    { id: 'context', label: '4. ENERJİ & BAĞLAM', desc: 'Hareket modu ve tetikleyiciler' }
-  ];
+  const steps = isEn
+    ? [
+        { id: 'tail', label: '1. TAIL LANGUAGE', desc: 'Carriage, velocity, bias & tension' },
+        { id: 'head', label: '2. EARS & EYES', desc: 'Gaze dynamics & ear positioning' },
+        { id: 'face_posture', label: '3. MOUTH & POSTURE', desc: 'Facial tension & center of gravity' },
+        { id: 'context', label: '4. ENERGY & CONTEXT', desc: 'Arousal state & environmental triggers' }
+      ]
+    : [
+        { id: 'tail', label: '1. KUYRUK DİLİ', desc: 'Pozisyon, hız, yön ve gerilim' },
+        { id: 'head', label: '2. KULAK & GÖZ', desc: 'Bakış ve kulak konumları' },
+        { id: 'face_posture', label: '3. AĞIZ & GÖVDE', desc: 'Dudak mimikleri ve beden ağırlığı' },
+        { id: 'context', label: '4. ENERJİ & BAĞLAM', desc: 'Hareket modu ve tetikleyiciler' }
+      ];
 
   const handleApplyVision = (detectedState: Partial<BehaviorInputState>) => {
     const nextForm = { ...formState, ...detectedState };
     setFormState(nextForm);
     const evaluated = analyzeDogBehavior({
       ...nextForm,
-      dogName: activeDog?.name || nextForm.dogName || 'Kuçu'
-    });
+      dogName: activeDog?.name || nextForm.dogName || (isEn ? 'Kuchu' : 'Kuçu')
+    }, lang);
     setResult(evaluated);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -70,8 +82,8 @@ export const BehaviorAnalysisPage: React.FC = () => {
     e.preventDefault();
     const evaluated = analyzeDogBehavior({
       ...formState,
-      dogName: activeDog?.name || formState.dogName || 'Dostunuz'
-    });
+      dogName: activeDog?.name || formState.dogName || (isEn ? 'Your Dog' : 'Dostunuz')
+    }, lang);
     setResult(evaluated);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -93,7 +105,7 @@ export const BehaviorAnalysisPage: React.FC = () => {
               01
             </span>
             <span className="font-mono text-xs font-bold uppercase tracking-wider text-black dark:text-white">
-              KURAL TABANLI VE AĞIRLIKLI SKORLAMA MOTORU
+              {isEn ? 'RULE-BASED & WEIGHTED SCORING ENGINE' : 'KURAL TABANLI VE AĞIRLIKLI SKORLAMA MOTORU'}
             </span>
           </div>
 
@@ -106,15 +118,17 @@ export const BehaviorAnalysisPage: React.FC = () => {
                 : 'bg-white dark:bg-zinc-950 text-black dark:text-white border-black dark:border-white'
             }`}
           >
-            EĞİTİM MODU: {eduMode ? 'AÇIK' : 'KAPALI'}
+            {isEn ? `EDUCATION MODE: ${eduMode ? 'ON' : 'OFF'}` : `EĞİTİM MODU: ${eduMode ? 'AÇIK' : 'KAPALI'}`}
           </button>
         </div>
 
         <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-black dark:text-white">
-          KÖPEK DAVRANIŞ ANALİZİ
+          {isEn ? 'CANINE BEHAVIOR ANALYSIS' : 'KÖPEK DAVRANIŞ ANALİZİ'}
         </h1>
         <p className="text-xs sm:text-sm font-medium text-zinc-600 dark:text-zinc-400 leading-relaxed">
-          Kuyruk asimetrisinden balina gözüne, piloereksiyondan sakinleşme sinyallerine kadar gözlemlediğiniz beden dili verilerini girin. Deterministik motor anlık duygusal durumu ve gerilim riskini hesaplasın.
+          {isEn
+            ? 'Input observed body language parameters — from tail lateralization to whale eye, piloerection to subtle calming signals. The deterministic engine computes real-time emotional equilibrium and tension risk.'
+            : 'Kuyruk asimetrisinden balina gözüne, piloereksiyondan sakinleşme sinyallerine kadar gözlemlediğiniz beden dili verilerini girin. Deterministik motor anlık duygusal durumu ve gerilim riskini hesaplasın.'}
         </p>
       </div>
 
@@ -139,7 +153,7 @@ export const BehaviorAnalysisPage: React.FC = () => {
               }`}
             >
               <Camera className="w-4 h-4" />
-              <span>1. FOTOĞRAFLA VISION AI TARA (YAPAY ZEKA)</span>
+              <span>{isEn ? '1. SCAN VISION AI WITH PHOTO (COMPUTER VISION)' : '1. FOTOĞRAFLA VISION AI TARA (YAPAY ZEKA)'}</span>
             </button>
 
             <button
@@ -152,7 +166,7 @@ export const BehaviorAnalysisPage: React.FC = () => {
               }`}
             >
               <SlidersHorizontal className="w-4 h-4" />
-              <span>2. MANUEL PARAMETRE SEÇİCİ (4 BOYUTLU MOTOR)</span>
+              <span>{isEn ? '2. MANUAL PARAMETER SELECTOR (4-AXIS ENGINE)' : '2. MANUEL PARAMETRE SEÇİCİ (4 BOYUTLU MOTOR)'}</span>
             </button>
           </div>
 
@@ -190,9 +204,9 @@ export const BehaviorAnalysisPage: React.FC = () => {
             {activeStep === 0 && (
               <div className="space-y-8 border-2 border-black dark:border-white p-6 sm:p-8 bg-white dark:bg-zinc-900 shadow-brutal">
                 <OptionGroup
-                  label="A.1 KUYRUK POZİSYONU"
-                  weightTag="%30 AĞIRLIK"
-                  options={TAIL_POSITIONS}
+                  label={isEn ? 'A.1 TAIL POSITION' : 'A.1 KUYRUK POZİSYONU'}
+                  weightTag={isEn ? '30% WEIGHT' : '%30 AĞIRLIK'}
+                  options={getLocalizedOptions(TAIL_POSITIONS, lang)}
                   value={formState.tailPosition}
                   onChange={(val) => setFormState({ ...formState, tailPosition: val })}
                   eduMode={eduMode}
@@ -200,9 +214,9 @@ export const BehaviorAnalysisPage: React.FC = () => {
                 />
 
                 <OptionGroup
-                  label="A.2 KUYRUK SALINMA YÖNÜ (VALLORTIGARA ASİMETRİSİ)"
-                  categoryTag="NÖRO-ETOLOJİ"
-                  options={TAIL_DIRECTIONS}
+                  label={isEn ? 'A.2 TAIL LATERALIZATION (VALLORTIGARA ASYMMETRY)' : 'A.2 KUYRUK SALINMA YÖNÜ (VALLORTIGARA ASİMETRİSİ)'}
+                  categoryTag={isEn ? 'NEURO-ETHOLOGY' : 'NÖRO-ETOLOJİ'}
+                  options={getLocalizedOptions(TAIL_DIRECTIONS, lang)}
                   value={formState.tailDirection}
                   onChange={(val) => setFormState({ ...formState, tailDirection: val })}
                   eduMode={eduMode}
@@ -211,8 +225,8 @@ export const BehaviorAnalysisPage: React.FC = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
                   <OptionGroup
-                    label="A.3 SALLAMA HIZI"
-                    options={TAIL_SPEEDS}
+                    label={isEn ? 'A.3 WAGGING VELOCITY' : 'A.3 SALLAMA HIZI'}
+                    options={getLocalizedOptions(TAIL_SPEEDS, lang)}
                     value={formState.tailSpeed}
                     onChange={(val) => setFormState({ ...formState, tailSpeed: val })}
                     eduMode={eduMode}
@@ -220,8 +234,8 @@ export const BehaviorAnalysisPage: React.FC = () => {
                   />
 
                   <OptionGroup
-                    label="A.4 SALINIM GENİŞLİĞİ"
-                    options={TAIL_SPREADS}
+                    label={isEn ? 'A.4 OSCILLATION AMPLITUDE' : 'A.4 SALINIM GENİŞLİĞİ'}
+                    options={getLocalizedOptions(TAIL_SPREADS, lang)}
                     value={formState.tailSpread}
                     onChange={(val) => setFormState({ ...formState, tailSpread: val })}
                     eduMode={eduMode}
@@ -229,8 +243,8 @@ export const BehaviorAnalysisPage: React.FC = () => {
                   />
 
                   <OptionGroup
-                    label="A.5 KAS GERGİNLİĞİ"
-                    options={TAIL_TENSIONS}
+                    label={isEn ? 'A.5 MUSCLE RIGIDITY / TENSION' : 'A.5 KAS GERGİNLİĞİ'}
+                    options={getLocalizedOptions(TAIL_TENSIONS, lang)}
                     value={formState.tailTension}
                     onChange={(val) => setFormState({ ...formState, tailTension: val })}
                     eduMode={eduMode}
@@ -244,9 +258,9 @@ export const BehaviorAnalysisPage: React.FC = () => {
             {activeStep === 1 && (
               <div className="space-y-8 border-2 border-black dark:border-white p-6 sm:p-8 bg-white dark:bg-zinc-900 shadow-brutal">
                 <OptionGroup
-                  label="B.1 KULAK DURUŞU"
-                  weightTag="%15 AĞIRLIK"
-                  options={EAR_POSITIONS}
+                  label={isEn ? 'B.1 EAR CARRIAGE' : 'B.1 KULAK DURUŞU'}
+                  weightTag={isEn ? '15% WEIGHT' : '%15 AĞIRLIK'}
+                  options={getLocalizedOptions(EAR_POSITIONS, lang)}
                   value={formState.earPosition}
                   onChange={(val) => setFormState({ ...formState, earPosition: val })}
                   eduMode={eduMode}
@@ -254,10 +268,10 @@ export const BehaviorAnalysisPage: React.FC = () => {
                 />
 
                 <OptionGroup
-                  label="C.1 GÖZLER VE BAKIŞ ŞEKLİ"
-                  weightTag="%10 AĞIRLIK"
-                  categoryTag="BALİNA GÖZÜ & SABİT BAKIŞ"
-                  options={EYE_GAZES}
+                  label={isEn ? 'C.1 OCULAR GAZE DYNAMICS' : 'C.1 GÖZLER VE BAKIŞ ŞEKLİ'}
+                  weightTag={isEn ? '10% WEIGHT' : '%10 AĞIRLIK'}
+                  categoryTag={isEn ? 'WHALE EYE & HARD STARE' : 'BALİNA GÖZÜ & SABİT BAKIŞ'}
+                  options={getLocalizedOptions(EYE_GAZES, lang)}
                   value={formState.eyeGaze}
                   onChange={(val) => setFormState({ ...formState, eyeGaze: val })}
                   eduMode={eduMode}
@@ -270,10 +284,10 @@ export const BehaviorAnalysisPage: React.FC = () => {
             {activeStep === 2 && (
               <div className="space-y-8 border-2 border-black dark:border-white p-6 sm:p-8 bg-white dark:bg-zinc-900 shadow-brutal">
                 <OptionGroup
-                  label="D.1 AĞIZ, DUDAK VE YÜZ MİMİKLERİ"
-                  weightTag="%10 AĞIRLIK"
-                  categoryTag="SAKİNLEŞME SİNYALLERİ"
-                  options={MOUTH_FACES}
+                  label={isEn ? 'D.1 MOUTH, LIPS & FACIAL EXPRESSIONS' : 'D.1 AĞIZ, DUDAK VE YÜZ MİMİKLERİ'}
+                  weightTag={isEn ? '10% WEIGHT' : '%10 AĞIRLIK'}
+                  categoryTag={isEn ? 'CALMING SIGNALS' : 'SAKİNLEŞME SİNYALLERİ'}
+                  options={getLocalizedOptions(MOUTH_FACES, lang)}
                   value={formState.mouthFace}
                   onChange={(val) => setFormState({ ...formState, mouthFace: val })}
                   eduMode={eduMode}
@@ -281,10 +295,10 @@ export const BehaviorAnalysisPage: React.FC = () => {
                 />
 
                 <OptionGroup
-                  label="E.1 GENEL VÜCUT DURUŞU (POSTURE)"
-                  weightTag="%25 AĞIRLIK"
-                  categoryTag="AĞIRLIK MERKEZİ & PİLOEREKSİYON"
-                  options={BODY_POSTURES}
+                  label={isEn ? 'E.1 POSTURAL STANCE & SPINAL ALIGNMENT' : 'E.1 GENEL VÜCUT DURUŞU (POSTURE)'}
+                  weightTag={isEn ? '25% WEIGHT' : '%25 AĞIRLIK'}
+                  categoryTag={isEn ? 'WEIGHT SHIFT & PILOERECTION' : 'AĞIRLIK MERKEZİ & PİLOEREKSİYON'}
+                  options={getLocalizedOptions(BODY_POSTURES, lang)}
                   value={formState.bodyPosture}
                   onChange={(val) => setFormState({ ...formState, bodyPosture: val })}
                   eduMode={eduMode}
@@ -297,10 +311,10 @@ export const BehaviorAnalysisPage: React.FC = () => {
             {activeStep === 3 && (
               <div className="space-y-8 border-2 border-black dark:border-white p-6 sm:p-8 bg-white dark:bg-zinc-900 shadow-brutal">
                 <OptionGroup
-                  label="F.1 GENEL ENERJİ VE HAREKET MODU"
-                  weightTag="%10 AĞIRLIK"
+                  label={isEn ? 'F.1 AROUSAL STATE & LOCOMOTION' : 'F.1 GENEL ENERJİ VE HAREKET MODU'}
+                  weightTag={isEn ? '10% WEIGHT' : '%10 AĞIRLIK'}
                   categoryTag="FREEZE / FIGHT / FLIGHT"
-                  options={ENERGY_MOVEMENTS}
+                  options={getLocalizedOptions(ENERGY_MOVEMENTS, lang)}
                   value={formState.energyMovement}
                   onChange={(val) => setFormState({ ...formState, energyMovement: val })}
                   eduMode={eduMode}
@@ -309,8 +323,8 @@ export const BehaviorAnalysisPage: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
                   <OptionGroup
-                    label="G.1 MEVCUT ORTAM (BAĞLAM)"
-                    options={ENVIRONMENTS}
+                    label={isEn ? 'G.1 IMMEDIATE ENVIRONMENT (CONTEXT)' : 'G.1 MEVCUT ORTAM (BAĞLAM)'}
+                    options={getLocalizedOptions(ENVIRONMENTS, lang)}
                     value={formState.environment || 'home'}
                     onChange={(val) => setFormState({ ...formState, environment: val })}
                     eduMode={eduMode}
@@ -318,8 +332,8 @@ export const BehaviorAnalysisPage: React.FC = () => {
                   />
 
                   <OptionGroup
-                    label="G.2 ÇEVRESEL TETİKLEYİCİ"
-                    options={TRIGGERS}
+                    label={isEn ? 'G.2 ENVIRONMENTAL TRIGGER' : 'G.2 ÇEVRESEL TETİKLEYİCİ'}
+                    options={getLocalizedOptions(TRIGGERS, lang)}
                     value={formState.trigger || 'none'}
                     onChange={(val) => setFormState({ ...formState, trigger: val })}
                     eduMode={eduMode}
@@ -337,7 +351,7 @@ export const BehaviorAnalysisPage: React.FC = () => {
                   onClick={() => setActiveStep(activeStep - 1)}
                   className="h-[44px] sm:h-[40px] px-6 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 text-black dark:text-white font-mono text-xs font-bold uppercase shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 transition-all cursor-pointer"
                 >
-                  ← ÖNCEKİ ADIM
+                  {isEn ? '← PREVIOUS STEP' : '← ÖNCEKİ ADIM'}
                 </button>
               ) : (
                 <div />
@@ -349,7 +363,7 @@ export const BehaviorAnalysisPage: React.FC = () => {
                   onClick={() => setActiveStep(activeStep + 1)}
                   className="h-[44px] sm:h-[40px] px-6 border-2 border-black dark:border-white bg-black text-white dark:bg-white dark:text-black font-mono text-xs font-bold uppercase shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 transition-all cursor-pointer flex items-center gap-2"
                 >
-                  <span>SONRAKİ ADIM</span>
+                  <span>{isEn ? 'NEXT STEP' : 'SONRAKİ ADIM'}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               ) : (
@@ -357,7 +371,7 @@ export const BehaviorAnalysisPage: React.FC = () => {
                   type="submit"
                   className="h-[44px] sm:h-[40px] px-8 border-2 border-black dark:border-white bg-red-600 text-white font-mono text-xs font-black uppercase tracking-wider shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 transition-all cursor-pointer flex items-center gap-2"
                 >
-                  <span>ANALİZİ HESAPLA</span>
+                  <span>{isEn ? 'CALCULATE ANALYSIS' : 'ANALİZİ HESAPLA'}</span>
                   <ArrowRight className="w-4 h-4 stroke-[3]" />
                 </button>
               )}
@@ -373,3 +387,4 @@ export const BehaviorAnalysisPage: React.FC = () => {
     </div>
   );
 };
+

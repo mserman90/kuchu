@@ -257,6 +257,234 @@ export const SAMPLE_CANINE_PHOTOS: SampleCaninePhoto[] = [
   }
 ];
 
+export const SAMPLE_CANINE_PHOTOS_EN: SampleCaninePhoto[] = [
+  {
+    id: 'whale_eye_stress',
+    title: 'Stressed & Apprehensive (Whale Eye)',
+    tag: 'HIGH STRESS',
+    imageUrl: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=800&q=80',
+    preset: {
+      detectedMood: 'Defensive Apprehension & Conflict Avoidance',
+      confidenceScore: 92,
+      stressLevel: 'high',
+      landmarks: [
+        {
+          id: 'lm_ear',
+          label: 'EARS RETRACTED',
+          xPercent: 35,
+          yPercent: 28,
+          status: 'warning',
+          detail: 'Ears pulled flat against posterior skull (Appeasement/withdrawal).'
+        },
+        {
+          id: 'lm_eye',
+          label: 'WHALE EYE (EXPOSED SCLERA)',
+          xPercent: 52,
+          yPercent: 38,
+          status: 'alert',
+          detail: 'Prominent crescent sclera visible; side glance without head movement.'
+        },
+        {
+          id: 'lm_mouth',
+          label: 'MOUTH TENSION',
+          xPercent: 48,
+          yPercent: 58,
+          status: 'warning',
+          detail: 'Lip commissures retracted tight; tense closed mouth line.'
+        },
+        {
+          id: 'lm_posture',
+          label: 'BODY WEIGHT BACK',
+          xPercent: 65,
+          yPercent: 75,
+          status: 'alert',
+          detail: 'Weight shifted to hind legs; defensive or flight posture.'
+        }
+      ],
+      suggestedState: {
+        earPosition: 'pinned_flat',
+        eyeGaze: 'whale_eye',
+        mouthFace: 'lip_licking_stress',
+        bodyPosture: 'cowering_crouched',
+        tailPosition: 'low',
+        tailTension: 'stiff_vibrating'
+      },
+      rawObservations: [
+        'Prominent "Whale Eye" sclera exposure detected.',
+        'Ear cartilage lateral retraction tension at 80%.',
+        'Facial muscle freeze patterns observed.'
+      ],
+      etologicalInsight: 'The dog is acutely anxious due to spatial pressure or an approaching trigger. Advancing further risks warning growls or defensive snaps; grant spatial relief immediately.'
+    }
+  },
+  {
+    id: 'relaxed_happy',
+    title: 'Relaxed, Calm and Content',
+    tag: 'LOW RISK / SAFE',
+    imageUrl: 'https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=80',
+    preset: {
+      detectedMood: 'Positive Social Openness & Relaxation',
+      confidenceScore: 95,
+      stressLevel: 'low',
+      landmarks: [
+        {
+          id: 'lm_ear',
+          label: 'NATURAL EARS',
+          xPercent: 40,
+          yPercent: 25,
+          status: 'positive',
+          detail: 'Soft, neutral droop at base of skull; zero tension.'
+        },
+        {
+          id: 'lm_eye',
+          label: 'SOFT GAZE',
+          xPercent: 50,
+          yPercent: 36,
+          status: 'positive',
+          detail: 'Soft almond eyes, no eye white visible.'
+        },
+        {
+          id: 'lm_mouth',
+          label: 'GENTLE PANTING',
+          xPercent: 52,
+          yPercent: 55,
+          status: 'positive',
+          detail: 'Tongue slightly relaxed out, jaw muscles loose and open.'
+        },
+        {
+          id: 'lm_posture',
+          label: 'BALANCED POSTURE',
+          xPercent: 60,
+          yPercent: 78,
+          status: 'positive',
+          detail: 'Weight evenly distributed across 4 limbs, fluid spinal line.'
+        }
+      ],
+      suggestedState: {
+        earPosition: 'relaxed_side',
+        eyeGaze: 'soft_squint',
+        mouthFace: 'open_panting_gentle',
+        bodyPosture: 'balanced_relaxed',
+        tailPosition: 'neutral',
+        tailTension: 'relaxed_fluid'
+      },
+      rawObservations: [
+        'Facial muscles relaxed; gentle smile curvature at lip corners.',
+        'No sympathetic nervous system pupil dilation detected.',
+        'Body weight center is neutral and balanced.'
+      ],
+      etologicalInsight: 'The dog feels secure in its comfort zone. Optimal cognitive state for learning and positive reinforcement training.'
+    }
+  },
+  {
+    id: 'play_bow',
+    title: 'Play Bow Stance',
+    tag: 'PLAY INVITATION',
+    imageUrl: 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=800&q=80',
+    preset: {
+      detectedMood: 'Recreational Invitation & Energy Discharge',
+      confidenceScore: 94,
+      stressLevel: 'low',
+      landmarks: [
+        {
+          id: 'lm_front',
+          label: 'FOREPAWS ON GROUND',
+          xPercent: 32,
+          yPercent: 70,
+          status: 'positive',
+          detail: 'Elbows and chest low to ground in classic play angle.'
+        },
+        {
+          id: 'lm_rear',
+          label: 'HIPS ELEVATED',
+          xPercent: 75,
+          yPercent: 45,
+          status: 'positive',
+          detail: 'Rear quarters elevated, flexible position ready to bounce.'
+        },
+        {
+          id: 'lm_face',
+          label: 'JOYFUL EYE CONTACT',
+          xPercent: 28,
+          yPercent: 42,
+          status: 'positive',
+          detail: 'Soft playful expression, animated and ready to spring.'
+        }
+      ],
+      suggestedState: {
+        earPosition: 'pricked_forward',
+        eyeGaze: 'relaxed_normal',
+        mouthFace: 'open_panting_gentle',
+        bodyPosture: 'play_bow',
+        tailPosition: 'high_stiff',
+        tailTension: 'relaxed_fluid'
+      },
+      rawObservations: [
+        'Classic canine play bow motor pattern identified.',
+        'Meta-communicative signal: "Subsequent rapid movements are purely recreational".',
+        'Low cortisol, elevated dopamine and endorphins.'
+      ],
+      etologicalInsight: 'The dog is initiating friendly social play. Responding reciprocally reinforces social bonding.'
+    }
+  },
+  {
+    id: 'freeze_stiff',
+    title: 'Stiff Freeze & Threat',
+    tag: 'HIGH RISK / ALARM',
+    imageUrl: 'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?auto=format&fit=crop&w=800&q=80',
+    preset: {
+      detectedMood: 'Acute Freezing & Spatial Boundary Marking',
+      confidenceScore: 91,
+      stressLevel: 'critical',
+      landmarks: [
+        {
+          id: 'lm_ear',
+          label: 'PRICKED & FORWARD',
+          xPercent: 42,
+          yPercent: 20,
+          status: 'alert',
+          detail: 'Locked forward in target-oriented alert stance.'
+        },
+        {
+          id: 'lm_eye',
+          label: 'HARD STARE',
+          xPercent: 48,
+          yPercent: 35,
+          status: 'alert',
+          detail: 'Unblinking, direct threat-focused fixation.'
+        },
+        {
+          id: 'lm_body',
+          label: 'STIFF FREEZE',
+          xPercent: 55,
+          yPercent: 65,
+          status: 'alert',
+          detail: 'Breath held, muscles rock-solid; acute strike threshold.'
+        }
+      ],
+      suggestedState: {
+        earPosition: 'pricked_forward',
+        eyeGaze: 'hard_stare',
+        mouthFace: 'closed_relaxed',
+        bodyPosture: 'weight_forward_tense',
+        tailPosition: 'high_stiff',
+        tailTension: 'stiff_vibrating'
+      },
+      rawObservations: [
+        'Rigid body posture (acute freeze reflex).',
+        'Hard eye contact and cessation of facial micro-movements.',
+        'High probability of air snap or strike in the next split second.'
+      ],
+      etologicalInsight: 'CRITICAL ALERT: The dog is currently over-threshold. Do not advance; break direct eye contact and withdraw slowly sideways.'
+    }
+  }
+];
+
+export function getLocalizedSampleCaninePhotos(lang: 'tr' | 'en'): SampleCaninePhoto[] {
+  return lang === 'en' ? SAMPLE_CANINE_PHOTOS_EN : SAMPLE_CANINE_PHOTOS;
+}
+
+
 /**
  * Client-Side Heuristic Vision Classifier
  * Analyzes uploaded canvas/image pixels, aspect ratio, brightness gradients, and edge density

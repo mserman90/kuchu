@@ -205,19 +205,235 @@ export const TRIAGE_QUESTIONS: TriageQuestion[] = [
   }
 ];
 
-function getReactionAdvice(reaction?: string): string[] {
+export function getLocalizedTriageQuestions(lang: 'tr' | 'en'): TriageQuestion[] {
+  if (lang !== 'en') return TRIAGE_QUESTIONS;
+
+  return [
+    {
+      id: 'primarySymptom',
+      stepNumber: 1,
+      title: 'PRIMARY BEHAVIORAL SYMPTOM',
+      subtitle: 'What is the main behavior you find most challenging and want to resolve immediately?',
+      options: [
+        {
+          id: 'symptom_barking',
+          label: 'Excessive Barking & Alarm Alert',
+          description: 'Barking at the doorbell, window passersby, on walks, or without apparent reason.',
+          icon: '🔊'
+        },
+        {
+          id: 'symptom_biting',
+          label: 'Biting, Growling, or Resource Guarding',
+          description: 'Teeth on hands, growling over food bowl/toys, or defensive territorial aggression.',
+          icon: '🦷'
+        },
+        {
+          id: 'symptom_separation',
+          label: 'Cannot Stay Alone & Howling',
+          description: 'Scratching at doors, howling, heavy drooling, and chewing furniture when left alone.',
+          icon: '🚪'
+        },
+        {
+          id: 'symptom_leash',
+          label: 'Leash Pulling & Reactivity',
+          description: 'Dragging the handler forcefully or lunging at passing dogs/people on walks.',
+          icon: '🦮'
+        },
+        {
+          id: 'symptom_potty',
+          label: 'Potty Accidents & Indoor Soiling',
+          description: 'Suddenly urinating or defecating indoors, on carpets or beds, despite past reliable training.',
+          icon: '🚽'
+        },
+        {
+          id: 'symptom_fear',
+          label: 'Thunderstorms, Fireworks & Noise Phobia',
+          description: 'Shaking, hiding in bathrooms, or panicking during storms, loud booms, or sudden noises.',
+          icon: '⚡'
+        },
+        {
+          id: 'symptom_jumping',
+          label: 'Frantic Jumping on People',
+          description: 'Jumping excitedly onto visitors arriving home or strangers encountered on the street.',
+          icon: '🐾'
+        },
+        {
+          id: 'symptom_senior',
+          label: 'Senior Disorientation & Night Pacing',
+          description: 'Getting stuck in room corners, pacing at night, aimless wandering, and staring blankly.',
+          icon: '⏳'
+        },
+        {
+          id: 'symptom_predatory',
+          label: '🌾 Chasing & Predating Farm Animals / Cats',
+          description: 'Chasing, grabbing, or harming chickens, sheep, cats, or birds (Predatory Drift instinct).',
+          icon: '🌾'
+        }
+      ]
+    },
+    {
+      id: 'timelineOnset',
+      stepNumber: 2,
+      title: 'ONSET TIMELINE & TRIGGER CONTEXT',
+      subtitle: 'When and under what specific conditions does this behavior occur?',
+      options: [
+        {
+          id: 'onset_sudden',
+          label: 'Started Suddenly (Recent Days / Weeks)',
+          description: 'Never did this before; sudden onset with no obvious reason (Critical Medical/Pain Risk).',
+          icon: '🚨'
+        },
+        {
+          id: 'onset_puppy',
+          label: 'Present for Months / Since Puppyhood',
+          description: 'A long-standing habit that has gradually become ingrained over time.',
+          icon: '📅'
+        },
+        {
+          id: 'onset_trigger',
+          label: 'Only in the Presence of a Specific Trigger',
+          description: 'Occurs only when the doorbell rings, when seeing another dog, or during feeding.',
+          icon: '🎯'
+        },
+        {
+          id: 'onset_separation',
+          label: 'When Left Alone or Door Closes',
+          description: 'Triggers as a crisis within the first 15 minutes of human departure.',
+          icon: '🗝️'
+        },
+        {
+          id: 'onset_night',
+          label: 'Increases at Night / In Darkness',
+          description: 'Calm during daytime, but noticeable restlessness, pacing, and whining at night.',
+          icon: '🌙'
+        }
+      ]
+    },
+    {
+      id: 'dogAgeGroup',
+      stepNumber: 3,
+      title: "YOUR DOG'S LIFE STAGE",
+      subtitle: 'Age group determines neurological development and potential hormonal/medical baselines.',
+      options: [
+        {
+          id: 'age_puppy',
+          label: 'Puppy (0 - 6 Months)',
+          description: 'Deciduous teething, critical socialization window, and bite inhibition learning.',
+          icon: '🍼'
+        },
+        {
+          id: 'age_adolescent',
+          label: 'Adolescent / Young (6 - 24 Months)',
+          description: 'Hormonal fluctuations, boundary testing, second fear period, and peak physical energy.',
+          icon: '⚡'
+        },
+        {
+          id: 'age_adult',
+          label: 'Adult (2 - 7 Years)',
+          description: 'Established character, physical maturity, and social adulthood.',
+          icon: '🐕'
+        },
+        {
+          id: 'age_senior',
+          label: 'Senior / Geriatric (8+ Years)',
+          description: 'Sensory decline, osteoarthritis discomfort, and Cognitive Dysfunction (CDS) risk.',
+          icon: '🧓'
+        }
+      ]
+    },
+    {
+      id: 'bodyLanguageStress',
+      stepNumber: 4,
+      title: 'BODY LANGUAGE & STRESS SIGNALS',
+      subtitle: 'What physical cues does your dog display during this behavior?',
+      options: [
+        {
+          id: 'stress_freeze',
+          label: 'Stiffening & Direct Hard Stare (Freezing)',
+          description: 'Body rigid as stone, eyes fixed on target, mouth clamped shut (High bite/defense risk).',
+          icon: '🧊'
+        },
+        {
+          id: 'stress_fear',
+          label: 'Fear & Avoidance (Tail Tucked Under)',
+          description: 'Ears pinned back, whites of eyes showing (Whale Eye), attempting to retreat or hide.',
+          icon: '😨'
+        },
+        {
+          id: 'stress_hyper',
+          label: 'Hyper-Arousal & Frantic Energy',
+          description: 'Mouth open with tongue lolling, rapid panting, unable to stay still, excitement overload.',
+          icon: '🔥'
+        },
+        {
+          id: 'stress_calming',
+          label: 'Calming Signals (Lip Licking / Yawning)',
+          description: 'Tongue flicking over nose without food, stress yawning, turning head sideways.',
+          icon: '🕊️'
+        },
+        {
+          id: 'stress_relaxed',
+          label: 'Loose & Relaxed Posture',
+          description: 'Tail wagging at mid-height with loose fluid spine, relaxed facial muscles.',
+          icon: '😊'
+        }
+      ]
+    },
+    {
+      id: 'ownerReaction',
+      stepNumber: 5,
+      title: 'YOUR CURRENT REACTION',
+      subtitle: 'What is typically your immediate response when this behavior occurs?',
+      options: [
+        {
+          id: 'reaction_punish',
+          label: 'Yelling "NO / STOP!" or Pushing Away',
+          description: 'Verbal reprimands, sharp leash yanks, or physical attempts to stop the dog.',
+          icon: '🗣️'
+        },
+        {
+          id: 'reaction_comfort',
+          label: 'Petting, Talking, or Offering Treats to Soothe',
+          description: 'Picking up, stroking head, or offering food in an effort to distract.',
+          icon: '🤗'
+        },
+        {
+          id: 'reaction_ignore',
+          label: 'Turning Away / Disengaging Completely',
+          description: 'Breaking eye contact and waiting silently with zero interaction.',
+          icon: '🚶'
+        },
+        {
+          id: 'reaction_helpless',
+          label: 'Unsure What to Do / Waiting for It to Pass',
+          description: 'Feeling overwhelmed or losing control during the incident.',
+          icon: '❓'
+        }
+      ]
+    }
+  ];
+}
+
+function getReactionAdvice(reaction?: string, lang: 'tr' | 'en' = 'tr'): string[] {
   if (reaction === 'reaction_punish') {
-    return ['Mevcut bağırma veya cezalandırma tepkiniz köpekte stres hormonunu (kortizol) yükseltmekte; bunu derhal durdurun.'];
+    return [
+      lang === 'en'
+        ? 'Your current scolding or punishing response raises stress cortisol; stop this immediately.'
+        : 'Mevcut bağırma veya cezalandırma tepkiniz köpekte stres hormonunu (kortizol) yükseltmekte; bunu derhal durdurun.'
+    ];
   }
   if (reaction === 'reaction_comfort') {
-    return ['Davranış anında köpeği okşamak veya konuşmak köpeğe istemsiz ilgi ödülü vermekte; davranışı pekiştirmeyin.'];
+    return [
+      lang === 'en'
+        ? 'Petting or verbally reassuring during the behavior inadvertently reinforces it with attention; avoid rewarding the behavior.'
+        : 'Davranış anında köpeği okşamak veya konuşmak köpeğe istemsiz ilgi ödülü vermekte; davranışı pekiştirmeyin.'
+    ];
   }
   return [];
 }
 
-export function resolveTriageSolution(answers: TriageAnswers, dogName: string = 'Köpeğiniz'): TriageSolution {
-  const { primarySymptom, timelineOnset, dogAgeGroup, bodyLanguageStress, ownerReaction } = answers;
-  const customMistakes = getReactionAdvice(ownerReaction);
+function computeRawTriageSolution(answers: TriageAnswers, dogName: string, customMistakes: string[]): TriageSolution {
+  const { primarySymptom, timelineOnset, dogAgeGroup, bodyLanguageStress } = answers;
 
   // RULE 1: Sudden onset in any dog -> High probability of underlying pain / medical issue
   if (timelineOnset === 'onset_sudden' && (primarySymptom === 'symptom_biting' || primarySymptom === 'symptom_barking' || primarySymptom === 'symptom_potty')) {
@@ -608,4 +824,226 @@ export function resolveTriageSolution(answers: TriageAnswers, dogName: string = 
     recommendedArticleSlug: 'merck-tepki-ikamesi-response-substitution-dri',
     recommendedPlanType: 'basic_obedience'
   };
+}
+
+function localizeTriageSolution(sol: TriageSolution, dogName: string): TriageSolution {
+  switch (sol.category) {
+    case 'potty_regression':
+      return {
+        ...sol,
+        diagnosisTitle: 'Medical-Origin Inappropriate Elimination (Cystitis / UTI Suspicion)',
+        clinicalSummary: `For ${dogName}, sudden indoor house-soiling after being reliably housetrained is associated in >65% of clinical cases with urinary tract infections (cystitis), bladder crystals, or metabolic conditions (diabetes/Cushing’s).`,
+        rootCause: 'Involuntary voiding driven by bladder dysuria, burning sensation, or compromised sphincter control.',
+        redFlags: [
+          'Frequent small-volume dribbling or straining/whining while urinating',
+          'Pink-tinged urine or excessive licking of the genital area'
+        ],
+        merck3MPlan: {
+          management: 'Neutralize indoor accident spots with enzymatic cleaners only (never ammonia); temporarily increase outdoor breaks to every 2 hours.',
+          modification: 'Never scold or punish accidents; reward heavily outside the exact second elimination finishes.',
+          responseSubstitution: 'Response Substitution: Teach bell-ringing at the exit door to announce potty urgency (Potty Bell).',
+          medicalThreshold: 'URGENT: Veterinary urinalysis and blood chemistry must be evaluated before attempting behavior training.'
+        },
+        immediateActionSteps: [
+          'Schedule a veterinary urinalysis appointment within 24 hours.',
+          'Log daily water intake and urination frequency.',
+          'Never scold, yell, or rub the dog’s nose in accidents.'
+        ]
+      };
+
+    case 'pain_medical':
+      return {
+        ...sol,
+        diagnosisTitle: 'Acute Pain-Induced Defensive Aggression',
+        clinicalSummary: `According to Merck Veterinary Manual behavioral principles, in a previously placid dog, sudden-onset growling or snapping is most commonly caused by HIDDEN PHYSICAL PAIN (osteoarthritis, otitis, dental disease, or spinal disc lesions).`,
+        rootCause: 'Anticipatory dread of painful physical touch drives immediate defensive boundary enforcement.',
+        redFlags: [
+          'Flinching, whining, or snarling when touched on ears, hips, back, or paws',
+          'Reluctance to climb stairs, jump into cars, or rise from resting',
+          'Sudden freezing stiff with a wide unblinking stare'
+        ],
+        merck3MPlan: {
+          management: 'Grant immediate physical space; do not hug, do not pull from beds, and keep children away.',
+          modification: 'Behavioral conditioning cannot take place while physical pain signals are active.',
+          responseSubstitution: 'Response Substitution: Wait for the dog to approach voluntarily rather than encroaching on resting areas.',
+          medicalThreshold: 'Vital Rule: Comprehensive orthopedic and oral examination is imperative before any behavioral training.'
+        },
+        immediateActionSteps: [
+          'Minimize unnecessary physical handling today and allow undisturbed rest.',
+          'Book an orthopedic and pain evaluation with your veterinarian.',
+          'Step back the moment growling occurs; never punish an auditory warning.'
+        ]
+      };
+
+    case 'senior_dishaa':
+      return {
+        ...sol,
+        diagnosisTitle: 'Canine Cognitive Dysfunction Syndrome (CDS - DISHAA Dementia)',
+        clinicalSummary: `Under Merck Geriatric Ethology standards, ${dogName} presents classic manifestations of age-related cerebral beta-amyloid deposition and neurodegenerative decline (Canine Dementia).`,
+        rootCause: 'Cellular degradation in brain regions responsible for spatial navigation, circadian rhythm, and house-training memory.',
+        redFlags: [
+          'Getting trapped behind doors or in room corners',
+          'Nocturnal pacing and vocalizing in dark rooms',
+          'Staring blankly at walls or into empty space'
+        ],
+        merck3MPlan: {
+          management: 'Keep furniture arrangements consistent; place non-slip floor rugs; install nightlights for orientation.',
+          modification: 'Stimulate neuroplasticity with gentle scent-work and low-stress snuffle mats.',
+          responseSubstitution: 'Response Substitution: Gently guide to an orthopedic memory-foam bed when night wandering begins.',
+          medicalThreshold: 'Veterinary cognitive support protocols (antioxidants, DHA/EPA omega-3, neuroprotective diets) are essential.'
+        },
+        immediateActionSteps: [
+          'Record behavioral changes weekly using the DISHAA criteria.',
+          'Place nightlights along dark hallways and exits.',
+          'Consult your veterinarian regarding neuroprotective geriatric support.'
+        ]
+      };
+
+    case 'separation_anxiety':
+      return {
+        ...sol,
+        diagnosisTitle: 'Separation Anxiety & Social Isolation Panic Disorder',
+        clinicalSummary: `Separation anxiety is not spite; it is an acute physiological panic attack triggered by human departure. Cortisol surges and heart rate spikes within minutes.`,
+        rootCause: 'Innate canine obligate social attachment; primitive instinct that isolation equals mortal danger.',
+        redFlags: [
+          'Scratching at door thresholds until paw pads bleed',
+          'Profuse salivation and panting puddles',
+          'Continuous distressed howling that alarms neighbors'
+        ],
+        merck3MPlan: {
+          management: 'Never leave the dog alone above panic threshold during rehabilitation (use daycare or sitters).',
+          modification: 'Sub-Threshold Micro-Separations: Step outside for 2-5 seconds and return while the dog remains calm.',
+          responseSubstitution: 'Response Substitution: Focus on licking a frozen peanut butter Kong toy upon departure (licking releases calming endorphins).',
+          medicalThreshold: 'In severe panic with self-mutilation, veterinary-prescribed anxiolytics are medically mandatory.'
+        },
+        immediateActionSteps: [
+          'Desensitize departure cues (jingle keys, put on coat) without leaving the house.',
+          'Keep greetings and departures low-key and matter-of-fact.',
+          'Perform five brief 10-second micro-departure repetitions daily.'
+        ]
+      };
+
+    case 'leash_reactivity':
+      return {
+        ...sol,
+        diagnosisTitle: 'Leash Reactivity & Opposition Reflex',
+        clinicalSummary: `Dogs instinctively brace and pull in the opposite direction when tension is applied to the leash (Opposition Reflex). Achieving forward motion by pulling reinforces the behavior.`,
+        rootCause: 'Natural canine walking speed exceeds human pace, while tight leash tension restricts flight options, inducing frustration.',
+        redFlags: [
+          'Choking and coughing against a neck collar while dragging the handler',
+          'Rearing onto hind legs and vocalizing upon seeing other dogs'
+        ],
+        merck3MPlan: {
+          management: 'Replace flat neck collars with an ergonomic Y-shaped front-clip chest harness.',
+          modification: 'Red Light - Green Light: The instant the leash tenses, freeze like a tree; move forward only when the leash slackens.',
+          responseSubstitution: 'Response Substitution (DRI): Look at the handler ("Look at That / Watch Me") upon spotting oncoming dogs.',
+          medicalThreshold: 'Have a veterinarian evaluate for tracheal collapse or cervical spine strain resulting from chronic pulling.'
+        },
+        immediateActionSteps: [
+          'Stop dead in your tracks the moment leash tension is felt.',
+          'Deliver high-value treats at your knee line to make walking beside you highly rewarding.',
+          'Retire retractable flexi leashes immediately.'
+        ]
+      };
+
+    case 'jumping_hyperactivity':
+      return {
+        ...sol,
+        diagnosisTitle: 'Arousal Greeting & Inadvertently Reinforced Jumping',
+        clinicalSummary: `Dogs naturally desire face-to-face greeting. When humans push, speak to, or grab a jumping dog, they inadvertently provide the social attention the dog craves.`,
+        rootCause: 'Innate greeting drive combined with intermittent reinforcement of jumping behavior.',
+        redFlags: [
+          'Scratching skin or knocking down children during arrivals',
+          'Over-aroused mouthing of hands and sleeves'
+        ],
+        merck3MPlan: {
+          management: 'Keep the dog leashed or behind a baby gate when guests enter the home.',
+          modification: 'Four on the Floor Rule: The second paws leave the ground, turn your back and cross your arms (-P).',
+          responseSubstitution: 'Response Substitution (DRI - Prime Merck Example): "SIT" upon hearing the doorbell. A dog cannot sit and jump at the same moment.',
+          medicalThreshold: 'Screen for patellar luxation or hip joint tenderness if jumping causes discomfort.'
+        },
+        immediateActionSteps: [
+          'Turn your back silently if the dog jumps when you enter the room.',
+          'Praise and pet only when all four paws are firmly on the floor.',
+          'Instruct incoming guests to completely ignore the dog until calm.'
+        ]
+      };
+
+    case 'fear_phobia':
+      return {
+        ...sol,
+        diagnosisTitle: 'Acoustic Phobia & Barometric Panic Disorder',
+        clinicalSummary: `Canine audition captures acoustic frequencies up to four times higher than humans. Thunder booms, barometric pressure shifts, and static electricity induce acute panic.`,
+        rootCause: 'Auditory hypersensitivity, barometric sensitivity, and genetic anxiety predisposition.',
+        redFlags: [
+          'Violent full-body shaking, hyperventilation, and dilated pupils',
+          'Attempting to burrow into tight closets, bathtubs, or jumping through screens'
+        ],
+        merck3MPlan: {
+          management: 'Draw heavy curtains, activate white noise or soothing classical music, and provide a dark den refuge.',
+          modification: 'Acoustic Desensitization: Play recorded storm sounds at whisper volume during calm moments paired with gourmet treats.',
+          responseSubstitution: 'Response Substitution: Licking a high-value frozen Lickimat inside the sanctuary den during storms.',
+          medicalThreshold: 'Merck Manual guidance indicates veterinary-prescribed anxiolytics administered prior to storms prevent severe trauma.'
+        },
+        immediateActionSteps: [
+          'Create a cozy, dark den in the quietest interior room today.',
+          'Provide calm, grounded companionship without anxious agitation.',
+          'Never force a fearful dog outside into weather triggers.'
+        ]
+      };
+
+    case 'predatory_drift':
+      return {
+        ...sol,
+        diagnosisTitle: 'Predatory Drift & Livestock/Small Animal Predation',
+        clinicalSummary: `This is not malice; it is the autonomic firing of the canine predatory sequence (Orient -> Eye -> Stalk -> Chase -> Grab -> Kill). Quick fleeing movements activate this instinct involuntarily.`,
+        rootCause: 'Innate predatory motor patterns lacking a safe, structured outlet.',
+        redFlags: [
+          'Total deafness to recall during pursuit (predatory tunnel vision)',
+          'History of grabbing, shaking, or harming birds or small animals',
+          'Breaching fences specifically to target livestock enclosures'
+        ],
+        merck3MPlan: {
+          management: 'NEVER allow unsupervised off-leash access around livestock or cats; use double-fencing and a 15m biothane long line.',
+          modification: 'Premack Principle & Flirt Pole: Provide a structured outlet for chase drive using a flirt pole toy, rewarding disengagement.',
+          responseSubstitution: 'Response Substitution (DRI): Dropping into a firm "DOWN" or checking in with handler eye contact upon spotting animals.',
+          medicalThreshold: 'Screen for digestive malabsorption or parasitic disease if consuming feces or small prey.'
+        },
+        immediateActionSteps: [
+          'Keep on a 15-meter long line near coops; do not leave unattended.',
+          'Spend 15 minutes daily channeling chase drive with a flirt pole.',
+          'Reward with high-value treats the millisecond the dog looks at you instead of pursuing.'
+        ]
+      };
+
+    default:
+      return {
+        ...sol,
+        diagnosisTitle: 'Territorial Alert & Arousal Barking',
+        clinicalSummary: `Your dog perceives environmental cues as intrusions and barks to create distance (Mail Carrier Syndrome: dog barks, stranger departs = dog believes barking worked).`,
+        rootCause: 'Territorial guarding instinct, boredom, and desire to increase distance from triggers.',
+        redFlags: [
+          'Barking persistently for more than 2 hours daily',
+          'Charging and biting at windows or doors'
+        ],
+        merck3MPlan: {
+          management: 'Install frosted window film or close blinds; mute loud chimes to prevent rehearsal of window-charging.',
+          modification: 'Sub-Threshold Desensitization: Pair soft doorbell sounds with high-value treats ("Doorbell = Delicious treats").',
+          responseSubstitution: 'Response Substitution (DRI): Running to a designated station mat instead of charging the front door.',
+          medicalThreshold: 'Check for hearing loss or ear discomfort, which can cause dogs to be easily startled.'
+        },
+        immediateActionSteps: [
+          'Close blinds to block visual triggers of street passersby.',
+          'Do not yell when the dog barks; step quietly between dog and window to block line of sight.',
+          'Reward the moment the dog falls silent.'
+        ]
+      };
+  }
+}
+
+export function resolveTriageSolution(answers: TriageAnswers, dogName: string = 'Köpeğiniz', lang: 'tr' | 'en' = 'tr'): TriageSolution {
+  const customMistakes = getReactionAdvice(answers.ownerReaction, lang);
+  const raw = computeRawTriageSolution(answers, dogName, customMistakes);
+  if (lang !== 'en') return raw;
+  return localizeTriageSolution(raw, dogName);
 }

@@ -854,3 +854,784 @@ export const BEHAVIOR_PROBLEMS: BehaviorProblem[] = [
     ]
   }
 ];
+
+export const PROBLEMS_EN_MAP: Record<string, Partial<BehaviorProblem>> = {
+  'barking-reactivity': {
+    title: 'EXCESSIVE BARKING (DOORBELL, WINDOW & STREET)',
+    shortDescription: 'Uncontrollable alarm barking when the doorbell rings, at passersby through windows, or on walks.',
+    rootCauses: [
+      'Territorial defense reflex and heightened physiological arousal',
+      'Desire to increase distance from perceived threats',
+      'Postman syndrome: believing barking successfully drove the intruder away'
+    ],
+    positiveProtocol: {
+      protocolName: 'Desensitization and Counter-Conditioning (CC/DS)',
+      overview: 'Transform the doorbell sound from an alarm trigger into a predictor of delicious rewards on a mat.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Lower Trigger Volume',
+          instruction: 'Play recorded chime sounds from your phone at low volume. The split-second the dog stays calm, say "Yes!" and reward with high-value treats.',
+          scientificTip: 'Keep training strictly sub-threshold; if barking begins, cortisol is already released.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Pair Chime with "Go to Mat"',
+          instruction: 'Condition the dog to sprint to a designated training mat upon hearing the doorbell (Differential Reinforcement of Incompatible Behavior - DRI).',
+          scientificTip: 'A dog lying calmly on a mat or chewing a toy cannot simultaneously charge the door.'
+        },
+        {
+          stepNumber: 3,
+          title: 'Gradual Real-Life Provocation',
+          instruction: 'Have a helper ring the actual doorbell while keeping the dog focused on a high-value chew mat at safe distance.',
+          scientificTip: 'Never scold when barking happens; quietly block the dog’s line of sight without yelling.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Apply frosted window film or close curtains; mute loud chimes to prevent repetitive rehearsal of door-charging.',
+      modification: 'Sub-Threshold Desensitization: Pair soft doorbell sounds with high-value treats.',
+      responseSubstitution: 'Response Substitution (DRI): Running to a designated station mat instead of charging the front door.',
+      medicalRuleOut: 'Rule out hearing loss or chronic ear infections which increase acoustic startle sensitivity.'
+    },
+    whatNotToDo: [
+      'Never yell "QUIET!" or "NO!" — the dog perceives human shouting as barking along.',
+      'Do not use citronella spray or electric shock collars; these induce chronic anxiety and redirected aggression.'
+    ],
+    whenToCallProfessional: [
+      'If barking escalates into charging people or snapping at the door threshold, consult a certified behaviorist.',
+      'If the dog barks continuously for more than 2 hours daily despite environmental management.'
+    ]
+  },
+  'livestock-predation': {
+    title: 'LIVESTOCK & SMALL ANIMAL PREDATION (PREDATORY DRIFT)',
+    shortDescription: 'Instinctual chasing, capturing, or harming of chickens, sheep, lambs, cats, or waterfowl in rural settings.',
+    rootCauses: [
+      'Strong innate predatory motor patterns (Orient -> Stalk -> Chase -> Grab -> Kill)',
+      'Sudden flight of prey animals triggering autonomic chase reflexes',
+      'Lack of appropriate outlets for channeled instinctual drive'
+    ],
+    positiveProtocol: {
+      protocolName: 'Flirt Pole Channeling & Predatory Impulse Control',
+      overview: 'Provide a structured, legal predatory outlet while conditioning impulse control and rock-solid recall.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Channel Prey Drive with a Flirt Pole',
+          instruction: 'Use a fleece flirt pole lure in the yard for 15 minutes daily. Teach "Wait", "Get it!", and "Drop it!" in high arousal.',
+          scientificTip: 'Controlled drive fulfillment reduces opportunistic hunting outbursts.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Sub-Threshold Long Line Training',
+          instruction: 'Keep the dog on a 15-meter biothane long line near livestock. Reward immediate eye contact away from animals.',
+          scientificTip: 'Never allow unsupervised rehearsal around livestock.'
+        },
+        {
+          stepNumber: 3,
+          title: 'Premack Principle (Grandma’s Rule)',
+          instruction: 'Reward calm disengagement by allowing controlled, calm scent observation from a safe distance.',
+          scientificTip: 'Access to natural stimulation is the ultimate reinforcer.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Double-fence all livestock perimeters; keep dog strictly on a long line in rural pastures.',
+      modification: 'Premack conditioning and impulse release via artificial lures.',
+      responseSubstitution: 'Response Substitution (DRI): Dropping into a firm "DOWN" upon visual spotting of animals.',
+      medicalRuleOut: 'Rule out exocrine pancreatic insufficiency (EPI) or nutritional deficits in coprophagic/predatory cases.'
+    },
+    whatNotToDo: [
+      'Never tie dead poultry to the dog’s neck or use beatings (cruel folk myths that cause trauma without curbing instinct).',
+      'Do not use shock collars, which cause erratic panic and redirected attacks.'
+    ],
+    whenToCallProfessional: [
+      'If the dog has already killed livestock or pets, professional working-dog ethologist guidance is mandatory.',
+      'If predatory tunnel vision prevents hearing any voice cues.'
+    ]
+  },
+  'separation-anxiety': {
+    title: 'SEPARATION ANXIETY & ISOLATION DISTRESS',
+    shortDescription: 'Distressed howling, scratching at doors, heavy salivation, and destructive chewing when left alone.',
+    rootCauses: [
+      'Primitive survival fear that isolation from the family group equals death',
+      'Over-attachment and lack of gradual independence training in puppyhood',
+      'Traumatic boarding or sudden routine changes'
+    ],
+    positiveProtocol: {
+      protocolName: 'Sub-Threshold Systematic Desensitization',
+      overview: 'Desensitize departure cues and increase alone duration strictly below the panic threshold.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Neutralize Departure Cues',
+          instruction: 'Pick up keys, put on coat, and handle bags, but sit down and read instead of departing.',
+          scientificTip: 'Pre-departure cues trigger anticipatory cortisol release.'
+        },
+        {
+          stepNumber: 2,
+          title: '1-Second Micro-Departures',
+          instruction: 'Step outside the door for literally 1 second and re-enter calmly before any distress begins.',
+          scientificTip: 'Building trust requires hundreds of repetitions where the dog never enters panic.'
+        },
+        {
+          stepNumber: 3,
+          title: 'Gradually Extend Duration',
+          instruction: 'Expand alone duration systematically (5s, 15s, 1m, 5m, 15m) using randomized duration schedules.',
+          scientificTip: 'Always return BEFORE the dog vocalizes or stresses.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Never leave the dog alone above threshold during therapy (utilize dog daycares or sitters).',
+      modification: 'Sub-threshold departure conditioning with randomized micro-durations.',
+      responseSubstitution: 'Response Substitution: Licking a frozen stuffed Kong upon departure (licking releases calming endorphins).',
+      medicalRuleOut: 'In severe panic with self-mutilation, veterinary-prescribed anxiolytics are medically mandatory.'
+    },
+    whatNotToDo: [
+      'Never scold the dog upon return for destroyed items (amplifies departure terror).',
+      'Never crate an anxious dog and allow them to "cry it out" (causes severe psychological trauma).'
+    ],
+    whenToCallProfessional: [
+      'If the dog injures paw pads or breaks teeth attempting to escape crates or doors.',
+      'If howling continues unabated for hours.'
+    ]
+  },
+  'coprophagia': {
+    title: 'STOOL EATING (COPROPHAGIA - OWN OR OTHER FECES)',
+    shortDescription: 'Seeking out and consuming own feces, other dogs’ feces, or cat/livestock droppings.',
+    rootCauses: [
+      'Nutritional malabsorption, enzyme deficiencies, or intestinal parasites',
+      'Boredom and sensory curiosity in puppies',
+      'Attempting to erase evidence after being punished for indoor accidents'
+    ],
+    positiveProtocol: {
+      protocolName: 'Immediate Decontamination & "Leave It" Conditioning',
+      overview: 'Combine strict environmental cleanup with enzyme support and an automatic check-in reflex.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Immediate Waste Removal',
+          instruction: 'Scoop feces immediately the second they hit the ground; prevent all rehearsal.',
+          scientificTip: 'Behaviors cannot be reinforced if opportunities are physically eliminated.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Digestive Enzymes / Fresh Pumpkin',
+          instruction: 'Supplement meals with veterinary digestive enzymes or fresh pineapple chunks to make stool unpalatable.',
+          scientificTip: 'Bromelain enzymes alter stool taste, rendering it naturally unappealing.'
+        },
+        {
+          stepNumber: 3,
+          title: 'Automatic "Leave It and Return"',
+          instruction: 'Reward the dog with chicken the instant they finish eliminating outside and turn toward you.',
+          scientificTip: 'Incentivize turning back to the handler rather than turning toward the waste.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Maintain pristine yard hygiene; muzzle with stool-guard during group walks if necessary.',
+      modification: 'High-value recall conditioning immediately after defecation.',
+      responseSubstitution: 'Response Substitution (DRI): Running to the owner for a treat immediately after elimination.',
+      medicalRuleOut: 'Conduct fecal flotations and screen for exocrine pancreatic insufficiency (EPI).'
+    },
+    whatNotToDo: [
+      'Never rub the dog’s nose in feces or yell (causes secretive consumption to hide it).',
+      'Do not chase the dog when it grabs feces (turns it into a fun game of keep-away).'
+    ],
+    whenToCallProfessional: [
+      'If the dog loses weight or has chronic loose stools alongside coprophagia.',
+      'If consumption occurs aggressively accompanied by resource guarding.'
+    ]
+  },
+  'compulsive-licking-tail-chasing': {
+    title: 'COMPULSIVE DISORDERS (EXCESSIVE PAW LICKING & TAIL CHASING - OCD)',
+    shortDescription: 'Incessant licking of paws causing lick granulomas, spinning in circles chasing the tail, or fly-snapping.',
+    rootCauses: [
+      'Chronic stress, isolation, and sensory deprivation',
+      'Underlying atopic dermatitis, food allergies, or spinal nerve pain',
+      'Genetic predisposition to repetitive stereotypical behaviors'
+    ],
+    positiveProtocol: {
+      protocolName: 'Sensory Enrichment & Calm Redirection',
+      overview: 'Address physical allergens, double mental stimulation, and interrupt loops without panic.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Interrupt Without Reprimand',
+          instruction: 'The second licking starts, calmly redirect with an interesting scent toy or frozen treat without scolding.',
+          scientificTip: 'Punishing compulsive behaviors increases anxiety and intensifies the compulsion.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Double Mental Enrichment',
+          instruction: 'Introduce snuffle mats, frozen kongs, and 20 minutes of daily nosework exercises.',
+          scientificTip: 'Olfactory work stimulates dopamine and serotonin pathways, reducing anxiety loops.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Use soft protective recovery boots or cones temporarily to allow skin healing.',
+      modification: 'Environmental enrichment and low-arousal redirection.',
+      responseSubstitution: 'Response Substitution: Holding and chewing an antler or dental toy instead of paw licking.',
+      medicalRuleOut: 'Dermatological allergy testing and spinal orthopedic evaluation for referred nerve sensations.'
+    },
+    whatNotToDo: [
+      'Never spray bitter apple directly on open skin lesions.',
+      'Do not yell or restrain forcibly when spinning or licking.'
+    ],
+    whenToCallProfessional: [
+      'If skin becomes ulcerated or tail is chewed bloody, veterinary pharmacological intervention is essential.',
+      'If trance-like episodes cannot be interrupted.'
+    ]
+  },
+  'puppy-biting': {
+    title: 'PUPPY TEETHING BITING & PANTS TUGGING',
+    shortDescription: 'Painful nipping and biting of hands and ankles with razor-sharp puppy deciduous teeth during play.',
+    rootCauses: [
+      'Deciduous tooth eruption causing gum irritation and aching',
+      'Incomplete bite inhibition learning from littermates',
+      'High arousal and fatigue during interactive play'
+    ],
+    positiveProtocol: {
+      protocolName: 'Bite Inhibition & Freeze Redirection',
+      overview: 'Teach the puppy human skin fragility through social freezing and chew toy trade-ups.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Auditory Feedback & Social Freeze',
+          instruction: 'When teeth touch skin, emit a high-pitched "OUCH!", freeze like a statue, and turn away for 15 seconds.',
+          scientificTip: 'Puppies learn from littermates that biting terminates fun social play.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Offer an Alternative Chew Toy',
+          instruction: 'Always have a rubber or frozen teething toy within arm’s reach to offer immediately upon mouthiness.',
+          scientificTip: 'Never leave hands empty; always trade for an acceptable target.'
+        },
+        {
+          stepNumber: 3,
+          title: 'Enforce Rest Time',
+          instruction: 'If nipping becomes frenzied, guide the puppy to a quiet playpen or crate for a restorative nap.',
+          scientificTip: 'Hyperactive puppy biting is almost always an indicator of overtiredness.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Keep puppies in managed puppy-proofed spaces; wear durable shoes around ankle-biters.',
+      modification: 'Negative punishment (-P): immediate withdrawal of social engagement upon hard biting.',
+      responseSubstitution: 'Response Substitution (DRI): Grabbing a stuffed toy upon approaching family members.',
+      medicalRuleOut: 'Examine gums for retained deciduous teeth or dental abnormalities past 6 months.'
+    },
+    whatNotToDo: [
+      'Never hold the muzzle shut or hit the puppy (destroys trust and causes fear of human hands).',
+      'Do not wave hands or play rough wrestling games with bare hands.'
+    ],
+    whenToCallProfessional: [
+      'If bite wounds break adult skin repeatedly after 6 months of age.',
+      'If biting is accompanied by hard staring, stiff freezing, or resource guarding.'
+    ]
+  },
+  'leash-pulling': {
+    title: 'LEASH PULLING & REACTIVE WALKING',
+    shortDescription: 'Dragging the owner continuously during walks, leaning into the collar until coughing and choking.',
+    rootCauses: [
+      'Natural canine pace is 2-3x faster than human walking speed',
+      'Opposition reflex: leaning into pressure when resistance is felt',
+      'Past history of pulling successfully earning access to exciting smells'
+    ],
+    positiveProtocol: {
+      protocolName: 'Loose Leash Red-Light Green-Light Protocol',
+      overview: 'Turn pulling into an absolute dead end while making the handler’s side a rewarding treat zone.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Freeze the Instant Leash Tenses',
+          instruction: 'The millisecond the leash is pulled tight, stop dead in your tracks. Never take a single forward step under tension.',
+          scientificTip: 'Forward motion is the ultimate reward; never reward pulling with forward progress.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Walk Forward When Leash Slackens',
+          instruction: 'The moment the dog releases tension or checks in with you, praise and resume walking forward.',
+          scientificTip: 'Reinforce the slack J-loop in the leash consistently.'
+        },
+        {
+          stepNumber: 3,
+          title: 'Practice Frequent U-Turns',
+          instruction: 'Change direction 180 degrees whenever the dog starts forging ahead, encouraging constant check-ins.',
+          scientificTip: 'Keep the walk mentally engaging and unpredictable.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Switch to a well-fitted Y-shaped front-clip harness to mechanically reduce pulling leverage.',
+      modification: 'Variable reinforcement for maintaining proximity beside the handler’s leg.',
+      responseSubstitution: 'Response Substitution (DRI): Handler eye contact upon seeing forward distractions.',
+      medicalRuleOut: 'Inspect for tracheal collapse or cervical disc damage from historic collar pulling.'
+    },
+    whatNotToDo: [
+      'Never use choke chains or prong collars (inflicts serious neck and thyroid trauma).',
+      'Avoid retractable flexi leashes which actively train dogs to pull against constant tension.'
+    ],
+    whenToCallProfessional: [
+      'If pulling is accompanied by explosive lunging and snapping at passing dogs.',
+      'If the handler is at physical risk of falls or injury.'
+    ]
+  },
+  'resource-guarding': {
+    title: 'RESOURCE GUARDING (FOOD BOWL, BONES & TOYS)',
+    shortDescription: 'Growling, freezing, or snapping defensively when humans or other pets approach while eating or chewing.',
+    rootCauses: [
+      'Evolutionary survival instinct to protect scarce food resources',
+      'History of humans forcibly snatching items from the dog',
+      'Underlying anxiety and insecurity regarding territorial boundaries'
+    ],
+    positiveProtocol: {
+      protocolName: 'Trade-Up & Approaching-Brings-Jackpots Protocol',
+      overview: 'Teach the dog that human approach signals an upgrade in value rather than theft.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Keep Distance and Toss Treats',
+          instruction: 'While the dog is chewing a bone, walk past at safe distance and toss a piece of roast beef into their space without stopping.',
+          scientificTip: 'Shift the dog’s emotional state from defensive fear to eager anticipation.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Practice the "Trade-Up" Game',
+          instruction: 'Offer a higher-value treat to trade for a toy; give the original toy right back once the trade is accepted.',
+          scientificTip: 'The dog learns that letting go of an item does not mean losing it forever.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Feed the dog in a separate quiet room; never allow anyone to disturb them while eating.',
+      modification: 'Classical counter-conditioning to human approach.',
+      responseSubstitution: 'Response Substitution (DRI): Teaching a reliable "Drop It" command paired with stepping back.',
+      medicalRuleOut: 'Rule out dental abscesses or digestive pain that makes eating stressful.'
+    },
+    whatNotToDo: [
+      'Never put your hand in the food bowl to "test dominance" (this directly causes resource guarding).',
+      'Never punish a growl — growling is the vital early warning system before a bite.'
+    ],
+    whenToCallProfessional: [
+      'If the dog guards low-value items (tissues, wrappers) or snaps at children.',
+      'If bites have occurred during past encounters.'
+    ]
+  },
+  'car-travel-anxiety': {
+    title: 'CAR TRAVEL ANXIETY & MOTION SICKNESS',
+    shortDescription: 'Excessive panting, trembling, motion sickness, vomiting, or refusal to enter the vehicle.',
+    rootCauses: [
+      'Vestibular motion sickness and nausea in young dogs',
+      'Associating the car exclusively with scary destinations like vet clinics',
+      'Vibrations, noise, and loss of footing causing panic'
+    ],
+    positiveProtocol: {
+      protocolName: 'Stationary Car Desensitization Protocol',
+      overview: 'Transform the parked car into a comforting dining room before taking any moving trips.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Feed Meals Near the Parked Car',
+          instruction: 'Feed meals 5 meters from the stationary car with the engine off, gradually moving closer over several days.',
+          scientificTip: 'Counter-condition the visual sight of the car with mealtime satisfaction.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Hang Out Inside the Parked Car',
+          instruction: 'Sit in the stationary car with open doors, offering a lickimat or chew toy without turning the engine on.',
+          scientificTip: 'De-couple entering the car from the terrifying experience of moving.'
+        },
+        {
+          stepNumber: 3,
+          title: 'Take 2-Minute Joy Rides',
+          instruction: 'Drive just around the block to a nearby fun park for a play session, then return.',
+          scientificTip: 'Ensure the destination is consistently positive.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Use a secure crash-tested crate or seatbelt harness; place anti-slip mats on seats.',
+      modification: 'Gradual systematic exposure to engine sounds and short trips.',
+      responseSubstitution: 'Response Substitution: Resting head on a familiar travel blanket.',
+      medicalRuleOut: 'Veterinary prescription of anti-emetics (Maropitant / Cerenia) for motion sickness.'
+    },
+    whatNotToDo: [
+      'Never force or drag a trembling dog into the car.',
+      'Do not feed a large meal immediately before driving.'
+    ],
+    whenToCallProfessional: [
+      'If the dog urinates or defecates uncontrollably in the vehicle from extreme terror.',
+      'If motion sickness persists despite anti-nausea medications.'
+    ]
+  },
+  'handling-vet-grooming-fear': {
+    title: 'VET CLINIC & GROOMING HANDLING PHOBIA',
+    shortDescription: 'Panicking, trembling, snapping, or attempting to flee during examinations, nail trims, or grooming.',
+    rootCauses: [
+      'Past painful or coercive restraint experiences during medical procedures',
+      'Sensory overload from chemical odors, bright lights, and slippery metal tables',
+      'Lack of cooperative care conditioning in early puppyhood'
+    ],
+    positiveProtocol: {
+      protocolName: 'Cooperative Care & Bucket Game Protocol',
+      overview: 'Give the dog agency and consent signals during grooming and veterinary care.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Chin Rest Consent Signal',
+          instruction: 'Train the dog to rest their chin on your palm or a cushion. Handling occurs ONLY while the chin remains grounded.',
+          scientificTip: 'Granting the dog the power to say "Pause" drastically lowers defensive fight-or-flight reflexes.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Touch and Reward Micro-Steps',
+          instruction: 'Briefly touch a paw or ear for 1 second, release, and offer a jackpot reward.',
+          scientificTip: 'Keep touch sessions well below the discomfort threshold.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Use fear-free certified veterinary clinics; schedule "happy visits" solely for treats and weighing.',
+      modification: 'Cooperative care protocols and positive conditioning to stethoscopes and clippers.',
+      responseSubstitution: 'Response Substitution: Focusing on a silicone lickimat mounted on the wall.',
+      medicalRuleOut: 'Pre-visit pharmaceutical protocols (Gabapentin / Trazodone) for high-stress veterinary visits.'
+    },
+    whatNotToDo: [
+      'Never allow four clinic staff members to pin the dog down by force (creates permanent trauma).',
+      'Never withhold water or treats during non-fasting visits.'
+    ],
+    whenToCallProfessional: [
+      'If the dog requires muzzling and attempts to bite vet staff during basic physical exams.',
+      'If grooming is completely impossible due to severe thrashing.'
+    ]
+  },
+  'door-dashing-escape': {
+    title: 'DOOR DASHING & BOLTING OUTSIDE',
+    shortDescription: 'Dashing out the moment an exterior door opens, ignoring recall commands, and initiating games of chase.',
+    rootCauses: [
+      'High environmental curiosity and unmet outdoor exploration needs',
+      'Lack of impulse control at threshold boundaries',
+      'Owner inadvertently turning escapes into exciting games of chase'
+    ],
+    positiveProtocol: {
+      protocolName: 'Doorway Boundary & Wait-for-Release Protocol',
+      overview: 'Teach the dog that open doors are invisible barriers that can only be crossed on cue.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Hand on Door Handle = Sit',
+          instruction: 'Condition the dog to sit the moment your hand touches the exterior door handle.',
+          scientificTip: 'Make the door handle the visual cue for the incompatible behavior of sitting.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Door Crack Opens: Close if Dog Moves',
+          instruction: 'Crack the door open 5 cm. If the dog moves forward, close it gently. Open again only when calm.',
+          scientificTip: 'The door itself acts as the environmental feedback mechanism.'
+        },
+        {
+          stepNumber: 3,
+          title: 'Release Cue: "Let’s Go!"',
+          instruction: 'Allow exit only after giving the verbal release word while the dog waits calmly.',
+          scientificTip: 'Control is maintained through voluntary choice rather than physical restraint.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Install baby gates at entry vestibules; use an double-door entry system.',
+      modification: 'Impulse control conditioning at all exterior doorways.',
+      responseSubstitution: 'Response Substitution (DRI): Sitting 2 meters back on an entryway mat when doors open.',
+      medicalRuleOut: 'Screen for intact male mating wanderlust or cognitive disorientation in seniors.'
+    },
+    whatNotToDo: [
+      'Never sprint after a bolting dog yelling their name (they perceive it as a thrilling game of chase).',
+      'Never scold the dog when they finally return (this punishes coming back).'
+    ],
+    whenToCallProfessional: [
+      'If the dog bolts into heavy traffic corridors repeatedly.',
+      'If recall is completely non-functional outside.'
+    ]
+  },
+  'jumping-on-people': {
+    title: 'JUMPING ON PEOPLE (OVER-ENTHUSIASTIC GREETINGS)',
+    shortDescription: 'Jumping frantically onto incoming guests or strangers on walks to seek attention and greet face-to-face.',
+    rootCauses: [
+      'Innate greeting drive to reach human facial level',
+      'Humans rewarding jumping with touch, eye contact, and vocalizations',
+      'Lack of impulse control during high social excitement'
+    ],
+    positiveProtocol: {
+      protocolName: 'Four-on-the-Floor & Incompatible Sitting Protocol',
+      overview: 'Make jumping completely unrewarding while making all four paws on the floor a treat magnet.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Turn Back and Cross Arms Instantly',
+          instruction: 'The split-second front paws leave the ground, turn completely around, fold your arms, and look at the ceiling.',
+          scientificTip: 'Removing all eye contact and attention is the most potent negative punishment (-P).'
+        },
+        {
+          stepNumber: 2,
+          title: 'Reward Four Paws on the Floor',
+          instruction: 'The millisecond all four paws touch the floor, bend down and praise calmly with treats at knee level.',
+          scientificTip: 'Reward at floor level to keep the dog’s center of gravity downward.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Keep the dog on leash or behind a barrier when visitors arrive.',
+      modification: 'Extinction of attention-seeking jumping behavior.',
+      responseSubstitution: 'Response Substitution (DRI): "SIT" before greetings occur — a dog cannot sit and jump simultaneously.',
+      medicalRuleOut: 'Check for joint stiffness or spinal pain that causes awkward jumping landings.'
+    },
+    whatNotToDo: [
+      'Never knee the dog in the chest (can cause rib fractures and severe fear).',
+      'Do not push with hands or speak to the dog while it jumps (it perceives this as roughhouse play).'
+    ],
+    whenToCallProfessional: [
+      'If jumping knocks down toddlers or elderly family members causing injury.',
+      'If jumping is accompanied by frantic arousal biting.'
+    ]
+  },
+  'fear-thunder-fireworks': {
+    title: 'THUNDERSTORM & FIREWORKS NOISE PHOBIA',
+    shortDescription: 'Violent trembling, hyperventilation, and attempting to hide in bathtubs or closets during storms and fireworks.',
+    rootCauses: [
+      'Extreme canine auditory sensitivity and barometric pressure drops',
+      'Electrostatic buildup in pet fur during lightning storms',
+      'Genetic predisposition to sound sensitivities'
+    ],
+    positiveProtocol: {
+      protocolName: 'Acoustic Sanctuary & Counter-Conditioning Protocol',
+      overview: 'Create an electrostatic-safe sound bunker and pair low-volume sounds with gourmet feasts.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Build a Den Sanctuary',
+          instruction: 'Set up blankets in an interior windowless room or closet with heavy bedding and a white noise machine.',
+          scientificTip: 'Dark, tight dens provide instinctual security during storms.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Play Classical Music or White Noise',
+          instruction: 'Turn on through-a-dog’s-ear psychoacoustic music or a loud box fan to mask acoustic peaks.',
+          scientificTip: 'Consistent auditory masking prevents sudden startle reactions.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Keep curtains tightly drawn; install grounding anti-static mats in the safe den.',
+      modification: 'Acoustic desensitization using low-volume storm tracks during calm seasons.',
+      responseSubstitution: 'Response Substitution: Licking a high-value frozen treat mat in the bunker.',
+      medicalRuleOut: 'Veterinary pre-storm anxiolytics (e.g. Sileo, Trazodone) prevent severe neurochemical panic.'
+    },
+    whatNotToDo: [
+      'Never withhold comfort out of fear of "reinforcing fear" — fear is an involuntary emotion that is soothed by comfort.',
+      'Never force a terrified dog out of its chosen hiding spot.'
+    ],
+    whenToCallProfessional: [
+      'If the dog breaks through glass windows or causes self-injury in panic.',
+      'If noise phobia expands to everyday household sounds (blenders, vacuum cleaners).'
+    ]
+  },
+  'potty-regression': {
+    title: 'POTTY TRAINING REGRESSION & INDOOR ACCIDENTS',
+    shortDescription: 'Suddenly urinating or defecating indoors on carpets or beds after previously being reliably trained.',
+    rootCauses: [
+      'Underlying urinary tract infection (cystitis), bladder stones, or diabetes',
+      'Incomplete past housetraining and residual scent markers on rugs',
+      'Sudden environmental stress or changes in household routine'
+    ],
+    positiveProtocol: {
+      protocolName: 'Back-to-Basics Housetraining & Enzymatic Cleanup',
+      overview: 'Rule out medical infections, eliminate scent markers with enzymes, and reward outside elimination.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Veterinary Urinalysis First',
+          instruction: 'Have a veterinarian analyze a urine sample to rule out bacterial cystitis or crystals before behavioral steps.',
+          scientificTip: 'Over 65% of sudden potty regressions are caused by active urinary tract infections.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Enzymatic Molecular Odor Removal',
+          instruction: 'Clean all accident sites with enzymatic cleaners that break down uric acid crystals permanently.',
+          scientificTip: 'Standard household cleaners leave scent traces that smell like a bathroom to canine noses.'
+        },
+        {
+          stepNumber: 3,
+          title: 'Jackpot Praise Outside',
+          instruction: 'Accompany the dog outside on leash; the exact second elimination finishes, praise enthusiastically with chicken.',
+          scientificTip: 'Timing is crucial; reward within 1 second of completion.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Confine dog to easy-to-clean spaces when unsupervised; take outside on a strict 2-hour schedule.',
+      modification: 'High-frequency outdoor reinforcement schedules.',
+      responseSubstitution: 'Response Substitution: Ringing a potty bell at the exit door to announce urgency.',
+      medicalRuleOut: 'Urinalysis, urine culture, and endocrine blood panels (Cushing’s, diabetes).'
+    },
+    whatNotToDo: [
+      'Never rub the dog’s nose in accidents or scold after the fact (destroys trust and causes hidden urination).',
+      'Never restrict fresh drinking water.'
+    ],
+    whenToCallProfessional: [
+      'If blood is visible in urine or the dog strains painfully without producing urine.',
+      'If accidents continue despite clean medical test results and strict schedules.'
+    ]
+  },
+  'pet-food-stealing': {
+    title: 'PET FOOD STEALING (CAT/RABBIT FOOD & WATER BOWL GUZZLING)',
+    shortDescription: 'Raiding and consuming food or water bowls belonging to other pets in the household.',
+    rootCauses: [
+      'Cat food has higher protein and fat content, making it biologically irresistible',
+      'Opportunistic scavenging instinct in domestic canines',
+      'Lack of clear physical separation during multi-pet feeding times'
+    ],
+    positiveProtocol: {
+      protocolName: 'Physical Separation & "Leave It" Conditioning',
+      overview: 'Separate feeding stations physically while building a rock-solid default "Leave It" command.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Elevate or Isolate Cat Bowls',
+          instruction: 'Place cat food bowls on elevated counters or behind door-strap gates accessible only to cats.',
+          scientificTip: 'Environmental management prevents repetitive self-rewarding habits.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Build the "Leave It" Cue',
+          instruction: 'Practice "Leave It" with low-value kibble, rewarding eye contact with a piece of hot dog from your other hand.',
+          scientificTip: 'The dog learns that ignoring food in the environment yields better food from the handler.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Physical barriers, microchip-activated pet feeders, and separate feeding rooms.',
+      modification: 'Conditioning voluntary disengagement from pet feeding zones.',
+      responseSubstitution: 'Response Substitution: Waiting on a station mat while other animals eat.',
+      medicalRuleOut: 'Screen for metabolic polyphagia or dietary caloric deficiencies.'
+    },
+    whatNotToDo: [
+      'Never leave bowls accessible on the floor expecting the dog to resist temptation indefinitely.',
+      'Never scold the dog after they have already swallowed the stolen food.'
+    ],
+    whenToCallProfessional: [
+      'If food raiding leads to fights or resource guarding attacks toward other household pets.',
+      'If the dog consumes dangerous non-food items or cat litter obsessively.'
+    ]
+  },
+  'garden-escape': {
+    title: 'FENCE ESCAPING & DIGGING UNDER ENCLOSURES',
+    shortDescription: 'Climbing over fences, digging escape tunnels, or darting through garden gates; severe runaway and traffic risk.',
+    rootCauses: [
+      'Boredom and lack of stimulation during extended solitary yard confinement',
+      'Intact reproductive drive seeking neighborhood mates',
+      'Separation distress seeking human family members'
+    ],
+    positiveProtocol: {
+      protocolName: 'Sensory Yard Enrichment & Fence Fortification',
+      overview: 'Transform the yard into an enriching wonderland while physically sealing escape vulnerabilities.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Fulfill Energy Needs Inside the Yard',
+          instruction: 'Never leave the dog alone in the yard with nothing to do. Scatter treats in the grass and provide frozen marrow bones.',
+          scientificTip: 'A mentally engaged dog does not search for escape avenues.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Make Fence Borders Rewarding',
+          instruction: 'Walk perimeter fences together and reward frequently for turning away from boundary lines.',
+          scientificTip: 'Change the fence boundary into a check-in zone rather than an escape route.'
+        },
+        {
+          stepNumber: 3,
+          title: 'Physical Fortification (L-Footers)',
+          instruction: 'Bury wire L-footers horizontally along fence bottoms to prevent digging underneath.',
+          scientificTip: 'Physical containment must be foolproof while training progresses.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Install coyote rollers on fence tops, bury wire footers, and keep dog on a tether when unsupervised.',
+      modification: 'Boundary recall and impulse conditioning.',
+      responseSubstitution: 'Response Substitution: Digging exclusively in a designated sandbox filled with buried toys.',
+      medicalRuleOut: 'Consider neutering intact males exhibiting reproductive wandering behaviors.'
+    },
+    whatNotToDo: [
+      'Never rely on invisible electric underground fences (dogs charge through in high drive and fear returning).',
+      'Never scold the dog when they return home after escaping.'
+    ],
+    whenToCallProfessional: [
+      'If the dog jumps 2-meter fences and endangers itself in traffic corridors.',
+      'If escape is driven by severe acoustic panic or separation anxiety.'
+    ]
+  },
+  'nail-trimming-phobia': {
+    title: 'NAIL TRIMMING PHOBIA & BODY GROOMING RESISTANCE',
+    shortDescription: 'Severe thrashing, freezing, and biting attempts when nails are clipped, paws handled, or ears cleaned.',
+    rootCauses: [
+      'Past history of having the quick (sensitive blood vessel) painfully cut',
+      'Canine instinctual sensitivity regarding paw restraint and vulnerability',
+      'Coercive physical pinning during previous grooming sessions'
+    ],
+    positiveProtocol: {
+      protocolName: 'Cooperative Care & "One-and-Done" Nail Protocol',
+      overview: 'Rebuild paw handling trust using desensitization, lick mats, and trimming just one nail per session.',
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Neutralize the Clipper Tool',
+          instruction: 'Place nail clippers on the floor next to a pile of roast chicken without attempting to cut.',
+          scientificTip: 'Recondition the visual sight of clippers from threat to positive predictor.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Lick Mat Distraction',
+          instruction: 'Smear peanut butter on a silicone lick mat mounted at eye level. Handle paws while the dog licks voluntarily.',
+          scientificTip: 'Continuous licking stimulates dopamine and lowers muscle tension.'
+        },
+        {
+          stepNumber: 3,
+          title: 'The "One and Done" Rule',
+          instruction: 'Clip exactly ONE nail per day followed by massive praise. Never attempt all four paws in one sitting.',
+          scientificTip: 'Ending sessions on a high note builds lasting confidence.'
+        }
+      ]
+    },
+    merckProtocol: {
+      management: 'Trim nails frequently to keep quicks short; switch to a quiet rotary grinder or scratch board.',
+      modification: 'Systematic desensitization: tool sight -> paw touch -> tool touch -> single clip.',
+      responseSubstitution: 'Response Substitution: Scratching a sandpaper scratchboard voluntarily with paws to file nails.',
+      medicalRuleOut: 'Check for nail bed fungal infections or arthritic digit pain that makes paw pressure hurt.'
+    },
+    whatNotToDo: [
+      'Never allow two people to pin the dog down forcibly to clip nails (creates severe lasting trauma).',
+      'Never rush to do all nails in one go.'
+    ],
+    whenToCallProfessional: [
+      'If the dog growls or snaps at the mere sight of clippers.',
+      'If paws are completely unhandled due to past trauma.'
+    ]
+  }
+};
+
+export function getLocalizedProblem(problem: BehaviorProblem, lang: 'tr' | 'en'): BehaviorProblem {
+  if (lang !== 'en') return problem;
+  const enData = PROBLEMS_EN_MAP[problem.id];
+  if (!enData) return problem;
+  return {
+    ...problem,
+    ...enData,
+    rootCauses: enData.rootCauses || problem.rootCauses,
+    positiveProtocol: enData.positiveProtocol || problem.positiveProtocol,
+    merckProtocol: enData.merckProtocol || problem.merckProtocol,
+    whatNotToDo: enData.whatNotToDo || problem.whatNotToDo,
+    whenToCallProfessional: enData.whenToCallProfessional || problem.whenToCallProfessional
+  };
+}

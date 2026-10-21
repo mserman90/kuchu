@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDog } from '@/context/DogContext';
 import { useAppAuth } from '@/contexts/AppAuthContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { dataEntities } from '@/lib/data/entities';
 import { DogProfileEntity, BehaviorAnalysisEntity, TrainingPlanEntity, FavoriteEntity } from '@/lib/data/types';
 import { Link } from 'react-router-dom';
@@ -21,6 +22,8 @@ import { BenchmarkComparison } from '@/components/common/BenchmarkComparison';
 export const AccountPanelPage: React.FC = () => {
   const { activeDog, setActiveDog } = useDog();
   const { authState, user, login, logout } = useAppAuth();
+  const { lang } = useLanguage();
+  const isEn = lang === 'en';
 
   // Local entities state
   const [dogs, setDogs] = useState<DogProfileEntity[]>([]);
@@ -50,7 +53,11 @@ export const AccountPanelPage: React.FC = () => {
 
   // Notes state
   const [personalNotes, setPersonalNotes] = useState(() => {
-    return localStorage.getItem('kuchu_personal_notes') || 'Kuçu bugün yürüyüşte karşıdan gelen köpeği görünce daha az heyecanlandı. LAT protokolü çalışıyor.';
+    return localStorage.getItem('kuchu_personal_notes') || (
+      isEn
+        ? 'Kuchu seemed much calmer seeing another dog across the street today. The LAT protocol is working.'
+        : 'Kuçu bugün yürüyüşte karşıdan gelen köpeği görünce daha az heyecanlandı. LAT protokolü çalışıyor.'
+    );
   });
 
   // Login form state
@@ -75,7 +82,7 @@ export const AccountPanelPage: React.FC = () => {
 
   const handleSaveNotes = () => {
     localStorage.setItem('kuchu_personal_notes', personalNotes);
-    toast.success('Kişisel notlar kaydedildi.');
+    toast.success(isEn ? 'Personal notes saved.' : 'Kişisel notlar kaydedildi.');
   };
 
   const handleAddDogSubmit = async (e: React.FormEvent) => {
@@ -97,27 +104,30 @@ export const AccountPanelPage: React.FC = () => {
       specialNotes: ''
     });
     refreshData();
-    toast.success(`"${created.name}" profili eklendi.`);
+    toast.success(isEn ? `Profile "${created.name}" added.` : `"${created.name}" profili eklendi.`);
   };
 
   const handleDeleteDog = async (id: string, name: string) => {
-    if (confirm(`"${name}" profilini silmek istediğinize emin misiniz?`)) {
+    const msg = isEn
+      ? `Are you sure you want to delete profile "${name}"?`
+      : `"${name}" profilini silmek istediğinize emin misiniz?`;
+    if (confirm(msg)) {
       await dataEntities.dogs.delete(id);
       refreshData();
-      toast.info(`"${name}" profili silindi.`);
+      toast.info(isEn ? `Profile "${name}" deleted.` : `"${name}" profili silindi.`);
     }
   };
 
   const handleDeleteAnalysis = async (id: string) => {
     await dataEntities.analyses.delete(id);
     refreshData();
-    toast.info('Analiz kaydı silindi.');
+    toast.info(isEn ? 'Analysis record deleted.' : 'Analiz kaydı silindi.');
   };
 
   const handleDeletePlan = async (id: string) => {
     await dataEntities.plans.delete(id);
     refreshData();
-    toast.info('Eğitim planı silindi.');
+    toast.info(isEn ? 'Training plan deleted.' : 'Eğitim planı silindi.');
   };
 
   const openComparison = (a: BehaviorAnalysisEntity, b?: BehaviorAnalysisEntity) => {
@@ -133,13 +143,15 @@ export const AccountPanelPage: React.FC = () => {
       <div className="border-2 border-black dark:border-white p-6 sm:p-8 bg-white dark:bg-zinc-900 shadow-brutal flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <span className="font-mono text-xs font-bold uppercase tracking-wider text-red-600">
-            HESAP & KÖPEK YÖNETİM MERKEZİ
+            {isEn ? 'ACCOUNT & CANINE CONTROL CENTER' : 'HESAP & KÖPEK YÖNETİM MERKEZİ'}
           </span>
           <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-black dark:text-white mt-1">
-            KONTROL PANELİ
+            {isEn ? 'CONTROL PANEL' : 'KONTROL PANELİ'}
           </h1>
           <p className="text-xs sm:text-sm font-medium text-zinc-600 dark:text-zinc-400">
-            Köpek profillerinizi, geçmiş davranış analizlerinizi ve aktif eğitim müfredatlarınızı yönetin.
+            {isEn
+              ? 'Manage your canine profiles, behavioral history records, and active training plans.'
+              : 'Köpek profillerinizi, geçmiş davranış analizlerinizi ve aktif eğitim müfredatlarınızı yönetin.'}
           </p>
         </div>
 
@@ -148,12 +160,12 @@ export const AccountPanelPage: React.FC = () => {
           {authState === 'authenticated' && user ? (
             <div className="flex items-center gap-2">
               <UserCheck className="w-4 h-4 text-green-600" />
-              <span>GİRİŞ YAPILDI: <strong>{user.email}</strong></span>
+              <span>{isEn ? 'LOGGED IN:' : 'GİRİŞ YAPILDI:'} <strong>{user.email}</strong></span>
               <button
                 onClick={logout}
                 className="text-red-600 underline font-bold ml-2 cursor-pointer"
               >
-                Çıkış
+                {isEn ? 'Logout' : 'Çıkış'}
               </button>
             </div>
           ) : (
@@ -168,14 +180,14 @@ export const AccountPanelPage: React.FC = () => {
                 type="email"
                 value={loginEmail}
                 onChange={(e) => setLoginEmail(e.target.value)}
-                placeholder="eposta@adresiniz.com"
+                placeholder={isEn ? 'email@address.com' : 'eposta@adresiniz.com'}
                 className="p-1 px-2 border border-black dark:border-white text-xs bg-white dark:bg-zinc-900"
               />
               <button
                 type="submit"
                 className="px-2.5 py-1 bg-red-600 text-white font-bold uppercase cursor-pointer"
               >
-                GİRİŞ
+                {isEn ? 'LOGIN' : 'GİRİŞ'}
               </button>
             </form>
           )}
@@ -186,7 +198,7 @@ export const AccountPanelPage: React.FC = () => {
       <section className="space-y-4">
         <div className="flex items-center justify-between border-b-2 border-black dark:border-white pb-3">
           <h2 className="text-xl font-black uppercase text-black dark:text-white flex items-center gap-2">
-            <span>🐕 KÖPEK PROFİLLERİ</span>
+            <span>🐕 {isEn ? 'CANINE PROFILES' : 'KÖPEK PROFİLLERİ'}</span>
             <span className="font-mono text-xs font-bold text-zinc-500">({dogs.length})</span>
           </h2>
 
@@ -195,7 +207,7 @@ export const AccountPanelPage: React.FC = () => {
             className="flex items-center gap-1.5 h-[36px] px-4 bg-red-600 text-white font-mono text-xs font-bold uppercase border-2 border-black dark:border-white shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 transition-all cursor-pointer"
           >
             <Plus className="w-4 h-4" />
-            <span>YENİ KÖPEK EKLE</span>
+            <span>{isEn ? 'ADD NEW DOG' : 'YENİ KÖPEK EKLE'}</span>
           </button>
         </div>
 
@@ -214,7 +226,7 @@ export const AccountPanelPage: React.FC = () => {
                 <div className="flex items-start justify-between">
                   <div>
                     <span className="font-mono text-[10px] font-black uppercase text-red-600">
-                      {d.breed || 'Irk Belirtilmedi'}
+                      {d.breed || (isEn ? 'Unspecified Breed' : 'Irk Belirtilmedi')}
                     </span>
                     <h3 className="text-xl font-black uppercase text-black dark:text-white">
                       {d.name}
@@ -226,7 +238,7 @@ export const AccountPanelPage: React.FC = () => {
                       <button
                         onClick={() => handleDeleteDog(d.id, d.name)}
                         className="p-1.5 text-zinc-400 hover:text-red-600 cursor-pointer"
-                        title="Profili Sil"
+                        title={isEn ? 'Delete Profile' : 'Profili Sil'}
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -235,9 +247,9 @@ export const AccountPanelPage: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-3 gap-2 font-mono text-[11px] font-bold border-y-2 border-black dark:border-white py-2 text-zinc-600 dark:text-zinc-400">
-                  <div>YAŞ: {d.ageYears} Yıl</div>
-                  <div>BOYUT: {d.size.toUpperCase()}</div>
-                  <div>ENERJİ: {d.energyLevel.toUpperCase()}</div>
+                  <div>{isEn ? 'AGE:' : 'YAŞ:'} {d.ageYears} {isEn ? 'Yr' : 'Yıl'}</div>
+                  <div>{isEn ? 'SIZE:' : 'BOYUT:'} {d.size.toUpperCase()}</div>
+                  <div>{isEn ? 'ENERGY:' : 'ENERJİ:'} {d.energyLevel.toUpperCase()}</div>
                 </div>
 
                 {d.specialNotes && (
@@ -254,7 +266,9 @@ export const AccountPanelPage: React.FC = () => {
                       : 'bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white hover:bg-zinc-200'
                   }`}
                 >
-                  {isSelected ? '✓ SEÇİLİ AKTİF KÖPEK' : 'BU KÖPEĞİ SEÇ'}
+                  {isSelected
+                    ? (isEn ? '✓ ACTIVE SELECTED DOG' : '✓ SEÇİLİ AKTİF KÖPEK')
+                    : (isEn ? 'SELECT THIS DOG' : 'BU KÖPEĞİ SEÇ')}
                 </button>
               </div>
             );
@@ -267,11 +281,13 @@ export const AccountPanelPage: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b-2 border-black dark:border-white pb-3">
           <div>
             <h2 className="text-xl font-black uppercase text-black dark:text-white flex items-center gap-2">
-              <span>📊 DAVRANIŞ ANALİZ GEÇMİŞİ</span>
+              <span>📊 {isEn ? 'BEHAVIOR ANALYSIS HISTORY' : 'DAVRANIŞ ANALİZ GEÇMİŞİ'}</span>
               <span className="font-mono text-xs font-bold text-zinc-500">({analyses.length})</span>
             </h2>
             <p className="text-xs text-zinc-600 dark:text-zinc-400">
-              Gözlemlediğiniz ruh hallerinin zamana göre değişimini inceleyin veya iki analizi yan yana kıyaslayın.
+              {isEn
+                ? 'Track emotional shifts across time or compare two behavior assessments side-by-side.'
+                : 'Gözlemlediğiniz ruh hallerinin zamana göre değişimini inceleyin veya iki analizi yan yana kıyaslayın.'}
             </p>
           </div>
 
@@ -281,7 +297,7 @@ export const AccountPanelPage: React.FC = () => {
               className="flex items-center gap-1.5 h-[36px] px-4 bg-yellow-400 text-black font-mono text-xs font-bold uppercase border-2 border-black shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 transition-all cursor-pointer shrink-0"
             >
               <Columns className="w-4 h-4" />
-              <span>SON 2 ANALİZİ KARŞILAŞTIR</span>
+              <span>{isEn ? 'COMPARE LAST 2 ANALYSES' : 'SON 2 ANALİZİ KARŞILAŞTIR'}</span>
             </button>
           )}
         </div>
@@ -290,13 +306,13 @@ export const AccountPanelPage: React.FC = () => {
           <div className="p-8 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-brutal text-center space-y-3">
             <Compass className="w-8 h-8 text-zinc-400 mx-auto" />
             <div className="text-sm font-bold text-black dark:text-white uppercase">
-              Henüz kaydedilmiş bir analiz bulunmuyor.
+              {isEn ? 'No saved behavior analyses yet.' : 'Henüz kaydedilmiş bir analiz bulunmuyor.'}
             </div>
             <Link
               to="/analiz"
               className="inline-block px-4 py-2 bg-red-600 text-white font-mono text-xs font-black uppercase border-2 border-black dark:border-white shadow-brutal-sm"
             >
-              İLK ANALİZİ BAŞLAT →
+              {isEn ? 'START FIRST ANALYSIS →' : 'İLK ANALİZİ BAŞLAT →'}
             </Link>
           </div>
         ) : (
@@ -309,7 +325,7 @@ export const AccountPanelPage: React.FC = () => {
                 <div className="flex items-start justify-between">
                   <div>
                     <span className="font-mono text-[10px] font-bold uppercase text-zinc-500">
-                      {new Date(ana.timestamp).toLocaleDateString('tr-TR')} • {new Date(ana.timestamp).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}
+                      {new Date(ana.timestamp).toLocaleDateString(isEn ? 'en-US' : 'tr-TR')} • {new Date(ana.timestamp).toLocaleTimeString(isEn ? 'en-US' : 'tr-TR', { hour: '2-digit', minute: '2-digit' })}
                     </span>
                     <h4 className="text-lg font-black uppercase text-black dark:text-white">
                       {ana.moodTitle}
@@ -323,7 +339,7 @@ export const AccountPanelPage: React.FC = () => {
                       ? 'bg-yellow-400 text-black'
                       : 'bg-green-600 text-white'
                   }`}>
-                    RİSK: %{ana.riskScore}
+                    {isEn ? 'RISK:' : 'RİSK:'} %{ana.riskScore}
                   </span>
                 </div>
 
@@ -337,14 +353,14 @@ export const AccountPanelPage: React.FC = () => {
                     className="text-red-600 hover:underline flex items-center gap-1 cursor-pointer"
                   >
                     <Columns className="w-3.5 h-3.5" />
-                    <span>KIYASLA</span>
+                    <span>{isEn ? 'COMPARE' : 'KIYASLA'}</span>
                   </button>
 
                   <button
                     onClick={() => handleDeleteAnalysis(ana.id)}
                     className="text-zinc-400 hover:text-red-600 cursor-pointer"
                   >
-                    Sil
+                    {isEn ? 'Delete' : 'Sil'}
                   </button>
                 </div>
               </div>
@@ -357,7 +373,7 @@ export const AccountPanelPage: React.FC = () => {
       <section className="space-y-4">
         <div className="border-b-2 border-black dark:border-white pb-3">
           <h2 className="text-xl font-black uppercase text-black dark:text-white flex items-center gap-2">
-            <span>🎯 KAYITLI EĞİTİM PLANLARI</span>
+            <span>🎯 {isEn ? 'SAVED TRAINING PLANS' : 'KAYITLI EĞİTİM PLANLARI'}</span>
             <span className="font-mono text-xs font-bold text-zinc-500">({plans.length})</span>
           </h2>
         </div>
@@ -366,13 +382,13 @@ export const AccountPanelPage: React.FC = () => {
           <div className="p-8 border-2 border-black dark:border-white bg-white dark:bg-zinc-900 shadow-brutal text-center space-y-3">
             <CalendarCheck className="w-8 h-8 text-zinc-400 mx-auto" />
             <div className="text-sm font-bold text-black dark:text-white uppercase">
-              Henüz kaydedilmiş bir eğitim planı yok.
+              {isEn ? 'No saved training plans yet.' : 'Henüz kaydedilmiş bir eğitim planı yok.'}
             </div>
             <Link
               to="/egitim-planlari"
               className="inline-block px-4 py-2 bg-black text-white dark:bg-white dark:text-black font-mono text-xs font-black uppercase border-2 border-black dark:border-white shadow-brutal-sm"
             >
-              EĞİTİM PLANI OLUŞTUR →
+              {isEn ? 'CREATE TRAINING PLAN →' : 'EĞİTİM PLANI OLUŞTUR →'}
             </Link>
           </div>
         ) : (
@@ -388,7 +404,7 @@ export const AccountPanelPage: React.FC = () => {
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div>
                       <span className="font-mono text-[10px] font-bold uppercase bg-red-600 text-white px-2 py-0.5 border border-black">
-                        {p.durationDays} GÜN / {p.level.toUpperCase()}
+                        {p.durationDays} {isEn ? 'DAYS' : 'GÜN'} / {p.level.toUpperCase()}
                       </span>
                       <h3 className="text-lg font-black uppercase text-black dark:text-white mt-1">
                         {p.planTitle}
@@ -398,7 +414,7 @@ export const AccountPanelPage: React.FC = () => {
                     <div className="flex items-center gap-4">
                       <div className="text-right">
                         <div className="font-mono text-xs font-bold uppercase text-zinc-500">
-                          {compCount} / {p.exercises.length} TAMAMLANDI
+                          {compCount} / {p.exercises.length} {isEn ? 'COMPLETED' : 'TAMAMLANDI'}
                         </div>
                         <div className="w-36 h-3 border border-black dark:border-white bg-zinc-200 dark:bg-zinc-800 overflow-hidden mt-1">
                           <div className="h-full bg-green-600" style={{ width: `${pct}%` }} />
@@ -408,7 +424,7 @@ export const AccountPanelPage: React.FC = () => {
                       <button
                         onClick={() => handleDeletePlan(p.id)}
                         className="p-1.5 text-zinc-400 hover:text-red-600 cursor-pointer"
-                        title="Planı Sil"
+                        title={isEn ? 'Delete Plan' : 'Planı Sil'}
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -420,7 +436,7 @@ export const AccountPanelPage: React.FC = () => {
                       to="/egitim-planlari"
                       className="font-mono text-xs font-black uppercase text-red-600 hover:underline"
                     >
-                      PLANA GİT VE EGZERSİZLERİ İŞARETLE →
+                      {isEn ? 'OPEN PLAN & MARK EXERCISES →' : 'PLANA GİT VE EGZERSİZLERİ İŞARETLE →'}
                     </Link>
                   </div>
                 </div>
@@ -438,13 +454,15 @@ export const AccountPanelPage: React.FC = () => {
           <div className="flex items-center gap-2 border-b-2 border-black dark:border-white pb-3">
             <span className="text-lg">⭐</span>
             <h3 className="font-mono text-xs font-black uppercase text-black dark:text-white">
-              FAVORİ İÇERİKLER ({favorites.length})
+              {isEn ? 'FAVORITE CONTENT' : 'FAVORİ İÇERİKLER'} ({favorites.length})
             </h3>
           </div>
 
           {favorites.length === 0 ? (
             <p className="text-xs font-medium text-zinc-500">
-              Kütüphane ve Sorun Çözüm Merkezindeki makalelerin yanındaki yıldız simgesine tıklayarak buraya ekleyebilirsiniz.
+              {isEn
+                ? 'Click the star icon next to articles and behavior problems to bookmark them here.'
+                : 'Kütüphane ve Sorun Çözüm Merkezindeki makalelerin yanındaki yıldız simgesine tıklayarak buraya ekleyebilirsiniz.'}
             </p>
           ) : (
             <ul className="space-y-2 font-mono text-xs">
@@ -466,7 +484,7 @@ export const AccountPanelPage: React.FC = () => {
           <div className="flex items-center gap-2 border-b-2 border-black dark:border-white pb-3">
             <FileText className="w-5 h-5 text-red-600" />
             <h3 className="font-mono text-xs font-black uppercase text-black dark:text-white">
-              KİŞİSEL GÖZLEM VE DAVRANIŞ NOTLARI
+              {isEn ? 'PERSONAL OBSERVATION & BEHAVIOR NOTES' : 'KİŞİSEL GÖZLEM VE DAVRANIŞ NOTLARI'}
             </h3>
           </div>
 
@@ -475,7 +493,7 @@ export const AccountPanelPage: React.FC = () => {
             onChange={(e) => setPersonalNotes(e.target.value)}
             rows={4}
             className="w-full p-3 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950 font-mono text-xs font-medium focus:outline-hidden"
-            placeholder="Köpeğinizin bugünkü ilerlemeleri, tetikleyicileri..."
+            placeholder={isEn ? "Your dog's progress today, triggers, training notes..." : 'Köpeğinizin bugünkü ilerlemeleri, tetikleyicileri...'}
           />
 
           <div className="flex justify-end">
@@ -483,7 +501,7 @@ export const AccountPanelPage: React.FC = () => {
               onClick={handleSaveNotes}
               className="h-[36px] px-5 bg-red-600 text-white font-mono text-xs font-bold uppercase border-2 border-black shadow-brutal-sm hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer"
             >
-              NOTLARI KAYDET
+              {isEn ? 'SAVE NOTES' : 'NOTLARI KAYDET'}
             </button>
           </div>
         </div>
@@ -508,10 +526,10 @@ export const AccountPanelPage: React.FC = () => {
             <div className="flex items-center justify-between border-b-2 border-black dark:border-white pb-3">
               <div className="space-y-1">
                 <span className="font-mono text-[10px] font-black uppercase bg-red-600 text-white px-2 py-0.5 border border-black">
-                  ETOLOJİK ZAMAN ANALİZİ
+                  {isEn ? 'TEMPORAL ETHOLOGY ANALYSIS' : 'ETOLOJİK ZAMAN ANALİZİ'}
                 </span>
                 <h3 className="text-xl font-black uppercase text-black dark:text-white mt-1">
-                  İKİ ANALİZİ KARŞILAŞTIR
+                  {isEn ? 'COMPARE TWO ASSESSMENTS' : 'İKİ ANALİZİ KARŞILAŞTIR'}
                 </h3>
               </div>
               <button onClick={() => setIsCompareModalOpen(false)} className="p-1 cursor-pointer">
@@ -524,42 +542,42 @@ export const AccountPanelPage: React.FC = () => {
               {/* Column A */}
               <div className="p-4 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950 space-y-3">
                 <div className="font-mono text-xs font-black uppercase bg-black text-white px-2 py-0.5 inline-block">
-                  A: {new Date(compareAnalysisA.timestamp).toLocaleDateString('tr-TR')}
+                  A: {new Date(compareAnalysisA.timestamp).toLocaleDateString(isEn ? 'en-US' : 'tr-TR')}
                 </div>
                 <h4 className="text-base font-black uppercase text-black dark:text-white">
                   {compareAnalysisA.moodTitle}
                 </h4>
                 <div className="font-mono text-sm font-black text-red-600">
-                  RİSK: %{compareAnalysisA.riskScore} ({compareAnalysisA.riskTitle})
+                  {isEn ? 'RISK:' : 'RİSK:'} %{compareAnalysisA.riskScore} ({compareAnalysisA.riskTitle})
                 </div>
                 <p className="text-xs font-medium text-zinc-700 dark:text-zinc-300">
                   {compareAnalysisA.summary}
                 </p>
                 <div className="pt-2 border-t border-zinc-200 dark:border-zinc-800 font-mono text-xs font-bold space-y-1">
-                  <div>Kuyruk: <strong>{compareAnalysisA.scoreBreakdown.tailScore}/30</strong></div>
-                  <div>Duruş: <strong>{compareAnalysisA.scoreBreakdown.postureScore}/25</strong></div>
-                  <div>Göz+Ağız: <strong>{compareAnalysisA.scoreBreakdown.faceScore}/20</strong></div>
+                  <div>{isEn ? 'Tail:' : 'Kuyruk:'} <strong>{compareAnalysisA.scoreBreakdown.tailScore}/30</strong></div>
+                  <div>{isEn ? 'Posture:' : 'Duruş:'} <strong>{compareAnalysisA.scoreBreakdown.postureScore}/25</strong></div>
+                  <div>{isEn ? 'Eyes+Mouth:' : 'Göz+Ağız:'} <strong>{compareAnalysisA.scoreBreakdown.faceScore}/20</strong></div>
                 </div>
               </div>
 
               {/* Column B */}
               <div className="p-4 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950 space-y-3">
                 <div className="font-mono text-xs font-black uppercase bg-red-600 text-white px-2 py-0.5 inline-block">
-                  B: {new Date(compareAnalysisB.timestamp).toLocaleDateString('tr-TR')}
+                  B: {new Date(compareAnalysisB.timestamp).toLocaleDateString(isEn ? 'en-US' : 'tr-TR')}
                 </div>
                 <h4 className="text-base font-black uppercase text-black dark:text-white">
                   {compareAnalysisB.moodTitle}
                 </h4>
                 <div className="font-mono text-sm font-black text-red-600">
-                  RİSK: %{compareAnalysisB.riskScore} ({compareAnalysisB.riskTitle})
+                  {isEn ? 'RISK:' : 'RİSK:'} %{compareAnalysisB.riskScore} ({compareAnalysisB.riskTitle})
                 </div>
                 <p className="text-xs font-medium text-zinc-700 dark:text-zinc-300">
                   {compareAnalysisB.summary}
                 </p>
                 <div className="pt-2 border-t border-zinc-200 dark:border-zinc-800 font-mono text-xs font-bold space-y-1">
-                  <div>Kuyruk: <strong>{compareAnalysisB.scoreBreakdown.tailScore}/30</strong></div>
-                  <div>Duruş: <strong>{compareAnalysisB.scoreBreakdown.postureScore}/25</strong></div>
-                  <div>Göz+Ağız: <strong>{compareAnalysisB.scoreBreakdown.faceScore}/20</strong></div>
+                  <div>{isEn ? 'Tail:' : 'Kuyruk:'} <strong>{compareAnalysisB.scoreBreakdown.tailScore}/30</strong></div>
+                  <div>{isEn ? 'Posture:' : 'Duruş:'} <strong>{compareAnalysisB.scoreBreakdown.postureScore}/25</strong></div>
+                  <div>{isEn ? 'Eyes+Mouth:' : 'Göz+Ağız:'} <strong>{compareAnalysisB.scoreBreakdown.faceScore}/20</strong></div>
                 </div>
               </div>
 
@@ -567,7 +585,15 @@ export const AccountPanelPage: React.FC = () => {
 
             {/* Comparison Conclusion */}
             <div className="p-4 border-2 border-black dark:border-white bg-zinc-100 dark:bg-zinc-950 font-mono text-xs font-black uppercase text-black dark:text-white">
-              📈 GELİŞİM FARKI: Gerilim Skoru Değişimi: {compareAnalysisB.riskScore - compareAnalysisA.riskScore > 0 ? `+${compareAnalysisB.riskScore - compareAnalysisA.riskScore}% (Artış)` : `${compareAnalysisB.riskScore - compareAnalysisA.riskScore}% (Pozitif İyileşme / Sakinleşme)`}
+              {isEn ? (
+                <>
+                  📈 PROGRESS DELTA: Tension Score Shift: {compareAnalysisB.riskScore - compareAnalysisA.riskScore > 0 ? `+${compareAnalysisB.riskScore - compareAnalysisA.riskScore}% (Increase / Higher Arousal)` : `${compareAnalysisB.riskScore - compareAnalysisA.riskScore}% (Positive Improvement / Calming)`}
+                </>
+              ) : (
+                <>
+                  📈 GELİŞİM FARKI: Gerilim Skoru Değişimi: {compareAnalysisB.riskScore - compareAnalysisA.riskScore > 0 ? `+${compareAnalysisB.riskScore - compareAnalysisA.riskScore}% (Artış)` : `${compareAnalysisB.riskScore - compareAnalysisA.riskScore}% (Pozitif İyileşme / Sakinleşme)`}
+                </>
+              )}
             </div>
 
             <div className="flex justify-end pt-2">
@@ -575,7 +601,7 @@ export const AccountPanelPage: React.FC = () => {
                 onClick={() => setIsCompareModalOpen(false)}
                 className="h-[40px] px-6 bg-black text-white dark:bg-white dark:text-black font-mono text-xs font-black uppercase border-2 border-black dark:border-white shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 transition-all cursor-pointer"
               >
-                KAPAT
+                {isEn ? 'CLOSE' : 'KAPAT'}
               </button>
             </div>
 
@@ -589,7 +615,7 @@ export const AccountPanelPage: React.FC = () => {
           <div className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-white max-w-lg w-full p-6 sm:p-8 space-y-6 shadow-brutal-xl dark:shadow-brutal-white-xl">
             <div className="flex items-center justify-between border-b-2 border-black dark:border-white pb-3">
               <h3 className="text-lg font-black uppercase text-black dark:text-white">
-                YENİ KÖPEK PROFİLİ EKLE
+                {isEn ? 'ADD NEW CANINE PROFILE' : 'YENİ KÖPEK PROFİLİ EKLE'}
               </h3>
               <button onClick={() => setIsAddDogOpen(false)} className="p-1 cursor-pointer">
                 <X className="w-5 h-5" />
@@ -599,31 +625,37 @@ export const AccountPanelPage: React.FC = () => {
             <form onSubmit={handleAddDogSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-mono text-xs font-black uppercase mb-1">KÖPEK ADI</label>
+                  <label className="block font-mono text-xs font-black uppercase mb-1">
+                    {isEn ? 'DOG NAME' : 'KÖPEK ADI'}
+                  </label>
                   <input
                     type="text"
                     value={newDog.name}
                     onChange={(e) => setNewDog({ ...newDog, name: e.target.value })}
                     className="w-full p-2.5 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950 font-mono text-xs font-bold uppercase"
-                    placeholder="Örn: Pamuk"
+                    placeholder={isEn ? 'e.g. Bella' : 'Örn: Pamuk'}
                     required
                   />
                 </div>
                 <div>
-                  <label className="block font-mono text-xs font-black uppercase mb-1">IRK / MELEZ</label>
+                  <label className="block font-mono text-xs font-black uppercase mb-1">
+                    {isEn ? 'BREED / MIX' : 'IRK / MELEZ'}
+                  </label>
                   <input
                     type="text"
                     value={newDog.breed}
                     onChange={(e) => setNewDog({ ...newDog, breed: e.target.value })}
                     className="w-full p-2.5 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950 font-mono text-xs font-bold uppercase"
-                    placeholder="Örn: Terrier Melezi"
+                    placeholder={isEn ? 'e.g. Terrier Mix' : 'Örn: Terrier Melezi'}
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="block font-mono text-xs font-black uppercase mb-1">YAŞ (YIL)</label>
+                  <label className="block font-mono text-xs font-black uppercase mb-1">
+                    {isEn ? 'AGE (YEARS)' : 'YAŞ (YIL)'}
+                  </label>
                   <input
                     type="number"
                     min="0"
@@ -634,37 +666,43 @@ export const AccountPanelPage: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block font-mono text-xs font-black uppercase mb-1">BOYUT</label>
+                  <label className="block font-mono text-xs font-black uppercase mb-1">
+                    {isEn ? 'SIZE' : 'BOYUT'}
+                  </label>
                   <select
                     value={newDog.size}
                     onChange={(e) => setNewDog({ ...newDog, size: e.target.value as any })}
                     className="w-full p-2.5 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950 font-mono text-xs font-bold uppercase"
                   >
-                    <option value="small">Küçük</option>
-                    <option value="medium">Orta</option>
-                    <option value="large">Büyük</option>
-                    <option value="giant">Dev</option>
+                    <option value="small">{isEn ? 'Small' : 'Küçük'}</option>
+                    <option value="medium">{isEn ? 'Medium' : 'Orta'}</option>
+                    <option value="large">{isEn ? 'Large' : 'Büyük'}</option>
+                    <option value="giant">{isEn ? 'Giant' : 'Dev'}</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block font-mono text-xs font-black uppercase mb-1">CİNSİYET</label>
+                  <label className="block font-mono text-xs font-black uppercase mb-1">
+                    {isEn ? 'GENDER' : 'CİNSİYET'}
+                  </label>
                   <select
                     value={newDog.gender}
                     onChange={(e) => setNewDog({ ...newDog, gender: e.target.value as any })}
                     className="w-full p-2.5 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950 font-mono text-xs font-bold uppercase"
                   >
-                    <option value="male">Erkek</option>
-                    <option value="female">Dişi</option>
+                    <option value="male">{isEn ? 'Male' : 'Erkek'}</option>
+                    <option value="female">{isEn ? 'Female' : 'Dişi'}</option>
                   </select>
                 </div>
               </div>
 
               <div>
-                <label className="block font-mono text-xs font-black uppercase mb-1">ÖZEL NOTLAR</label>
+                <label className="block font-mono text-xs font-black uppercase mb-1">
+                  {isEn ? 'SPECIAL NOTES' : 'ÖZEL NOTLAR'}
+                </label>
                 <textarea
                   value={newDog.specialNotes}
                   onChange={(e) => setNewDog({ ...newDog, specialNotes: e.target.value })}
-                  placeholder="Karakter özellikleri veya korkuları..."
+                  placeholder={isEn ? 'Personality traits, known triggers, or fears...' : 'Karakter özellikleri veya korkuları...'}
                   rows={2}
                   className="w-full p-2.5 border-2 border-black dark:border-white bg-zinc-50 dark:bg-zinc-950 font-mono text-xs font-medium"
                 />
@@ -676,13 +714,13 @@ export const AccountPanelPage: React.FC = () => {
                   onClick={() => setIsAddDogOpen(false)}
                   className="h-[38px] px-4 border-2 border-black dark:border-white font-mono text-xs font-black uppercase cursor-pointer"
                 >
-                  İPTAL
+                  {isEn ? 'CANCEL' : 'İPTAL'}
                 </button>
                 <button
                   type="submit"
                   className="h-[38px] px-6 bg-red-600 text-white font-mono text-xs font-black uppercase border-2 border-black shadow-brutal hover:translate-x-0.5 hover:translate-y-0.5 transition-all cursor-pointer"
                 >
-                  KAYDET
+                  {isEn ? 'SAVE' : 'KAYDET'}
                 </button>
               </div>
             </form>
@@ -693,3 +731,4 @@ export const AccountPanelPage: React.FC = () => {
     </div>
   );
 };
+

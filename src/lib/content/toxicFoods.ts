@@ -376,7 +376,8 @@ export interface ChocolateCalcResult {
 export function calculateChocolateToxicity(
   dogWeightKg: number,
   chocolateType: 'white' | 'milk' | 'dark' | 'baking_cocoa',
-  amountGrams: number
+  amountGrams: number,
+  lang: 'tr' | 'en' = 'tr'
 ): ChocolateCalcResult {
   // Approximate theobromine content mg/g:
   // White: ~0.05 mg/g (almost zero, but fat risk)
@@ -399,8 +400,12 @@ export function calculateChocolateToxicity(
       totalTheobromineMg: Math.round(totalTheobromineMg),
       theobromineDoseMgPerKg: dose,
       severity: 'negligible',
-      summary: 'İhmal Edilebilir Düşük Doz. Hayati teobromin zehirlenmesi riski beklenmez.',
-      actionRequired: 'Çikolatanın yüksek yağ ve şeker içeriği nedeniyle hafif mide bulantısı veya ishal olabilir; evde gözlemleyin, su erişimini açık tutun.'
+      summary: lang === 'en'
+        ? 'Negligible Low Dose. Life-threatening theobromine toxicity is not expected.'
+        : 'İhmal Edilebilir Düşük Doz. Hayati teobromin zehirlenmesi riski beklenmez.',
+      actionRequired: lang === 'en'
+        ? 'Mild nausea or loose stool may occur due to high fat/sugar content; observe at home and keep fresh water accessible.'
+        : 'Çikolatanın yüksek yağ ve şeker içeriği nedeniyle hafif mide bulantısı veya ishal olabilir; evde gözlemleyin, su erişimini açık tutun.'
     };
   }
 
@@ -409,8 +414,12 @@ export function calculateChocolateToxicity(
       totalTheobromineMg: Math.round(totalTheobromineMg),
       theobromineDoseMgPerKg: dose,
       severity: 'mild',
-      summary: 'Hafif Toksisite Eşiği. Mide-bağırsak uyarımı ve huzursuzluk başlayabilir.',
-      actionRequired: 'Köpekte kusma, ishal, huzursuzluk ve sık idrara çıkma görülebilir. Veteriner hekiminizi telefonla bilgilendirin.'
+      summary: lang === 'en'
+        ? 'Mild Toxicity Threshold. Gastrointestinal stimulation and agitation may develop.'
+        : 'Hafif Toksisite Eşiği. Mide-bağırsak uyarımı ve huzursuzluk başlayabilir.',
+      actionRequired: lang === 'en'
+        ? 'Vomiting, diarrhea, restlessness, and frequent urination may occur. Notify your veterinarian by phone.'
+        : 'Köpekte kusma, ishal, huzursuzluk ve sık idrara çıkma görülebilir. Veteriner hekiminizi telefonla bilgilendirin.'
     };
   }
 
@@ -419,8 +428,12 @@ export function calculateChocolateToxicity(
       totalTheobromineMg: Math.round(totalTheobromineMg),
       theobromineDoseMgPerKg: dose,
       severity: 'moderate',
-      summary: 'ORTA - YÜKSEK TOKSİSİTE! Kalp ve kardiyovasküler sistem uyarılması riski.',
-      actionRequired: 'ACİL VETERİNER MÜDAHALESİ GEREKİR! Taşikardi (aşırı hızlı kalp atışı), titremeler ve hipertermi gelişebilir. Yutma son 2 saat içindeyse klinikte kusturulmalıdır.'
+      summary: lang === 'en'
+        ? 'MODERATE TO HIGH TOXICITY! Risk of cardiovascular and nervous system stimulation.'
+        : 'ORTA - YÜKSEK TOKSİSİTE! Kalp ve kardiyovasküler sistem uyarılması riski.',
+      actionRequired: lang === 'en'
+        ? 'URGENT VETERINARY ATTENTION REQUIRED! Tachycardia, tremors, and hyperthermia may develop. If ingested in the last 2 hours, emesis at clinic is recommended.'
+        : 'ACİL VETERİNER MÜDAHALESİ GEREKİR! Taşikardi (aşırı hızlı kalp atışı), titremeler ve hipertermi gelişebilir. Yutma son 2 saat içindeyse klinikte kusturulmalıdır.'
     };
   }
 
@@ -428,7 +441,292 @@ export function calculateChocolateToxicity(
     totalTheobromineMg: Math.round(totalTheobromineMg),
     theobromineDoseMgPerKg: dose,
     severity: 'severe_critical',
-    summary: '🚨 HAYATİ KRİTİK DOZ! Şiddetli kardiyotoksisite, epileptik nöbetler ve ölüm riski!',
-    actionRequired: 'DERHAL EN YAKIN 7/24 NÖBETÇİ VETERİNER KLİNİĞİNE GİDİN! Yolda kliniği arayarak köpeğin kilosunu ve yediği miktarı bildirin. Yoğun bakım ve kalp monitörizasyonu şarttır.'
+    summary: lang === 'en'
+      ? '🚨 CRITICAL LIFE-THREATENING DOSE! Severe cardiotoxicity, seizures, and fatal risk!'
+      : '🚨 HAYATİ KRİTİK DOZ! Şiddetli kardiyotoksisite, epileptik nöbetler ve ölüm riski!',
+    actionRequired: lang === 'en'
+      ? 'GO TO THE NEAREST 24/7 EMERGENCY VET CLINIC IMMEDIATELY! Call en route with dog weight and chocolate amount. Intensive care and cardiac monitoring required.'
+      : 'DERHAL EN YAKIN 7/24 NÖBETÇİ VETERİNER KLİNİĞİNE GİDİN! Yolda kliniği arayarak köpeğin kilosunu ve yediği miktarı bildirin. Yoğun bakım ve kalp monitörizasyonu şarttır.'
+  };
+}
+
+export const TOXIC_FOODS_EN_MAP: Record<string, Partial<ToxicFoodItem>> = {
+  'kuru-uzum-yas-uzum': {
+    name: 'Grapes and Raisins (Fresh or Dried)',
+    toxicAgent: 'Tartaric Acid & Potassium Bitartrate',
+    onsetHours: '6 - 24 hours',
+    lethalThreshold: 'DOSE INDEPENDENT! Even a single raisin can trigger acute renal failure in sensitive dogs.',
+    symptoms: [
+      'Continuous vomiting and diarrhea (often containing grape pieces)',
+      'Extreme lethargy, inability to stand, and tremors',
+      'Oliguria or anuria (absence of urine - acute kidney failure sign)',
+      'Severe abdominal pain upon gentle touch'
+    ],
+    emergencyFirstAid: [
+      'If ingested less than 2 hours ago and the dog is fully conscious, emesis must be induced immediately under veterinary care.',
+      'Never attempt to induce emesis with salt or household chemicals at home.',
+      'Do not force water; transport immediately to the nearest 24/7 clinic.'
+    ],
+    contraindications: [
+      'NEVER induce vomiting if dog is unconscious, having seizures, or unable to swallow (aspiration pneumonia risk).'
+    ],
+    veterinaryTreatment: 'Continuous IV fluid diuresis for the first 48-72 hours, activated charcoal administration, and serial kidney panel monitoring.'
+  },
+  'ksilitol-tatlandirici': {
+    name: 'Xylitol (Birch Sugar / Sugar-Free Gum)',
+    toxicAgent: 'Xylitol (Massive Insulin Secretion Trigger)',
+    onsetHours: '15 - 60 minutes (Extremely Fast!)',
+    lethalThreshold: '0.1 g/kg causes hypoglycemia, >0.5 g/kg causes acute hepatic failure. 1-2 sticks of gum can send a small dog into a coma.',
+    symptoms: [
+      'Sudden hind-leg weakness, ataxia (staggering walk)',
+      'Acute severe hypoglycemia (blood sugar collapse)',
+      'Collapse, epileptic seizures, and coma'
+    ],
+    emergencyFirstAid: [
+      'Life-threatening emergency! Rub honey or syrup directly onto gums if conscious, and rush to emergency clinic immediately.',
+      'Do NOT induce vomiting if the dog is unsteady, weak, or having seizures.'
+    ],
+    contraindications: [
+      'Do not wait for symptoms to appear; liver damage happens very rapidly.'
+    ],
+    veterinaryTreatment: 'IV dextrose infusion, continuous glucose monitoring, hepatoprotectants (SAMe), and coagulopathy screening.'
+  },
+  'cikolata-ve-kakao': {
+    name: 'Chocolate and Cocoa (Theobromine)',
+    toxicAgent: 'Theobromine & Caffeine (Methylxanthines)',
+    onsetHours: '1 - 6 hours',
+    lethalThreshold: '20 mg/kg causes mild signs; >40 mg/kg cardiotoxic; >60 mg/kg causes seizures. Baking cocoa is 8-10x more concentrated than milk chocolate.',
+    symptoms: [
+      'High fever, panting, and uncontrollable restlessness',
+      'Tachycardia (racing heartbeat) and dangerous arrhythmias',
+      'Muscle stiffness, twitches, seizures, and collapse'
+    ],
+    emergencyFirstAid: [
+      'Calculate theobromine dose via the interactive calculator below.',
+      'If ingested within 2 hours, proceed to clinic for gastric decontamination.'
+    ],
+    contraindications: [
+      'Never treat vomiting with salt water; salt toxicity can be fatal.'
+    ],
+    veterinaryTreatment: 'Gastric lavage, repeated activated charcoal (enterohepatic recycling), beta-blockers for arrhythmias, and IV fluid diuresis.'
+  },
+  'sogan-sarimsak-pirasa': {
+    name: 'Onions, Garlic, Leeks & Chives',
+    toxicAgent: 'N-Propyl Disulfide & Thiosulfate (Hemolytic)',
+    onsetHours: '1 - 5 days (Delayed Onset)',
+    lethalThreshold: '0.5% of body weight in onion destroys red blood cells. Garlic is 3-5x more toxic than raw onion.',
+    symptoms: [
+      'Heinz Body Hemolytic Anemia (red blood cells rupture)',
+      'Dark red, brown, or tea-colored urine (hemoglobinuria)',
+      'Pale or porcelain-white gums, extreme weakness',
+      'Panting, rapid heartbeat, and jaundice'
+    ],
+    emergencyFirstAid: [
+      'If swallowed recently (< 2 hours), clinical emesis is effective.',
+      'Never assume safety because signs did not appear on day 1.',
+      'Keep the dog rested and avoid strenuous walks (oxygen capacity is compromised).'
+    ],
+    contraindications: [
+      'Cooked, powdered, or fried onion/garlic does NOT lose toxicity.'
+    ],
+    veterinaryTreatment: 'Oxygen therapy, IV fluids, antioxidants, and blood transfusion in critical hemolytic cases.'
+  },
+  'avokado': {
+    name: 'Avocado (Fruit, Leaves & Large Pit)',
+    toxicAgent: 'Persin Toxin & Mechanical Pit Obstruction',
+    onsetHours: '4 - 12 hours',
+    lethalThreshold: 'Ingested pit causes intestinal obstruction requiring emergency surgery; leaves and skin cause myocardial damage.',
+    symptoms: [
+      'Severe vomiting, diarrhea, and abdominal cramping',
+      'Myocardial necrosis (heart muscle tissue damage)',
+      'Respiratory distress and fluid accumulation in chest'
+    ],
+    emergencyFirstAid: [
+      'If pit was swallowed, go immediately for X-ray/ultrasound.',
+      'Do NOT induce vomiting at home; the large pit can lodge in esophagus.'
+    ],
+    contraindications: [
+      'Forced vomiting of large pit can cause asphyxiation.'
+    ],
+    veterinaryTreatment: 'Supportive gastrointestinal care, abdominal surgery if obstructed, and cardiac monitoring.'
+  },
+  'makademya-findigi': {
+    name: 'Macadamia Nuts',
+    toxicAgent: 'Unknown Neurotoxic Compound',
+    onsetHours: '3 - 12 hours',
+    lethalThreshold: '2.4 g/kg (4-5 nuts can paralyze a small dog temporarily).',
+    symptoms: [
+      'Hind limb paresis, stiffness, and inability to stand',
+      'Hyperthermia (elevated body temperature)',
+      'Muscle tremors and joint pain',
+      'Vomiting and lethargy'
+    ],
+    emergencyFirstAid: [
+      'Clinical emesis and activated charcoal within 1-2 hours.',
+      'Keep the dog in a cool, quiet, padded space.'
+    ],
+    contraindications: [
+      'Chocolate-covered macadamias carry double poisoning risk.'
+    ],
+    veterinaryTreatment: 'IV fluids, analgesics, antipyretics; full recovery usually within 24-48 hours.'
+  },
+  'mayali-hamur-alkol': {
+    name: 'Raw Yeast Bread Dough & Alcohol',
+    toxicAgent: 'Ethanol Fermentation & Gastric Torsion (GDV)',
+    onsetHours: '15 - 60 minutes',
+    lethalThreshold: 'Dough expands in warm stomach, risking gastric rupture and releasing lethal amounts of alcohol into bloodstream.',
+    symptoms: [
+      'Extreme abdominal distension and non-productive retching',
+      'Alcohol poisoning: ataxia, hypothermia, slow breathing',
+      'Metabolic acidosis, coma, and gastric torsion (GDV)'
+    ],
+    emergencyFirstAid: [
+      'LIFE THREATENING! Give small amount of cold water to slow fermentation while speeding to emergency surgery clinic.'
+    ],
+    contraindications: [
+      'Never induce vomiting if stomach is visibly bloated (rupture danger).'
+    ],
+    veterinaryTreatment: 'Cold water gastric lavage, IV sodium bicarbonate, and emergency surgery if stomach is twisted.'
+  },
+  'pismis-kemikler': {
+    name: 'Cooked Bones (Chicken, Lamb, Chops)',
+    toxicAgent: 'Mechanical Splintering & Gastrointestinal Perforation',
+    onsetHours: '1 - 24 hours',
+    lethalThreshold: 'Cooked bones lose flexibility and shatter like glass; sharp shards puncture esophagus, stomach, or intestines.',
+    symptoms: [
+      'Bloody drool, rigid abdomen, and painful crying',
+      'Constipation or tarry black stool (melena)',
+      'Peritonitis and septic shock'
+    ],
+    emergencyFirstAid: [
+      'DO NOT INDUCE VOMITING! Bone shards will tear the esophagus coming up.',
+      'Feed several slices of white bread or plain boiled pumpkin to cushion shards and go immediately for X-ray.'
+    ],
+    contraindications: [
+      'Never induce vomiting after cooked bone ingestion.'
+    ],
+    veterinaryTreatment: 'Endoscopy or emergency exploratory surgery (laparotomy/enterotomy).'
+  },
+  'kahve-ve-kafein': {
+    name: 'Coffee, Tea, Energy Drinks & Caffeine',
+    toxicAgent: 'Caffeine (Methylxanthine)',
+    onsetHours: '30 - 120 minutes',
+    lethalThreshold: '140 mg/kg lethal threshold. 1 espresso shot or caffeine pill can be deadly for a small dog.',
+    symptoms: [
+      'Severe hyperactivity, pacing, and muscle tremors',
+      'High blood pressure and dangerous arrhythmias',
+      'Seizures and cardiac arrest'
+    ],
+    emergencyFirstAid: [
+      'Clinic emesis within first hour; keep dog in dim, quiet room.'
+    ],
+    contraindications: [
+      'Do not excite or exercise a dog with racing heartbeat.'
+    ],
+    veterinaryTreatment: 'Activated charcoal, IV fluids, beta-blockers, and anticonvulsants.'
+  },
+  'kuflu-gidalar-ve-cop': {
+    name: 'Moldy Foods, Spoiled Cheese & Compost',
+    toxicAgent: 'Tremorgenic Mycotoxins (Penitrem A & Roquefortine C)',
+    onsetHours: '30 minutes - 3 hours',
+    lethalThreshold: 'Mycotoxins on moldy food cause non-stop seizures and neurological trauma.',
+    symptoms: [
+      'Violent muscle fasciculations and whole-body shaking ("Garbage Shakes")',
+      'Epileptic seizures, profuse drooling, and high fever',
+      'Loss of consciousness and coma'
+    ],
+    emergencyFirstAid: [
+      'Rush to clinic for seizure management; prevent dog from injuring itself.'
+    ],
+    contraindications: [
+      'Do not give oral liquids or food during tremors or seizures.'
+    ],
+    veterinaryTreatment: 'Methocarbamol (muscle relaxant), diazepam/midazolam, and activated charcoal.'
+  },
+  'cekirdekli-meyveler-siyanur': {
+    name: 'Cherry, Plum, Peach & Apricot Pits',
+    toxicAgent: 'Amygdalin (Cyanide-Releasing Glycoside) & Obstruction',
+    onsetHours: '1 - 6 hours',
+    lethalThreshold: 'Crushed pits release cyanide, which prevents cells from using oxygen.',
+    symptoms: [
+      'Bright red gums and tongue',
+      'Dilated pupils (mydriasis) and severe dyspnea',
+      'Shock and collapse'
+    ],
+    emergencyFirstAid: [
+      'Fruit pulp is safe, but crushed pits require immediate veterinary oxygen and antidote therapy.'
+    ],
+    contraindications: [
+      'Do not stress an oxygen-deprived dog at home.'
+    ],
+    veterinaryTreatment: 'Cyanide antidote (Sodium nitrite/thiosulfate) and obstruction monitoring.'
+  },
+  'insan-agri-kesicileri': {
+    name: 'Human Painkillers (Paracetamol, Ibuprofen, Aspirin)',
+    toxicAgent: 'Paracetamol & NSAID Hepatotoxicity / Nephrotoxicity',
+    onsetHours: '1 - 4 hours',
+    lethalThreshold: 'Dogs lack human liver enzymes! 1 pill can cause fatal stomach perforation and liver necrosis.',
+    symptoms: [
+      'Brown muddy blood and blue gums (methemoglobinemia)',
+      'Vomiting blood and black tarry stool',
+      'Acute liver and kidney shutdown'
+    ],
+    emergencyFirstAid: [
+      'NEVER GIVE HUMAN PAIN MEDS! If ingested accidentally, bring the medication package to clinic within 30 minutes.'
+    ],
+    contraindications: [
+      'Giving baby aspirin or paracetamol to a dog in pain is a fatal mistake.'
+    ],
+    veterinaryTreatment: 'N-Acetylcysteine (antidote), Vitamin C, gastroprotectants, and IV diuresis.'
+  },
+  'havuc': {
+    name: 'Carrots (Raw or Boiled)',
+    toxicAgent: 'Non-Toxic (Rich in Vitamin A & Fiber)',
+    onsetHours: 'Harmless',
+    lethalThreshold: 'Safe. Low calorie, excellent dental-cleaning crunchy treat.',
+    symptoms: ['Does not cause toxicity. Orange specks may appear in stool if eaten in large amounts.'],
+    emergencyFirstAid: ['No intervention required.'],
+    contraindications: ['Slice into bite-sized pieces for small dogs to prevent choking.'],
+    veterinaryTreatment: 'Not required.'
+  },
+  'balkabagi': {
+    name: 'Pumpkin (Boiled & Unseasoned)',
+    toxicAgent: 'Non-Toxic (Digestive Superfood)',
+    onsetHours: 'Harmless',
+    lethalThreshold: 'Safe. #1 vet-recommended soluble fiber source for both diarrhea and constipation.',
+    symptoms: ['Completely safe.'],
+    emergencyFirstAid: ['No intervention required.'],
+    contraindications: ['Do not feed spiced pie mix or sweetened pumpkin; use 100% plain boiled puree.'],
+    veterinaryTreatment: 'Not required.'
+  },
+  'elma-cekirdeksiz': {
+    name: 'Apples (Seedless & Cored)',
+    toxicAgent: 'Non-Toxic (Remove Seeds & Core)',
+    onsetHours: 'Harmless',
+    lethalThreshold: 'Flesh is safe and rich in Vitamin C and fiber. Only seeds should be discarded.',
+    symptoms: ['Safe.'],
+    emergencyFirstAid: ['No intervention required.'],
+    contraindications: ['Do not give central hard core or seeds to dog.'],
+    veterinaryTreatment: 'Not required.'
+  },
+  'yaban-mersini': {
+    name: 'Blueberries (Fresh or Frozen)',
+    toxicAgent: 'Non-Toxic (Super Antioxidant)',
+    onsetHours: 'Harmless',
+    lethalThreshold: 'Safe. Rich in antioxidants, supporting canine brain and cognitive health.',
+    symptoms: ['Safe.'],
+    emergencyFirstAid: ['No intervention required.'],
+    contraindications: ['Feed moderate amounts; excessive handfuls can cause transient loose stool.'],
+    veterinaryTreatment: 'Not required.'
+  }
+};
+
+export function getLocalizedToxicFood(item: ToxicFoodItem, lang: 'tr' | 'en'): ToxicFoodItem {
+  if (lang !== 'en') return item;
+  const enData = TOXIC_FOODS_EN_MAP[item.id];
+  if (!enData) return item;
+  return {
+    ...item,
+    ...enData
   };
 }
